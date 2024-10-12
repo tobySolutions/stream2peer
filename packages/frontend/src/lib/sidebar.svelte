@@ -22,6 +22,7 @@
 </aside>
 
 <style lang="scss">
+	@import "../styles/styles.scss";
 	.sidebar {
 		flex-basis: 20%;
 		padding: 20px;
@@ -55,7 +56,7 @@
 		}
 	}
 
-	@media (max-width: 650px) {
+	@include respond(ms) {
 		.sidebar {
 			position: absolute;
 			bottom: 0;

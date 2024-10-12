@@ -2,6 +2,7 @@
 	import Logo from '../../../static/favicon.png';
 	import Navbar from '$lib/navbar.svelte';
 	import Sidebar from '$lib/sidebar.svelte';
+	import "../../styles/styles.scss"
 
 	export const navItems = [
 		{ label: 'Home', value: 'home', route: '/dashboard/home' },
@@ -19,6 +20,9 @@
 </div>
 
 <style lang="scss">
+
+	@import "../../styles/styles.scss";
+	
 	@keyframes slideUp {
 		from {
 			transform: translateY(80px);
@@ -43,7 +47,7 @@
 		}
 	}
 
-	@media (max-width: 650px) {
+	@include respond(ms) {
 		.content {
 			.main__content {
 				flex-basis: 100%;

@@ -54,6 +54,7 @@
 </nav>
 
 <style lang="scss">
+	@import "../styles//styles.scss";
 	.nav {
 		background-color: #1e1e1e;
 		position: fixed;
@@ -67,7 +68,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 10px 25px;
+		padding: 36px 25px;
 
 		.nav__items {
 			display: flex;
@@ -170,7 +171,7 @@
 		}
 	}
 
-	@media (max-width: 650px) {
+	@include respond(ms) {
 		.nav {
 			.mobile__nav {
 				display: block;

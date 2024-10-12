@@ -1,0 +1,43 @@
+@import './reset.scss';
+
+$breakpoint-xs: 480px;
+$breakpoint-ms: 650px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1400px;
+
+
+body {
+	min-height: 100vh;
+	margin: 0;
+}
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-xs}) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm}) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md}) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg}) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl}) {
+      @content;
+    }
+  }
+  @else if $breakpoint == ms {
+    @media (max-width: #{$breakpoint-ms}) {
+      @content;
+    }
+  }
+}
