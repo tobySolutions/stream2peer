@@ -1,0 +1,17 @@
+.dashboard-header {
+    display: flex;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid hsl(155, 6%, 42.5%);
+}
+.header-text {
+    font-size: 32px;
+    color: #FFFFFF;
+}
+.header-subtext {
+    font-size: 18px;
+    opacity: 0.6;
+    color: #FFFFFF;
+}

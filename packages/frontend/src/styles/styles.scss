@@ -1,5 +1,17 @@
 @import './reset.scss';
 
+
+$background-color: #121212;
+$surface-color: #1e1e1e;
+$primary-color: #bb86fc;
+$secondary-color: #03dac6;
+$danger-color: #cf6679;
+$text-color: #e1e1e1;
+$text-color-secondary: #b0b0b0;
+
+$hover-color: #2c2c2c;
+$border-color: #333333;
+
 $breakpoint-xs: 480px;
 $breakpoint-ms: 650px;
 $breakpoint-sm: 768px;
@@ -11,6 +23,26 @@ $breakpoint-xl: 1400px;
 body {
 	min-height: 100vh;
 	margin: 0;
+}
+
+@mixin card {
+  background-color: $surface-color;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+@mixin button($bg-color, $text-color: white) {
+  background-color: $bg-color;
+  color: $text-color;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
 }
 
 @mixin respond($breakpoint) {
@@ -39,5 +71,22 @@ body {
     @media (max-width: #{$breakpoint-ms}) {
       @content;
     }
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

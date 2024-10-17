@@ -41,7 +41,7 @@
 		min-height: 100vh;
 		.main__content {
 			flex-basis: 80%;
-			padding: 20px;
+			padding: 40px;
 			margin-top: 72px;
 			background-color: #000000;
 		}
