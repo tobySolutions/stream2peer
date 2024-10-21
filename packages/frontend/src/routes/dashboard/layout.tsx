@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../lib/navbar";
 import Sidebar from "../../lib/sidebar";
+import { IoIosArrowBack } from "react-icons/io";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -8,15 +9,16 @@ type LayoutProps = {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <>
+    <div className="">
       <Navbar />
-      <div className="flex w-full relative min-h-screen bg-black">
+      <div className="flex h-full items-start relative bg-black">
         <Sidebar />
-        <main className="flex-[0_0_80%] md:flex-[0_0_100%] p-5 mt-[80px]  animate-slideUp">
-          {children}
+        <main className="p-6 w-full ml-[20%] min-h-[calc(100vh-60px)] animate-slideUp">
+         
+          <div>{children}</div>
         </main>
       </div>
-    </>
+    </div>
   );
 }
 

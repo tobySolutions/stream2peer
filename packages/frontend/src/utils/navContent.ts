@@ -4,6 +4,7 @@ export const navItems = [
   {
     label: "Destination",
     value: "destination",
-    route: "/dashboard/projects",
+    route: "/dashboard/destination",
   },
 ];
+

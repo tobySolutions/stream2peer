@@ -18,11 +18,11 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-[#1e1e1e] fixed top-0 right-0 left-0 z-[100] h-[60px] border-b border-[hsl(155,6%,42.5%)] flex items-center justify-between px-[36px] py-[25px]">
+    <nav className="bg-[#1e1e1e] sticky bottom-0 top-0 right-0 left-0 z-[100] h-[60px] border-b border-[hsl(155,6%,42.5%)] flex items-center justify-between px-[36px] py-[25px]">
       {/* Logo Container */}
       <div className="flex items-center gap-[10px] cursor-pointer">
         <img src={Logo} alt="Logo" width="60px" height="60px" />
-        <p className="font-serif text-white">STREAM2PEER</p>
+        <p className="text-white font-montserrat">STREAM2PEER</p>
       </div>
 
       {/* Desktop Menu */}
@@ -48,7 +48,6 @@ function Navbar() {
           ></div>
         </div>
       </div>
-
       {/* Mobile Menu */}
       <div
         className={`${menuOpen ? "flex" : "hidden"} fixed top-0 left-0 w-full h-screen z-[1000] bg-[#1e1e1e]`}

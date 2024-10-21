@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        montserrat: ["montserrat", "sans-serif"]
+      },
       keyframes: {
         slideUp: {
           "0%": { transform: "translateY(80px)", opacity: 0 },
