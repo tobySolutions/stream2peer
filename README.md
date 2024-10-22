@@ -2,6 +2,10 @@
 
 Stream2Peer is a decentralized video stream management platform built on top of [Livepeer](https://livepeer.org/). Inspired by [StreamYard](https://streamyard.com/), this project replicates the core functionalities of StreamYard with added advantages of decentralization, scalability, and enhanced user control. Stream2Peer allows users to broadcast, record, and manage live streams seamlessly using the power of Web3 and Livepeer's open-source technology.
 
+## Code of Conduct
+
+We are committed to fostering an open and welcoming environment. Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) to understand the behavior we expect from our contributors and maintainers.
+
 ## Features
 
 - **Decentralized Streaming**: Stream2Peer uses the Livepeer protocol to deliver highly scalable and decentralized video streaming services.
@@ -85,7 +89,7 @@ The frontend is built using React and Vite, offering a fast and optimized develo
 
 ## Contributing
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Check out the [Contributing guide](#) to see how to set things up on your machine.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Check out the [Contributing guide](https://github.com/tobySolutions/stream2peer/blob/main/CONTRIBUTING.md) to see how to set things up on your machine.
 
 1. Fork the Project.
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
