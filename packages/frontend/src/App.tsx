@@ -2,7 +2,7 @@ import Routes from "./routes/Routes";
 
 function App() {
   return (
-    <main>
+    <main className="font-montserrat">
       <Routes />
     </main>
   );

@@ -1,27 +1,29 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { navItems } from "../utils/navContent";
 
 function Sidebar() {
   const location = useLocation();
+  let navigate = useNavigate();
+
+  const isActive = (path: string) => {
+    if (path === "/dashboard/projects") {
+      return location.pathname.startsWith("/dashboard/projects");
+    }
+    return location.pathname === path;
+  };
 
   return (
-    <aside className="flex-[0_0_20%] px-5 pt-20 bg-[#1e1e1e]  border-r border-[hsl(155,6%,42.5%)] md:flex md:flex-col md:gap-5 md:border-r md:border-none md:border-t md:mt-[10px] md:overflow-x-scroll">
-      <ul className="list-none p-0 flex flex-col gap-5  md:w-full md:justify-between">
+    <aside className="fixed hidden w-[20%] top-0 bottom-0 left-0 right-0 px-5 mt-[57px] pt-8 h-full bg-dark-gray  border-r-0 border-primary-border md:flex md:flex-col md:gap-5 md:border-r">
+      <ul className="list-none p-0 md:flex flex-col gap-5  md:w-full md:justify-between">
         {navItems.map((item) => (
           <li
             key={item.value}
-            className={`${location.pathname === item.route ? "bg-white" : ""} p-2 rounded-md`}
+            className={`${
+              isActive(item.route) ? "bg-white text-dark-gray" : "text-white"
+            } p-2 rounded-md no-underline font-raleway cursor-pointer`}
+            onClick={() => navigate(item.route)}
           >
-            <a
-              href={item.route}
-              className={`${
-                location.pathname === item.route
-                  ? "text-[#1e1e1e]"
-                  : "text-white"
-              } no-underline font-raleway`}
-            >
-              {item.label}
-            </a>
+            {item.label}
           </li>
         ))}
       </ul>
