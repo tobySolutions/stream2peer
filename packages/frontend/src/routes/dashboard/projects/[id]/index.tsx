@@ -120,10 +120,10 @@ const ProjectPage = () => {
           Project {projectId}
         </h1>
 
-        <div className="mb-4 flex justify-between items-center w-full">
-          <div className="flex mb-4 rounded-lg overflow-hidden border border-[hsl(155,6%,42.5%)]">
+        <div className="mb-4 flex flex-wrap-reverse gap-4 justify-between items-center w-full">
+          <div className="flex rounded-lg overflow-hidden border border-[hsl(155,6%,42.5%)]">
             <button
-              className={`px-4 py-2 ${
+              className={`lg:px-4 px-2 text-[14px] lg:text-[16px] py-1 lg:py-2 ${
                 activeTab !== "upcoming"
                   ? "bg-[#1e1e1e] text-white"
                   : "bg-gray-100 text-gray-800"
@@ -133,7 +133,7 @@ const ProjectPage = () => {
               Upcoming Livestreams
             </button>
             <button
-              className={`px-4 py-2 ${
+              className={`lg:px-4 px-2 py-1 lg:py-2 ${
                 activeTab !== "past"
                   ? "bg-[#1e1e1e] text-white"
                   : "bg-gray-100 text-gray-800"
@@ -155,7 +155,7 @@ const ProjectPage = () => {
         </div>
 
         {activeTab === "upcoming" ? (
-          <div className="grid grid-cols-3 w-full gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-6">
             {livestreams
               .filter((item) => item.status.toLocaleLowerCase() == "live" || item.status.toLocaleLowerCase() == "scheduled")
               .map((livestream) => (
@@ -163,7 +163,7 @@ const ProjectPage = () => {
               ))}
           </div>
         ) : (
-          <div className="grid grid-cols-3 w-full gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-6">
             {livestreams
               .filter((item) => item.status.toLocaleLowerCase() == "ended")
               .map((livestream) => (

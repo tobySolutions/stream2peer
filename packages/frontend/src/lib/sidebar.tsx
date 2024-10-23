@@ -13,8 +13,8 @@ function Sidebar() {
   };
 
   return (
-    <aside className="fixed w-[20%] top-0 bottom-0 left-0 right-0 px-5 mt-[57px] pt-8 h-full bg-[#1e1e1e]  border-r-0 border-[hsl(155,6%,42.5%)] md:flex md:flex-col md:gap-5 md:border-r">
-      <ul className="list-none p-0 flex flex-col gap-5  md:w-full md:justify-between">
+    <aside className="fixed hidden w-[20%] top-0 bottom-0 left-0 right-0 px-5 mt-[57px] pt-8 h-full bg-[#1e1e1e]  border-r-0 border-[hsl(155,6%,42.5%)] md:flex md:flex-col md:gap-5 md:border-r">
+      <ul className="list-none p-0 md:flex flex-col gap-5  md:w-full md:justify-between">
         {navItems.map((item) => (
           <li
             key={item.value}

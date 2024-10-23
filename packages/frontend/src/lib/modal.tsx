@@ -7,17 +7,21 @@ const Modal = ({ isOpen, onClose, title, children }: {isOpen: boolean, onClose: 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 md:max-w-[550px] rounded-lg shadow-lg max-w-sm w-full relative">
+      <div className="bg-white max-h-[550px] overflow-y-auto px-6 pb-6 md:max-w-[550px] rounded-lg shadow-lg max-w-sm w-full relative">
         {/* Modal Close Button */}
         <button
-          className="absolute top-3 right-4 text-gray-500 hover:text-gray-800"
+          className="absolute z-20 top-3 right-4 text-gray-500 hover:text-gray-800"
           onClick={onClose}
         >
-          <GrClose size={22}/>
+          <GrClose size={22} />
         </button>
 
         {/* Modal Title */}
-        {title && <h2 className="text-xl font-bold mb-4">{title}</h2>}
+        {title && (
+          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white ">
+            {title}
+          </h2>
+        )}
 
         {/* Modal Content */}
         <div className="mb-4">{children}</div>
@@ -27,7 +31,7 @@ const Modal = ({ isOpen, onClose, title, children }: {isOpen: boolean, onClose: 
           className="bg-red-500 text-white px-4 py-2 rounded"
           onClick={onClose}
         >
-          Close
+          Submit
         </button>
       </div>
     </div>
