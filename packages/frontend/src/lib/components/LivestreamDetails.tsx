@@ -19,12 +19,12 @@ const LivestreamDetails = ({ livestreamId }: { livestreamId: string | undefined 
 
   return (
     <div className="rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4 text-[#fff6ff]">
+      <h2 className="text-xl font-bold mb-4 text-primary-white">
         {livestream.title}
       </h2>
-      <p className="text-[#fff6ff] mb-2">Date: {livestream.date}</p>
-      <p className="text-[#fff6ff] mb-2">Status: {livestream.status}</p>
-      <p className="text-[#fff6ff] mb-2">
+      <p className="text-primary-white mb-2">Date: {livestream.date}</p>
+      <p className="text-primary-white mb-2">Status: {livestream.status}</p>
+      <p className="text-primary-white mb-2">
         Share URL:{" "}
         <a href={livestream.shareUrl} className="text-blue-500 hover:underline">
           {livestream.shareUrl}

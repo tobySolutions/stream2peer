@@ -77,7 +77,7 @@ function Projects() {
                 />
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-gray-400"
+                  className="bg-orange-500 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
                   disabled={
                     emails.length >= 3 ||
                     !inputEmail ||
@@ -103,7 +103,7 @@ function Projects() {
                   <span className="text-[14px]">{email}</span>
                   <button
                     onClick={() => handleDeleteEmail(email)}
-                    className="text-red-500 hover:text-red-700 font-bold"
+                    className="text-orange-500 hover:text-orange-700 font-bold"
                   >
                     <FaRegTrashCan />
                   </button>
@@ -116,10 +116,10 @@ function Projects() {
       />
       <div className="container p-4">
         <div className="flex w-full items-center justify-between flex-wrap gap-2">
-          <p className="text-[#fff6ff] text-[32px]">Projects</p>
+          <p className="text-primary-white text-[32px]">Projects</p>
           <button
             onClick={() => setModalOpen(true)}
-            className="bg-[#1e1e1e] flex items-center gap-1 text-white px-4 py-2 rounded hover:bg-[#1e1e1e] border border-[hsl(155,6%,42.5%)] text-[14px] transition"
+            className="bg-dark-gray flex items-center gap-1 text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[14px] transition"
           >
             <IoAddSharp size={18} /> Add New Project
           </button>

@@ -121,11 +121,11 @@ const ProjectPage = () => {
         </h1>
 
         <div className="mb-4 flex flex-wrap-reverse gap-4 justify-between items-center w-full">
-          <div className="flex rounded-lg overflow-hidden border border-[hsl(155,6%,42.5%)]">
+          <div className="flex rounded-lg overflow-hidden border border-primary-border">
             <button
               className={`lg:px-4 px-2 text-[14px] lg:text-[16px] py-1 lg:py-2 ${
                 activeTab !== "upcoming"
-                  ? "bg-[#1e1e1e] text-white"
+                  ? "bg-dark-gray text-white"
                   : "bg-gray-100 text-gray-800"
               }`}
               onClick={() => setActiveTab("upcoming")}
@@ -135,7 +135,7 @@ const ProjectPage = () => {
             <button
               className={`lg:px-4 px-2 py-1 lg:py-2 ${
                 activeTab !== "past"
-                  ? "bg-[#1e1e1e] text-white"
+                  ? "bg-dark-gray text-white"
                   : "bg-gray-100 text-gray-800"
               }`}
               onClick={() => setActiveTab("past")}
@@ -146,7 +146,7 @@ const ProjectPage = () => {
 
           <div>
             <button
-              className="bg-[#1e1e1e] text-white px-4 py-2 rounded hover:bg-[#1e1e1e] border border-[hsl(155,6%,42.5%)] text-[14px] transition"
+              className="bg-dark-gray text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[14px] transition"
               onClick={() => setModalOpen(true)}
             >
               Create New Livestream
