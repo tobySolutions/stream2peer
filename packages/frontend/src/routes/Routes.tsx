@@ -3,6 +3,7 @@ import Home from "./home";
 import Login from "./login";
 import DashboardHome from "./dashboard/home";
 import Projects from "./dashboard/projects";
+import SignUp from "./signup";
 import ProjectPage from "./dashboard/projects/[id]";
 import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
 import { DemoPlayer } from "./dashboard/livestream";
@@ -31,6 +32,7 @@ export default function Routes() {
     <BaseRoutes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/dashboard">
         <Route index element={<DashboardHome />} />
         <Route path="projects" element={<Projects />} />

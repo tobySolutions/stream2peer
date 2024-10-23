@@ -15,7 +15,7 @@ const defaultFormValues = {
   password: "",
 };
 
-function Login() {
+function SignUp() {
   const [formValues, setFormValues] = useState<FormValuesType>({
     ...defaultFormValues,
   });
@@ -67,7 +67,38 @@ function Login() {
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
         >
           <div className="rounded-[8px] border border-[#313538] px-[2.5rem] py-[3rem] md:px-[4rem]">
-            <div className="my-[.6rem] lg:mt-[1.3rem]  text-white text-[15px]">
+            <div className="flex flex-col space-y-4">
+              <button
+                type="button"
+                onClick={handleGoogleSignIn}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                <FaGoogle className="mr-2" />
+                Sign up with Google
+              </button>
+              <button
+                type="button"
+                onClick={handleGitHubSignIn}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                <FaGithub className="mr-2" />
+                Sign up with GitHub
+              </button>
+              <button
+                type="button"
+                onClick={handleMetaMaskSignIn}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+              >
+                <MetaMaskIcon className="mr-2" />
+                Sign up with MetaMask
+              </button>
+            </div>
+
+            <div className="text-center text-white my-5">
+              <span>or</span>
+            </div>
+
+            <div className="my-[.6rem] text-white text-[15px]">
               <Input
                 type="email"
                 name="email"
@@ -78,7 +109,7 @@ function Login() {
                 label="Email address"
               />
             </div>
-            <div className="my-[.6rem] lg:my-[1.3rem]  text-white text-[15px]">
+            <div className="my-[.6rem] text-white text-[15px]">
               <Input
                 type="password"
                 name="password"
@@ -93,42 +124,11 @@ function Login() {
 
             <Button className="w-full text-[1rem] my-[.8rem]" />
 
-            <div className="text-center text-white my-5">
-              <span>or</span>
-            </div>
-
-            <div className="flex flex-col space-y-4">
-              <button
-                type="button"
-                onClick={handleGoogleSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-              >
-                <FaGoogle className="mr-2" />
-                Sign in with Google
-              </button>
-              <button
-                type="button"
-                onClick={handleGitHubSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-              >
-                <FaGithub className="mr-2" />
-                Sign in with GitHub
-              </button>
-              <button
-                type="button"
-                onClick={handleMetaMaskSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-              >
-                <MetaMaskIcon className="mr-2" />
-                Sign in with MetaMask
-              </button>
-            </div>
-
             <div className="my-[.8rem] text-white text-[15px] text-center">
               <span>
-                Don't have an account?{" "}
-                <a href="/signup/" className="text-yellow-dark-9">
-                  Sign Up
+                Already have an account?{" "}
+                <a href="/login/" className="text-yellow-dark-9">
+                  Log In
                 </a>
               </span>
             </div>
@@ -139,4 +139,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;
