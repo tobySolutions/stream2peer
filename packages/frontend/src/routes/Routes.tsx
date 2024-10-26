@@ -11,13 +11,13 @@ import { getSrc } from "@livepeer/react/external";
 import { Livepeer } from "livepeer";
 
 export default function Routes() {
-  const playbackId = "f5eese9wwl88k4g8";
+  const playbackId = import.meta.env.VITE_PLAYBACK_URL;
 
   const livepeer = new Livepeer({
-    apiKey: "f5eese9wwl88k4g8",
+    apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
   });
 
-  const getPlaybackSource = async() => {
+  const getPlaybackSource = async () => {
     const playbackInfo = await livepeer.playback.get(playbackId);
 
     const src = getSrc(playbackInfo.playbackInfo);
@@ -26,7 +26,6 @@ export default function Routes() {
   };
 
   // const src = await getPlaybackSource();
-
 
   return (
     <BaseRoutes>
