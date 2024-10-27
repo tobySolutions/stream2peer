@@ -15,12 +15,18 @@ export const colors = {
   "yellow-dark-10": "#FFFF57",
   "yellow-dark-11": "#F5E147",
   "yellow-dark-12": "#F6EEB4",
+  "dark-gray": "#1e1e1e",
+  "primary-white": "#fff6ff",
+  "primary-border": "hsl(155,6%,42.5%)",
 };
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        montserrat: ["montserrat", "sans-serif"]
+      },
       keyframes: {
         slideUp: {
           "0%": { transform: "translateY(80px)", opacity: 0 },
