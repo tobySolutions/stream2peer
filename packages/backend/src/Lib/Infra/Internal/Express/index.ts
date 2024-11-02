@@ -75,6 +75,7 @@ export default class Express {
   }
 
   #attachErrorHandlers() {
+    // https://www.codeconcisely.com/posts/how-to-handle-errors-in-express-with-typescript/
 
     this.app.use(
       (err: Error, req: Request, res: Response, next: NextFunction) => {

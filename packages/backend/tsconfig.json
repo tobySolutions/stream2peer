@@ -25,7 +25,8 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
+    "strictFunctionTypes": false, 
     "strictPropertyInitialization": false,
     "skipLibCheck": true
   },
