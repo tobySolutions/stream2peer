@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
-import cors from "cors";
+// import cors from "cors";
 import helmet from "helmet";
 import { expressConfig } from "Config//expressConfig";
 import {
@@ -51,13 +51,13 @@ export default class Express {
   #attachMiddlewares() {
     this.app.use(bodyParser.urlencoded({ extended: false }));
 
-    this.app.use(helmet());
+    // this.app.use(helmet());
     this.app.use(express.json());
-    this.app.use(
-      cors({
-        origin: Express.getCorsWhiteList() as string[],
-      })
-    );
+    // this.app.use(
+    //   cors({
+    //     origin: Express.getCorsWhiteList() as string[],
+    //   })
+    // );
     this.loggingProvider.info(MIDDLEWARE_ATTACHED);
   }
 
@@ -70,9 +70,9 @@ export default class Express {
     this.loggingProvider.info(ROUTES_ATTACHED);
   }
 
-  public static getCorsWhiteList(): Array<string> {
-    return expressConfig.corsWhitelist;
-  }
+  // public static getCorsWhiteList(): Array<string> {
+  //   return expressConfig.corsWhitelist;
+  // }
 
   #attachErrorHandlers() {
 

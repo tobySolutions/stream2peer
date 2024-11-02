@@ -3,13 +3,29 @@ import { IoAddSharp } from "react-icons/io5";
 import Layout from "../layout";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Modal from "../../../lib/modal";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FetchAllProjects } from "../../../network/projects/projects";
+import { StateContext } from "../../../context";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
   const [emails, setEmails] = useState<string[]>([]);
   const [inputEmail, setInputEmail] = useState("");
+  
+  const {setProjectData, ProjectsData} = useContext(StateContext);
 
+  const getAllProjects = async () => {
+    try {
+      const res = await FetchAllProjects();
+      console.log(res);
+      setProjectData(res?.results?.data)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getAllProjects();
+  }, []);
   const projects = [
     { id: "1", name: "First Project", description: "Lorem Ipsum" },
     { id: "2", name: "First Project", description: "Lorem Ipsum" },
@@ -125,7 +141,7 @@ function Projects() {
           </button>
         </div>
         <div className="grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
-          {projects.map((project) => (
+          {ProjectsData.map((project) => (
             <ProjectCard project={project} />
           ))}
         </div>
