@@ -141,7 +141,7 @@ function Projects() {
           </button>
         </div>
         <div className="grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
-          {ProjectsData.map((project) => (
+          {ProjectsData?.map((project) => (
             <ProjectCard project={project} />
           ))}
         </div>
