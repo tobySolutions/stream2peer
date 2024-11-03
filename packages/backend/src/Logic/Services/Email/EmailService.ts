@@ -43,6 +43,10 @@ export class EmailService {
     await emailProvider.sendEmail(passwordResetEmailArgs);
   }
 
+  public static sendEmail() {
+    throw new Error("Method not implemented");
+  }
+
   public static async sendProjectInviteLink(
     sendProjectInviteLinkArgs: SendProjectInviteLinkDtoType
   ) {
@@ -61,11 +65,22 @@ export class EmailService {
     await emailProvider.sendEmail(projectInviteEmailArgs);
   }
 
-  public static sendEmail() {
-    throw new Error("Method not implemented");
-  }
-
-  public static sendBulkEmail() {
-    throw new Error("Method not implemented");
+public static async sendBulkProjectInviteLink(sendBulkProjectInviteLinkArgs: SendProjectInviteLinkDtoType[]) {
+    const users = sendBulkProjectInviteLinkArgs;
+    const emailProvider = EmailProviderFactory.build();
+  
+    const emailPromises = users.map(({ userId, projectInviteLink }) => {
+      const emailTemplate = TemplateService.getProjectInvitationTemplate(projectInviteLink);
+  
+      const projectInviteEmailArgs: SendEmailArgs = {
+        body: emailTemplate,
+        subject: PROJECT_INVITE_LINK,
+        to: userId,
+      };
+  
+      return emailProvider.sendEmail(projectInviteEmailArgs);
+    });
+  
+    await Promise.all(emailPromises);
   }
 }

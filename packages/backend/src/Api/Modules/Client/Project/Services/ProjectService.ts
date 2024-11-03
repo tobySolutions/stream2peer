@@ -164,20 +164,24 @@ class ProjectService {
    * Sends an invitation Email to Peer to Join Project
    */
   public async sendProjectInvite(
-    userId: string,
+    users: ProjectPeer[],
     projectId: string,
-    role: ProjectRole,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     queryRunner?: QueryRunner
   ) {
-    const token = JwtHelper.generateInviteToken({
-      userId,
-      projectId,
-      role,
+    const projectInviteLinks = users.map(({ userId, role }) => {
+      const token = JwtHelper.generateInviteToken({
+        userId,
+        projectId,
+        role,
+      });
+  
+      return {
+        userId,
+        projectInviteLink: `${businessConfig.projectInviteLink}/project-invite/${projectId}?token=${token}`
+      };
     });
-
-    const projectInviteLink = `${businessConfig.projectInviteLink}/project-invite/${projectId}?token=${token}`;
-
+  
     // Create an invitation record in the system
     // save data to notifications table
     /*const projectInvitation = await ProjectService.createInvitation({
@@ -185,14 +189,14 @@ class ProjectService {
         userId,
         queryRunner,
     });*/
-
-    await EmailService.sendProjectInviteLink(
-      {
-        userId,
-        projectInviteLink
-      }
-    )
-  }
+  
+    if (users.length === 1) {
+      await EmailService.sendProjectInviteLink(projectInviteLinks[0]);
+    } else {
+      await EmailService.sendBulkProjectInviteLink(projectInviteLinks);
+    }
+}
+  
 
   /**
    * Adds a user as a peer to a project (peer_ids and peer_roles).

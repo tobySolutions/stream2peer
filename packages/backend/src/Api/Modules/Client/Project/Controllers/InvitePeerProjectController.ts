@@ -20,7 +20,7 @@ class ProjectInviteController {
     await queryRunner.startTransaction();
     try {
       const user = (request as AuthRequest).authAccount;
-      const { role, userId } = request.body;
+      const { users } = request.body;
       const { projectId } = request.params;
 
       const isAuthorized = await ProjectService.getProjectOwnerId(projectId) === user.userId;
@@ -34,9 +34,8 @@ class ProjectInviteController {
       }
 
       await ProjectService.sendProjectInvite(
-        userId,
+        users,
         projectId,
-        role,
         queryRunner,
       )
 
