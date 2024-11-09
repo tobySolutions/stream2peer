@@ -1,8 +1,8 @@
-import ApplicationError from "Api/Modules/Common/Exceptions/ApplicationError";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import ApplicationError from 'Api/Modules/Common/Exceptions/ApplicationError';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 export class UnauthenticatedError extends ApplicationError {
-  constructor(description = "Not Authenticated") {
+  constructor(description = 'Not Authenticated') {
     super({
       description,
       httpStatusCode: HttpStatusCodeEnum.UNAUTHENTICATED,

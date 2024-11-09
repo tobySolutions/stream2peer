@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
-import StreamService from "Api/Modules/Client/Stream/Services/StreamService";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
+import StreamService from 'Api/Modules/Client/Stream/Services/StreamService';
 import {
   ERROR,
   SUCCESS,
   RESOURCE_NOT_FOUND,
   INFORMATION_UPDATED,
   NULL_OBJECT,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 
 const dbContext = container.resolve(DbContext);
 
@@ -21,9 +21,12 @@ class ActivateStreamController {
     try {
       const { streamId } = request.params;
 
-      const activatedStream = await StreamService.activateStream(streamId, queryRunner);
+      const activatedStream = await StreamService.activateStream(
+        streamId,
+        queryRunner,
+      );
 
-      if (activatedStream==NULL_OBJECT) {
+      if (activatedStream == NULL_OBJECT) {
         await queryRunner.rollbackTransaction();
         return response.status(HttpStatusCodeEnum.NOT_FOUND).json({
           status_code: HttpStatusCodeEnum.NOT_FOUND,
@@ -40,13 +43,16 @@ class ActivateStreamController {
         message: INFORMATION_UPDATED,
       });
     } catch (ActivateStreamControllerError) {
-      console.error("ActivateStreamController.handle ActivateStreamControllerError:", ActivateStreamControllerError);
+      console.error(
+        'ActivateStreamController.handle ActivateStreamControllerError:',
+        ActivateStreamControllerError,
+      );
       await queryRunner.rollbackTransaction();
 
       return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,
-        message: "An error occurred while activating the stream.",
+        message: 'An error occurred while activating the stream.',
       });
     }
   }

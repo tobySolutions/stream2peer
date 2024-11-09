@@ -1,6 +1,6 @@
-import { IPaymentProviderDriver } from "Lib/Infra/External/Payment/TypeChecking/IPaymentProviderDriver";
-import { InitializeTransactionDto } from "Lib/Infra/External/Payment/TypeChecking/InitializeTransactionDto";
-import { VerifyTransactionDto } from "Lib/Infra/External/Payment/TypeChecking/VerifyTransactionDto";
+import { IPaymentProviderDriver } from 'Lib/Infra/External/Payment/TypeChecking/IPaymentProviderDriver';
+import { InitializeTransactionDto } from 'Lib/Infra/External/Payment/TypeChecking/InitializeTransactionDto';
+import { VerifyTransactionDto } from 'Lib/Infra/External/Payment/TypeChecking/VerifyTransactionDto';
 
 export class PaymentProvider {
   private driver: IPaymentProviderDriver;
@@ -10,7 +10,7 @@ export class PaymentProvider {
   }
 
   public async initiateTransaction(
-    initializeTransactionDto: InitializeTransactionDto
+    initializeTransactionDto: InitializeTransactionDto,
   ) {
     return this.driver.initializeTransaction(initializeTransactionDto);
   }

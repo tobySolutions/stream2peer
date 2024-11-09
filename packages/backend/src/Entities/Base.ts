@@ -4,14 +4,14 @@ import {
   Generated,
   CreateDateColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
 export abstract class BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  @Generated("uuid")
+  @Generated('uuid')
   identifier: string;
 
   @CreateDateColumn()

@@ -1,14 +1,14 @@
-import { autoInjectable } from "tsyringe";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { AuthAccount } from "Api/Modules/Client/Authentication/Entities/AuthAccount";
-import { NULL_OBJECT } from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { DateTime } from "luxon";
-import { Repository } from "typeorm";
+import { autoInjectable } from 'tsyringe';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { AuthAccount } from 'Api/Modules/Client/Authentication/Entities/AuthAccount';
+import { NULL_OBJECT } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { DateTime } from 'luxon';
+import { Repository } from 'typeorm';
 import {
   CreateAuthAccountRecordDto,
   UpdateAuthAccountRecordArgs,
-} from "Api/Modules/Client/Authentication/TypeChecking/AuthAccount";
-import { AuthAccountType } from "../TypeChecking/AuthAccount";
+} from 'Api/Modules/Client/Authentication/TypeChecking/AuthAccount';
+import { AuthAccountType } from '../TypeChecking/AuthAccount';
 
 @autoInjectable()
 class AuthAccountService {
@@ -16,13 +16,14 @@ class AuthAccountService {
 
   constructor(private dbContext?: DbContext) {
     this.authAccountRepository = dbContext?.getEntityRepository(
-      AuthAccount
+      AuthAccount,
     ) as Repository<AuthAccount>;
   }
 
-  public async createAuthAccountRecord(createAuthAccountRecordArgs: CreateAuthAccountRecordDto) {
-    const { userId, authProvider, queryRunner } =
-      createAuthAccountRecordArgs;
+  public async createAuthAccountRecord(
+    createAuthAccountRecordArgs: CreateAuthAccountRecordDto,
+  ) {
+    const { userId, authProvider, queryRunner } = createAuthAccountRecordArgs;
     const newAuthAccountData = {
       userId,
       authProvider,
@@ -43,17 +44,21 @@ class AuthAccountService {
     });
   }
 
-  public async getAuthAccountByUserId(userId: string): Promise<AuthAccount | null> {
+  public async getAuthAccountByUserId(
+    userId: string,
+  ): Promise<AuthAccount | null> {
     if (!userId) {
-      console.log("Error: userId is undefined or empty.");
+      console.log('Error: userId is undefined or empty.');
       return NULL_OBJECT;
     }
-  
+
     const authAccount = await this.authAccountRepository.findOneBy({ userId });
     return authAccount || NULL_OBJECT;
   }
 
-  public async getAuthAccountsByAuthProvider(authProvider: AuthAccountType ): Promise<AuthAccount | null> {
+  public async getAuthAccountsByAuthProvider(
+    authProvider: AuthAccountType,
+  ): Promise<AuthAccount | null> {
     const authAccount = await this.authAccountRepository.findOneBy({
       auth_provider: authProvider,
     });
@@ -61,7 +66,9 @@ class AuthAccountService {
     return authAccount || NULL_OBJECT;
   }
 
-  public async updateAuthAccountRecord(updateAuthAccountRecordArgs: UpdateAuthAccountRecordArgs) {
+  public async updateAuthAccountRecord(
+    updateAuthAccountRecordArgs: UpdateAuthAccountRecordArgs,
+  ) {
     const { userId, updateAuthAccountPayload } = updateAuthAccountRecordArgs;
 
     const authAccount = await this.getAuthAccountByUserId(userId);
@@ -88,7 +95,7 @@ class AuthAccountService {
   public async updateAuthAccountLastLoginDate(userId: string) {
     const updateAuthAccountRecordArgs: UpdateAuthAccountRecordArgs = {
       userId,
-      identifierType: "userId",
+      identifierType: 'userId',
       updateAuthAccountPayload: {
         lastLoginDate: DateTime.now(),
       },

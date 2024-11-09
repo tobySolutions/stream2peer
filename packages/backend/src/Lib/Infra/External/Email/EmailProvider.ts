@@ -2,7 +2,7 @@ import {
   IEmailDriver,
   SendBulkEmailArgs,
   SendEmailArgs,
-} from "Lib/Infra/External/Email/TypeSetting";
+} from 'Lib/Infra/External/Email/TypeSetting';
 
 export class EmailProvider {
   constructor(private emailDriver: IEmailDriver) {}
@@ -12,8 +12,8 @@ export class EmailProvider {
       await this.emailDriver.sendEmail(sendMailArgs);
     } catch (sendEmailError) {
       console.log(
-        "💣 EmailProvider.sendEmail sendEmailError ->",
-        sendEmailError
+        '💣 EmailProvider.sendEmail sendEmailError ->',
+        sendEmailError,
       );
     }
   }

@@ -1,11 +1,10 @@
 export enum ProjectRole {
-    HOST = "Host",
-    CO_HOST = "co-Host",
-    SUBSCRIBER = "Subscriber",
+  HOST = 'Host',
+  CO_HOST = 'co-Host',
+  SUBSCRIBER = 'Subscriber',
 }
 
 export type ProjectPeer = {
-    userId: string;
-    role: ProjectRole;
+  userId: string;
+  role: ProjectRole;
 };
-  

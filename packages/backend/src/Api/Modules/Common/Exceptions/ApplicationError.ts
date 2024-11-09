@@ -1,4 +1,4 @@
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 interface ApplicationErrorArgs {
   httpStatusCode: HttpStatusCodeEnum;

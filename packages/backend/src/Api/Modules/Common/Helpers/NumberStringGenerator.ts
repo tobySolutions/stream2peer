@@ -1,16 +1,16 @@
-import randomstring from "randomstring";
-import { RandomStringGeneratorDto } from "Api/Modules/Common/TypeChecking/GeneralPurpose/RandomStringGeneratorDto";
+import randomstring from 'randomstring';
+import { RandomStringGeneratorDto } from 'Api/Modules/Common/TypeChecking/GeneralPurpose/RandomStringGeneratorDto';
 
 export function NumberStringGenerator(
-  randomStringGeneratorDto: RandomStringGeneratorDto
+  randomStringGeneratorDto: RandomStringGeneratorDto,
 ): string {
   const {
     characterLength,
     isCapitalized = false,
-    outputOption = "alphanumeric",
+    outputOption = 'alphanumeric',
   } = randomStringGeneratorDto;
 
-  if (outputOption === "numeric") {
+  if (outputOption === 'numeric') {
     return randomstring.generate({
       length: characterLength,
       charset: outputOption,
@@ -20,6 +20,6 @@ export function NumberStringGenerator(
   return randomstring.generate({
     length: characterLength,
     charset: outputOption,
-    capitalization: isCapitalized ? "uppercase" : "lowercase",
+    capitalization: isCapitalized ? 'uppercase' : 'lowercase',
   });
 }

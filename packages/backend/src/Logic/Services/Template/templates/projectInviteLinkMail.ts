@@ -11,4 +11,3 @@ const projectInviteLinkEmail = `
 `;
 
 export default projectInviteLinkEmail;
-

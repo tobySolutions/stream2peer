@@ -1,22 +1,22 @@
-import express, { NextFunction, Request, Response } from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
-import helmet from "helmet";
-import { expressConfig } from "Config//expressConfig";
+import express, { NextFunction, Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import helmet from 'helmet';
+import { expressConfig } from 'Config//expressConfig';
 import {
   ILoggingDriver,
   LoggingProviderFactory,
-} from "Lib/Infra/Internal/Logging";
-import "express-async-errors";
-import routes from "Api/Routes";
-import { errorHandler } from "Api/Modules/Common/Exceptions/ErrorHandler";
+} from 'Lib/Infra/Internal/Logging';
+import 'express-async-errors';
+import routes from 'Api/Routes';
+import { errorHandler } from 'Api/Modules/Common/Exceptions/ErrorHandler';
 import {
   MIDDLEWARE_ATTACHED,
   MySQLDB_CONNECTED,
   MySQLDB_CONNECTION_ERROR,
   ROUTES_ATTACHED,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
 
 export default class Express {
   app: express.Express;
@@ -37,8 +37,8 @@ export default class Express {
       })
       .catch((MySQLDBConnectionError) => {
         console.log(
-          "🚀 ~ Express. MySQLDBConnectionError ->",
-          MySQLDBConnectionError
+          '🚀 ~ Express. MySQLDBConnectionError ->',
+          MySQLDBConnectionError,
         );
         this.loggingProvider.error(MySQLDB_CONNECTION_ERROR);
       });
@@ -56,7 +56,7 @@ export default class Express {
     this.app.use(
       cors({
         origin: Express.getCorsWhiteList() as string[],
-      })
+      }),
     );
     this.loggingProvider.info(MIDDLEWARE_ATTACHED);
   }
@@ -66,7 +66,7 @@ export default class Express {
   }
 
   #attachRouters() {
-    this.app.use("/Interface", routes);
+    this.app.use('/Interface', routes);
     this.loggingProvider.info(ROUTES_ATTACHED);
   }
 
@@ -82,14 +82,14 @@ export default class Express {
         console.log(err);
         this.loggingProvider.error(err.message);
         next(err);
-      }
+      },
     );
 
     this.app.use(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (err: Error, req: Request, res: Response, next: NextFunction) => {
         errorHandler.handleError(err, res);
-      }
+      },
     );
   }
 }

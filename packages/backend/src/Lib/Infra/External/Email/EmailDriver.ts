@@ -1,11 +1,11 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 import {
   IEmailDriver,
   SendBulkEmailArgs,
   SendEmailArgs,
-} from "Lib/Infra/External/Email/";
-import { emailConfig } from "Config/emailConfig";
+} from 'Lib/Infra/External/Email/';
+import { emailConfig } from 'Config/emailConfig';
 
 export class EmailDriver implements IEmailDriver {
   private transporter: nodemailer.Transporter;
@@ -67,13 +67,13 @@ export class EmailDriver implements IEmailDriver {
     await null;
   }
 
-  public async sendEmail({ to, subject, body }:SendEmailArgs) {
+  public async sendEmail({ to, subject, body }: SendEmailArgs) {
     const htmlContent = `<h3>${body}</h3>`;
     const senderDetails = {
       email: emailConfig.emailFromEmail,
       name: emailConfig.emailFromName,
     };
-  
+
     if (this.transporter) {
       await this.transporter.sendMail({
         from: `${senderDetails.name} <${senderDetails.email}>`,
@@ -85,7 +85,4 @@ export class EmailDriver implements IEmailDriver {
       throw new Error('No valid email provider configured');
     }
   }
-
 }
-
-

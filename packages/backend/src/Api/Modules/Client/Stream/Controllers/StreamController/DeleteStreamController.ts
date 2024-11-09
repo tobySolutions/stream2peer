@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import StreamService from "Api/Modules/Client/Stream/Services/StreamService";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import StreamService from 'Api/Modules/Client/Stream/Services/StreamService';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import {
   ERROR,
   SOMETHING_WENT_WRONG,
@@ -10,7 +10,7 @@ import {
   NULL_OBJECT,
   RESOURCE_DELETED_SUCCESSFULLY,
   RESOURCE_NOT_FOUND,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 
 const dbContext = container.resolve(DbContext);
 
@@ -40,7 +40,10 @@ class DeleteStreamController {
         message: RESOURCE_DELETED_SUCCESSFULLY,
       });
     } catch (DeleteStreamError) {
-      console.error("DeleteStreamController.handle DeleteStreamError:", DeleteStreamError);
+      console.error(
+        'DeleteStreamController.handle DeleteStreamError:',
+        DeleteStreamError,
+      );
       await queryRunner.rollbackTransaction();
 
       return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({

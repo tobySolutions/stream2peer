@@ -1,17 +1,17 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import {
   ERROR,
   NULL_OBJECT,
   PROJECT_RESOURCE,
   SOMETHING_WENT_WRONG,
   SUCCESS,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { AuthRequest } from "TypeChecking/GeneralPurpose/AuthRequest";
-import ProjectService from "Api/Modules/Client/Project/Services/ProjectService";
-import { RESOURCE_RECORD_NOT_FOUND } from "Api/Modules/Common/Helpers/Messages/SystemMessageFunctions";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { AuthRequest } from 'TypeChecking/GeneralPurpose/AuthRequest';
+import ProjectService from 'Api/Modules/Client/Project/Services/ProjectService';
+import { RESOURCE_RECORD_NOT_FOUND } from 'Api/Modules/Common/Helpers/Messages/SystemMessageFunctions';
 
 const dbContext = container.resolve(DbContext);
 
@@ -39,11 +39,11 @@ class DeleteProjectController {
         return response.status(HttpStatusCodeEnum.FORBIDDEN).json({
           status_code: HttpStatusCodeEnum.FORBIDDEN,
           status: ERROR,
-          message: "You are not authorized to delete this project.",
+          message: 'You are not authorized to delete this project.',
         });
       }
 
-      await ProjectService.deleteProject(projectId,queryRunner);
+      await ProjectService.deleteProject(projectId, queryRunner);
 
       await queryRunner.commitTransaction();
 
@@ -53,8 +53,8 @@ class DeleteProjectController {
       });
     } catch (DeleteProjectControllerError) {
       console.log(
-        "🚀 ~ DeleteProjectController.handle DeleteProjectControllerError ->",
-        DeleteProjectControllerError
+        '🚀 ~ DeleteProjectController.handle DeleteProjectControllerError ->',
+        DeleteProjectControllerError,
       );
 
       return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({

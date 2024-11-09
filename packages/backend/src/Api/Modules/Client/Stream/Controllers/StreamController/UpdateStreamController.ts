@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import StreamService from "Api/Modules/Client/Stream/Services/StreamService";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import StreamService from 'Api/Modules/Client/Stream/Services/StreamService';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import {
   ERROR,
   SOMETHING_WENT_WRONG,
   SUCCESS,
   INFORMATION_UPDATED,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 
 const dbContext = container.resolve(DbContext);
 
@@ -19,10 +19,14 @@ class UpdateStreamController {
 
     try {
       const { streamId } = request.params;
-      const { title, description } = request.body; 
+      const { title, description } = request.body;
       const updateData = { title, description };
 
-      const stream = await StreamService.updateStream(streamId, updateData, queryRunner);
+      const stream = await StreamService.updateStream(
+        streamId,
+        updateData,
+        queryRunner,
+      );
 
       await queryRunner.commitTransaction();
 
@@ -33,7 +37,10 @@ class UpdateStreamController {
         results: stream,
       });
     } catch (UpdateStreamControllerError) {
-      console.error("UpdateStreamController.handle UpdateStreamError:", UpdateStreamControllerError);
+      console.error(
+        'UpdateStreamController.handle UpdateStreamError:',
+        UpdateStreamControllerError,
+      );
       await queryRunner.rollbackTransaction();
 
       return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({

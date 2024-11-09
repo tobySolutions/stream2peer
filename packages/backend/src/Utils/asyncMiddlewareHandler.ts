@@ -1,5 +1,5 @@
-import { NextFunction, Response, Request } from "express";
-import { Middleware } from "TypeChecking/GeneralPurpose/Middleware";
+import { NextFunction, Response, Request } from 'express';
+import { Middleware } from 'TypeChecking/GeneralPurpose/Middleware';
 
 export const asyncMiddlewareHandler =
   (fn: Middleware) => (req: Request, res: Response, next: NextFunction) =>

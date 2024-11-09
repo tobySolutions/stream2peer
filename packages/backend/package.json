@@ -7,7 +7,7 @@
     "build": "tsc && resolve-tspaths",
     "prod": "node dist/bootstrap.js",
     "test": "jest",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d ./src/Lib/Infra/Internal/DBContext/Datasource.ts",

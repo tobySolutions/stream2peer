@@ -1,5 +1,5 @@
 export type PutRequestDto = {
-    url: string;
-    headers?: object;
-    body?: object;
-  };
+  url: string;
+  headers?: object;
+  body?: object;
+};

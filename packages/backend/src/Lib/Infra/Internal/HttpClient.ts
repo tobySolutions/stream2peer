@@ -1,8 +1,8 @@
-import axios from "axios";
-import { GetRequestDto } from "TypeChecking/GeneralPurpose/GetRequestDto";
-import { PostRequestDto } from "TypeChecking/GeneralPurpose/PostRequestDto";
-import { PutRequestDto } from "TypeChecking/GeneralPurpose/PutRequestDto";
-import { DeleteRequestDto } from "TypeChecking/GeneralPurpose/DeleteRequestDto";
+import axios from 'axios';
+import { GetRequestDto } from 'TypeChecking/GeneralPurpose/GetRequestDto';
+import { PostRequestDto } from 'TypeChecking/GeneralPurpose/PostRequestDto';
+import { PutRequestDto } from 'TypeChecking/GeneralPurpose/PutRequestDto';
+import { DeleteRequestDto } from 'TypeChecking/GeneralPurpose/DeleteRequestDto';
 
 export class HttpClient {
   public static async get(getRequestDto: GetRequestDto) {
@@ -42,20 +42,20 @@ export class HttpClient {
       const response = await axiosInstance.put(url, body);
       return response.data;
     } catch (error) {
-      console.error("PUT request error:", error);
+      console.error('PUT request error:', error);
     }
   }
 
   public static async delete(deleteRequestDto: DeleteRequestDto) {
     const { url, headers } = deleteRequestDto;
-    
+
     const axiosInstance = axios.create({ headers });
 
     try {
       const response = await axiosInstance.delete(url);
       return response.data;
     } catch (error) {
-      console.error("DELETE request error:", error);
+      console.error('DELETE request error:', error);
     }
   }
 }

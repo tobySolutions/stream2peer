@@ -1,4 +1,4 @@
 export type SendProjectInviteLinkDtoType = {
-    userId: string;
-    projectInviteLink: string;
+  userId: string;
+  projectInviteLink: string;
 };

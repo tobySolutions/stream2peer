@@ -1,1 +1,1 @@
-export * from "TypeChecking/GeneralPurpose/AuthRequest";
+export * from 'TypeChecking/GeneralPurpose/AuthRequest';

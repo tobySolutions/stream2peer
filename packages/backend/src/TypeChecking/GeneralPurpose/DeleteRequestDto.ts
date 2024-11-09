@@ -1,4 +1,4 @@
 export type DeleteRequestDto = {
-    url: string;
-    headers?: object;
+  url: string;
+  headers?: object;
 };

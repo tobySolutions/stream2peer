@@ -1,12 +1,12 @@
-import { AuthAccountType } from "../TypeChecking/AuthAccount";
+import { AuthAccountType } from '../TypeChecking/AuthAccount';
 
 export interface IAuthAccount {
-  id?: number; 
+  id?: number;
   userId: string;
   auth_provider: AuthAccountType;
   createdAt?: Date;
   updatedAt?: Date;
   identifier?: string;
-  isActive?: boolean; 
+  isActive?: boolean;
   isDeleted?: boolean;
 }

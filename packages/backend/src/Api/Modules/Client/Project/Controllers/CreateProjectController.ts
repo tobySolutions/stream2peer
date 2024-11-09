@@ -1,18 +1,15 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import ProjectService from "Api/Modules/Client/Project/Services/ProjectService";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
-import {
-  RESOURCE_RECORD_CREATED_SUCCESSFULLY,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessageFunctions";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import ProjectService from 'Api/Modules/Client/Project/Services/ProjectService';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
+import { RESOURCE_RECORD_CREATED_SUCCESSFULLY } from 'Api/Modules/Common/Helpers/Messages/SystemMessageFunctions';
 import {
   ERROR,
   SUCCESS,
   SOMETHING_WENT_WRONG,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { AuthRequest } from "TypeChecking/GeneralPurpose/AuthRequest";
-import { ProjectRole } from "../TypeChecking/ProjectRole";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { AuthRequest } from 'TypeChecking/GeneralPurpose/AuthRequest';
 
 const dbContext = container.resolve(DbContext);
 
@@ -22,11 +19,14 @@ class CreateProjectController {
 
     await queryRunner.startTransaction();
     try {
-      const { title, description, imageUrl, inviteeId } = request.body;
+      const { title, description, imageUrl, inviteeIds } = request.body;
       const user = (request as AuthRequest).authAccount;
 
-      const projectExists = await ProjectService.getProjectByTitle(title, user.userId);
-  
+      const projectExists = await ProjectService.getProjectByTitle(
+        title,
+        user.userId,
+      );
+
       if (projectExists) {
         return response.status(HttpStatusCodeEnum.CONFLICT).json({
           status_code: HttpStatusCodeEnum.CONFLICT,
@@ -43,8 +43,12 @@ class CreateProjectController {
         queryRunner,
       });
 
-      if(inviteeId){
-        await ProjectService.sendProjectInvite(inviteeId,project.identifier,ProjectRole.CO_HOST,queryRunner);
+      if (inviteeIds) {
+        await ProjectService.sendProjectInvite(
+          inviteeIds,
+          project.identifier,
+          queryRunner,
+        );
       }
 
       await queryRunner.commitTransaction();
@@ -52,13 +56,13 @@ class CreateProjectController {
       return response.status(HttpStatusCodeEnum.CREATED).json({
         status_code: HttpStatusCodeEnum.CREATED,
         status: SUCCESS,
-        message: RESOURCE_RECORD_CREATED_SUCCESSFULLY("Project"),
+        message: RESOURCE_RECORD_CREATED_SUCCESSFULLY('Project'),
         results: project,
       });
     } catch (CreateProjectControllerError) {
       console.error(
-        "🚀 ~ CreateProjectController.handle CreateProjectControllerError ->",
-        CreateProjectControllerError
+        '🚀 ~ CreateProjectController.handle CreateProjectControllerError ->',
+        CreateProjectControllerError,
       );
 
       await queryRunner.rollbackTransaction();
