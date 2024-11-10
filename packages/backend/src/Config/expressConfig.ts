@@ -1,4 +1,4 @@
-import { toArray } from 'lodash';
+import toArray from "Utils/transformString";
 
 export const expressConfig = {
   env: process.env['EXPRESS_NODE_ENV']!,

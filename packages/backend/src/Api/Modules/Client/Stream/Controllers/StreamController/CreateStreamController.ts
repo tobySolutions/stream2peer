@@ -53,7 +53,7 @@ class CreateStreamController {
         status_code: HttpStatusCodeEnum.CREATED,
         status: SUCCESS,
         message: RESOURCE_CREATED,
-        results: stream,
+        results: stream.singleView(),
       });
     } catch (CreateStreamControllerError) {
       console.error(

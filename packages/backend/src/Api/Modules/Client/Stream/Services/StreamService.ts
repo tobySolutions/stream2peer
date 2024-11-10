@@ -203,7 +203,7 @@ class StreamService {
   /**
    * Activates a stream.
    */
-  public async activateStream(
+  public async activateStream(  
     streamId: string,
     queryRunner: QueryRunner,
   ): Promise<Stream | null> {
