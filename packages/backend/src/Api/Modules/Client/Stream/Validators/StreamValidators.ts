@@ -40,11 +40,11 @@ export const AccessStreamValidator = [
 ];
 
 export const WebhookStreamValidator = [
-  body('type', 'Event type is required and should be a string')
+  body('event', 'Event type is required and should be a string')
     .isString()
-    .isIn(['stream.started', 'stream.suspended'])
-    .withMessage("Event type must be 'stream.started' or 'stream.suspended'"),
-  body('streamId', 'Stream ID should be a valid UUID')
+    .isIn(['stream.started', 'stream.idle'])
+    .withMessage("Event type must be 'stream.started' or 'stream.idle'"),
+  body('stream.id', 'Stream ID should be a valid UUID')
     .isUUID()
     .withMessage('Stream ID is required and must be a valid UUID'),
 ];

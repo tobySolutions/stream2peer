@@ -11,7 +11,6 @@ import {
   NULL_OBJECT,
 } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import { StreamStatus } from '../../../TypeChecking/StreamStatus';
-import { Stream } from '../../../Entities/Stream';
 
 const dbContext = container.resolve(DbContext);
 
@@ -21,19 +20,20 @@ class StreamEventController {
     await queryRunner.startTransaction();
 
     try {
-        const event = request.body;
-        let streamEvent:Stream;
-        switch (event.type) {
+        const streamData = request.body;
+        let streamEvent;
+        console.log(streamData.event)
+        switch (streamData.event) {
         case 'stream.started':
             streamEvent = await StreamService.updateStreamStatus(
-                event.streamId,
+                streamData.stream.id,
                 StreamStatus.LIVE,
                 queryRunner,
               );
           break;
-        case 'stream.suspended':
+        case 'stream.idle':
             streamEvent = await StreamService.updateStreamStatus(
-                event.streamId,
+              streamData.stream.id,
                 StreamStatus.SUSPENDED,
                 queryRunner,
               );

@@ -6,9 +6,9 @@
     "emitDecoratorMetadata": true,
     "noEmit": false,
     "noPropertyAccessFromIndexSignature": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "sourceMap": true,
-    "module": "commonjs",
+    "module": "Node16",
     "paths": {
       "Lib/*": ["./src/Lib/*"],
       "Utils/*": ["./src/Utils/*"],
@@ -25,8 +25,7 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
-    "strictFunctionTypes": false,
+    "strict": true,
     "strictPropertyInitialization": false,
     "skipLibCheck": true
   },

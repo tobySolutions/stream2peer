@@ -32,6 +32,7 @@ export const USER_DOES_NOT_EXIST = 'User does not exist';
 /* ----------------------------------- Object States  ------------------------------*/
 export const NULL_OBJECT = null;
 export const NOT_APPLICABLE = 'N/A';
+export const RESOURCE_NOT_CREATED = 'Resource Not Created';
 export const RESOURCE_NOT_FOUND = 'Resource Not Found';
 export const RESOURCE_CREATED = 'Resource Created Successfully';
 export const RESOURCE_DELETED_SUCCESSFULLY = 'Resource Deleted Successfully';

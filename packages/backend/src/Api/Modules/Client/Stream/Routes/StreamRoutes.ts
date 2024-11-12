@@ -20,6 +20,7 @@ import {
 } from 'Api/Modules/Client/Stream/Validators/StreamValidators';
 import { validateLivepeerSignature } from 'Api/Modules/Client/Stream/Middlewares/validateLivepeerSignature';
 import StreamEventController from '../Controllers/StreamController/WebhooksEvent/StreamEventController';
+import { AccessProjectIdentifierValidator } from '../../Project/Validators/ProjectValidators';
 
 //middleware to check if user is permitted to make changes in the project page for the streams
 //create,update,terminate and delete stream in a project.
@@ -54,8 +55,16 @@ routes.delete(
   DeleteStreamController.handle,
 );
 
+routes.post(
+  '/:projectId/Terminate/:streamId',
+  asyncMiddlewareHandler(authenticateUser),
+  AccessStreamValidator,
+  validate,
+  TerminateStreamController.handle,
+);
+
 routes.get(
-  '/:projectId/Fetch/:streamId',
+  '/:projectId/FetchByIdentifier/:streamId',
   asyncMiddlewareHandler(authenticateUser),
   AccessStreamValidator,
   validate,
@@ -65,17 +74,9 @@ routes.get(
 routes.get(
   '/:projectId/Fetch/all',
   asyncMiddlewareHandler(authenticateUser),
-  AccessStreamValidator,
+  AccessProjectIdentifierValidator,
   validate,
   FetchAllStreamsController.handle,
-);
-
-routes.post(
-  '/:projectId/Terminate/:streamId',
-  asyncMiddlewareHandler(authenticateUser),
-  AccessStreamValidator,
-  validate,
-  TerminateStreamController.handle,
 );
 
 routes.get(

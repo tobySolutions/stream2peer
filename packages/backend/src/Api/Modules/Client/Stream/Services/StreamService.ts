@@ -43,30 +43,29 @@ class StreamService {
     if (!project) return NULL_OBJECT;
 
     const stream = new Stream();
-    const playbackPolicy: PlaybackPolicy = {
+    const playBackPolicy: PlaybackPolicy = {
       ...defaultPlaybackPolicy,
       webhookContext: { projectId },
     };
 
+    const streamProfiles = profiles || defaultProfiles;
+    
     Object.assign(stream, {
       title,
       description,
       project,
-      profiles: profiles || defaultProfiles,
-      playbackPolicy,
+      profiles: JSON.stringify(streamProfiles),
+      playBackPolicy: JSON.stringify(playBackPolicy),
       schedule: scheduleDate,
     });
 
     try {
-      const createdStream = await LivepeerService.createStream(
+      await LivepeerService.createStream(
         stream,
+        streamProfiles,
+        playBackPolicy,
         platforms,
       );
-      Object.assign(stream, {
-        livepeerStreamId: createdStream?.id,
-        playbackId: createdStream?.playbackId,
-        encryptedStreamData: createdStream,
-      });
       await queryRunner.manager.save(stream);
       return stream;
     } catch (error) {

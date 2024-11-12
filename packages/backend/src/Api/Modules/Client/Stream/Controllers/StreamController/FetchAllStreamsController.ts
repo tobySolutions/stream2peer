@@ -10,7 +10,7 @@ import {
 class FetchAllStreamsController {
   public async handle(request: Request, response: Response) {
     try {
-      const { projectId } = request.query;
+      const { projectId } = request.params;
 
       if (!projectId) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
@@ -20,8 +20,8 @@ class FetchAllStreamsController {
         });
       }
 
-      const streams = await StreamService.getAllStreams(projectId as string);
-
+      const streams = await StreamService.getAllStreams(projectId);
+      console.log(streams);
       return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,

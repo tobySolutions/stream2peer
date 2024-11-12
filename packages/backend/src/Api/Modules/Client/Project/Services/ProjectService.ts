@@ -348,25 +348,23 @@ class ProjectService {
   ): Promise<{ error: string | null }> {
     const project = await queryRunner.manager.findOne(Project, {
       where: { identifier: projectId },
-      relations: ['stream_tokens'],
     });
 
-    const validTokenTypes = new Set(
-      project.stream_tokens
-        .filter((token) => token.token)
-        .map((token) => token.type),
-    );
-
-    const missingTokens = requestedPlatforms.filter(
-      (platform) => !validTokenTypes.has(platform),
-    );
-
-    if (missingTokens.length > 0) {
-      return {
-        error: `The following platforms are not authenticated for multistreaming: ${missingTokens.join(', ')}`,
-      };
-    }
-
+    if(project?.stream_tokens){
+      const validTokenTypes = new Set(
+       project?.stream_tokens
+          .filter((token) => token.token)
+          .map((token) => token.type),
+      );
+      const missingTokens = requestedPlatforms.filter(
+        (platform) => !validTokenTypes.has(platform),
+      );
+      if (missingTokens.length > 0) {
+        return {
+          error: `The following platforms are not authenticated for multistreaming: ${missingTokens.join(', ')}`,
+        };
+      }
+  }
     return { error: null };
   }
 }

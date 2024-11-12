@@ -5,6 +5,7 @@ import { AuthAccount } from 'Api/Modules/Client/Authentication/Entities/AuthAcco
 import { Project } from 'Api/Modules/Client/Project/Entities/Project';
 import { Stream } from 'Api/Modules/Client/Stream/Entities/Stream';
 import { CreateTables1729503760012 } from 'src/Migrations/1729503760012-createTables';
+import { UpdateAuthProjectStreamEntities1731363722903 } from 'src/Migrations/1731363722903-updateAuthProjectStreamEntities';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -14,6 +15,7 @@ export const AppDataSource = new DataSource({
   password: dbConfig.password,
   database: dbConfig.dbName,
   entities: [AuthAccount, Project, Stream],
-  migrations: [CreateTables1729503760012],
+  migrations: [CreateTables1729503760012,UpdateAuthProjectStreamEntities1731363722903],
+  synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
 });

@@ -3,7 +3,6 @@ import { BaseEntity } from 'Entities/Base';
 import { Project } from 'Api/Modules/Client/Project/Entities/Project';
 import { StreamStatus } from 'Api/Modules/Client/Stream/TypeChecking/StreamStatus';
 import {
-  defaultPlaybackPolicy,
   PlaybackPolicy,
   StreamProfile,
   Type,
@@ -53,10 +52,7 @@ export class Stream extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   playbackId: string;
 
-  @Column({
-    type: 'json',
-    default: defaultPlaybackPolicy,
-  })
+  @Column({ type: 'json', nullable: true })
   playBackPolicy: PlaybackPolicy;
 
   @Column({ type: 'json', nullable: true })
@@ -81,8 +77,8 @@ export class Stream extends BaseEntity {
       playbackId: this.playbackId,
       isPublic: this.playBackPolicy.type === Type.Public ? true : false,
       schedule: this.schedule,
-      profiles: this.profiles,
-      destinations: this.destinations,
+      profiles: JSON.parse(this.profiles as unknown as string),
+      destinations: JSON.parse(this.destinations as unknown as string),
       startedAt: this.startedAt,
       endedAt: this.endedAt,
     };
@@ -99,8 +95,8 @@ export class Stream extends BaseEntity {
       playbackId: this.playbackId,
       isPublic: this.playBackPolicy.type === Type.Public ? true : false,
       schedule: this.schedule,
-      profiles: this.profiles,
-      destinations: this.destinations,
+      profiles: JSON.parse(this.profiles as unknown as string),
+      destinations: JSON.parse(this.destinations as unknown as string),
       startedAt: this.startedAt,
       endedAt: this.endedAt,
     };

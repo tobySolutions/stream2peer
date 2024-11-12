@@ -1,4 +1,6 @@
-export const defaultProfiles = [
+import { StreamProfile } from "../TypeChecking/StreamData";
+
+export const defaultProfiles: StreamProfile[] = [
   {
     name: '720p',
     bitrate: 2000000,

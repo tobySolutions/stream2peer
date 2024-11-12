@@ -8,6 +8,8 @@ import {
   SOMETHING_WENT_WRONG,
   ERROR,
   SUCCESS,
+  NULL_OBJECT,
+  RESOURCE_NOT_CREATED,
 } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import ProjectService from 'Api/Modules/Client/Project/Services/ProjectService';
 
@@ -47,8 +49,16 @@ class CreateStreamController {
         queryRunner,
       );
 
-      await queryRunner.commitTransaction();
+      if (stream == NULL_OBJECT) {
+        await queryRunner.rollbackTransaction();
+        return response.status(HttpStatusCodeEnum.NOT_FOUND).json({
+          status_code: HttpStatusCodeEnum.NOT_FOUND,
+          status: ERROR,
+          message: RESOURCE_NOT_CREATED,
+        });
+      }
 
+      await queryRunner.commitTransaction();
       return response.status(HttpStatusCodeEnum.CREATED).json({
         status_code: HttpStatusCodeEnum.CREATED,
         status: SUCCESS,

@@ -5,7 +5,7 @@ export type createStreamDto = {
   title: string;
   description: string;
   playBackPolicy?: object;
-  profiles?: StreamProfile;
+  profiles?: StreamProfile[];
   scheduleDate?: Date;
   platforms?: MultistreamTarget[];
 };

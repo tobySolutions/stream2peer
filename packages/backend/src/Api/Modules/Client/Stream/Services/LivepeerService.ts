@@ -5,7 +5,7 @@ import {
   MultistreamTarget,
 } from '../TypeChecking/createStreamDto';
 import { streamConfig } from 'Config/streamConfig';
-import { StreamProfile } from '../TypeChecking/StreamData';
+import { PlaybackPolicy, StreamProfile } from '../TypeChecking/StreamData';
 
 class LivePeerService {
   private livepeerClient: Livepeer;
@@ -21,13 +21,15 @@ class LivePeerService {
    */
   public async createStream(
     streamData: LivepeerCreateStreamDto,
-    platforms: MultistreamTarget[],
+    profiles: StreamProfile[],
+    playBackPolicy: PlaybackPolicy,
+    platforms?: MultistreamTarget[],
   ) {
     try {
       const createdStream = await this.livepeerClient.stream.create({
         name: streamData.title,
-        profiles: streamData.profiles,
-        playbackPolicy: streamData.playbackPolicy,
+        profiles: profiles,
+        playbackPolicy: playBackPolicy,
         multistream: {
           targets: platforms,
           //[
@@ -42,6 +44,12 @@ class LivePeerService {
           //   },
           // ],
         },
+      });
+
+      Object.assign(streamData, {
+        livepeerStreamId: createdStream.stream?.id,
+        playbackId: createdStream.stream?.playbackId,
+        encryptedStreamData: JSON.stringify(createdStream.stream),
       });
       return createdStream.stream;
     } catch (createStreamError) {
@@ -62,10 +70,13 @@ class LivePeerService {
   ): Promise<boolean> {
     try {
       const existingStream = await this.livepeerClient.stream.get(streamId);
-      existingStream?.stream?.multistream?.targets.push(target);
+      if(!existingStream){
+        return false;
+      }
+      existingStream.stream?.multistream?.targets?.push(target);
 
       await this.livepeerClient.stream.update(streamId, {
-        multistream: { targets: existingStream?.stream?.multistream.targets },
+        multistream: { targets: existingStream.stream?.multistream?.targets },
       });
       return true;
     } catch (attachMultistreamError) {
@@ -87,7 +98,7 @@ class LivePeerService {
     try {
       const existingStream = await this.livepeerClient.stream.get(streamId);
       profiles.forEach((profile) =>
-        existingStream?.stream?.profiles.push(profile),
+        existingStream!.stream!.profiles!.push(profile),
       );
 
       await this.livepeerClient.stream.update(streamId, {

@@ -33,7 +33,7 @@ export class Project extends BaseEntity {
   @Column({ type: 'simple-json' })
   peers_roles: ProjectPeer[];
 
-  @Column({ type: 'simple-json', default: [] })
+  @Column({ type: 'simple-json', nullable:true })
   stream_tokens: MultiStreamToken[];
 
   @OneToMany(() => Stream, (stream) => stream.project)
