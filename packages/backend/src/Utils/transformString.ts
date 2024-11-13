@@ -1,0 +1,1 @@
+export default function toArray(envVar: string) { return envVar ? envVar.split(',') : [];}

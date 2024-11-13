@@ -24,7 +24,7 @@ We are committed to fostering an open and welcoming environment. Please read our
   - UI: [TailwindCSS](https://tailwindcss.com/) for styling and flexibility in design.
   
 - **Backend**:
-  - Framework: [AdonisJS](https://adonisjs.com/) for a scalable and robust server.
+  - Framework: [ExpressJS](https://expressjs.com/) for a scalable and robust server.
   - Database: [MySQL](https://www.mysql.com/) (or any SQL database you prefer).
   
 - **Streaming & Transcoding**:
@@ -41,7 +41,7 @@ Before you begin, ensure you have met the following requirements:
 
 - [Node.js](https://nodejs.org/) v16+ installed
 - [pnpm](https://pnpm.io/) installed globally
-- PostgreSQL database running
+- MySQL database running
 
 ### Installation
 
@@ -81,7 +81,7 @@ stream2peer/
 
 ### Backend API
 
-The backend is powered by AdonisJS, and it handles stream creation, user management, and more. The API endpoints are RESTful and support integration with Livepeer’s transcoding API for video handling.
+The backend is powered by ExpressJs, and it handles stream creation, user management, and more. The API endpoints are RESTful and support integration with Livepeer’s transcoding API for video handling.
 
 ### Frontend
 
@@ -104,7 +104,7 @@ Distributed under the MIT License. See [LICENSE](https://github.com/tobySolution
 ## Acknowledgements
 
 - [Livepeer](https://livepeer.org/)
-- [AdonisJS](https://adonisjs.com/)
+- [ExpressJs](https://expressjs.com/)
 - [pnpm](https://pnpm.io/)
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
