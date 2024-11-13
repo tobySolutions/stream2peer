@@ -1,11 +1,10 @@
-import Express from "Lib/Infra/Internal/Express";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import { expressConfig } from "Config/index";
-import { SERVER_STARTED } from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { DependencyContainer } from "tsyringe";
+import Express from 'Lib/Infra/Internal/Express';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import { expressConfig } from 'Config/index';
+import { SERVER_STARTED } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { DependencyContainer } from 'tsyringe';
 
 export class Application {
-                                                                                                                                                                                                            
   express: Express;
   container: DependencyContainer;
 

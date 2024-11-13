@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:backend": "cd packages/backend && ts-node-dev --respawn --transpile-only --no-notify -r tsconfig-paths/register src/bootstrap.ts"
   },
   "keywords": [],
   "author": "",

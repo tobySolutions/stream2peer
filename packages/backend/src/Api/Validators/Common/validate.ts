@@ -1,6 +1,6 @@
-import { VALIDATION_ERROR } from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { NextFunction, Request, Response } from "express";
-import { validationResult } from "express-validator";
+import { VALIDATION_ERROR } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 
 const validate = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
@@ -10,7 +10,7 @@ const validate = (req: Request, res: Response, next: NextFunction) => {
   return res.status(422).json({
     status_code: 422,
     message: VALIDATION_ERROR,
-    status: "error",
+    status: 'error',
     errors: errors.array(),
   });
 };

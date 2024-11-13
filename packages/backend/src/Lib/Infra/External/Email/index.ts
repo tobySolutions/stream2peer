@@ -1,2 +1,2 @@
-export * from "./TypeSetting";
-export * from "./EmailProviderFactory";
+export * from './TypeSetting';
+export * from './EmailProviderFactory';

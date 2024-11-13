@@ -1,10 +1,10 @@
-import { Response } from "express";
-import ApplicationError from "./ApplicationError";
+import { Response } from 'express';
+import ApplicationError from './ApplicationError';
 import {
   CRITICAL_ERROR_EXITING,
   ERROR,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 class ErrorHandler {
   private isTrustedError(error: Error): boolean {
@@ -17,7 +17,7 @@ class ErrorHandler {
 
   public handleError(
     error: Error | ApplicationError,
-    response?: Response
+    response?: Response,
   ): void {
     if (this.isTrustedError(error) && response) {
       this.handleTrustedError(error as ApplicationError, response);
@@ -28,7 +28,7 @@ class ErrorHandler {
 
   private handleTrustedError(
     error: ApplicationError,
-    response: Response
+    response: Response,
   ): void {
     response.status(error.httpCode).json({
       status_code: error.httpCode,
@@ -39,7 +39,7 @@ class ErrorHandler {
 
   private handleCriticalError(
     error: Error | ApplicationError,
-    response?: Response
+    response?: Response,
   ): void {
     if (response) {
       response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({

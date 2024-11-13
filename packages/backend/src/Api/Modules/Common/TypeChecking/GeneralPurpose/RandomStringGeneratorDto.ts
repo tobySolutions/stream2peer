@@ -8,7 +8,7 @@ export interface RandomStringGeneratorDto {
    * Defines the character set of the string to be generated.
    * Options are numeric or Alphanumeric(Default)
    */
-  outputOption?: "numeric" | "alphanumeric";
+  outputOption?: 'numeric' | 'alphanumeric';
 
   /**
    * Defines whether the output should be capitalized or not

@@ -1,9 +1,9 @@
-import ApplicationError from "./ApplicationError";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import ApplicationError from './ApplicationError';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 export class UnauthorizedError extends ApplicationError {
   constructor(
-    description = "You are not authorized to perform this operation"
+    description = 'You are not authorized to perform this operation',
   ) {
     super({
       description,

@@ -1,8 +1,8 @@
-import ApplicationError from "./ApplicationError";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import ApplicationError from './ApplicationError';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 export class BadRequestError extends ApplicationError {
-  constructor(description = "Bad Request Error") {
+  constructor(description = 'Bad Request Error') {
     super({
       description,
       httpStatusCode: HttpStatusCodeEnum.BAD_REQUEST,

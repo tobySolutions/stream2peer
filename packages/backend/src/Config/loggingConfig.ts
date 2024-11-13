@@ -1,6 +1,6 @@
 export const loggingConfig = {
   LOGS: {
-    level: process.env["LOG_LEVEL"]! || "silly",
+    level: process.env['LOG_LEVEL']! || 'silly',
   },
-  LOGGING_PROVIDER: "winston",
+  LOGGING_PROVIDER: 'winston',
 };

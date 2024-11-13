@@ -1,5 +1,5 @@
-import * as bcrypt from "bcrypt";
-import { encryptionConfig } from "Config/index";
+import * as bcrypt from 'bcrypt';
+import { encryptionConfig } from 'Config/index';
 
 export class PasswordEncryptionHelper {
   public static hashPassword(password: string): string {
@@ -8,7 +8,7 @@ export class PasswordEncryptionHelper {
 
   public static async verifyPassword(
     candidatePassword: string,
-    hashedPassword: string
+    hashedPassword: string,
   ) {
     return await bcrypt.compare(candidatePassword, hashedPassword);
   }

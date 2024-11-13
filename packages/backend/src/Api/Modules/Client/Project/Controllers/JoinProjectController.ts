@@ -1,16 +1,16 @@
-import { Request, Response } from "express";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import { Request, Response } from 'express';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import {
   ERROR,
   SOMETHING_WENT_WRONG,
   SUCCESS,
   PEER_ADDED_TO_PROJECT,
   INVALID_TOKEN_TYPE,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { JwtHelper } from "Api/Modules/Common/Helpers/JwtHelper";
-import { container } from "tsyringe";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import ProjectService from "Api/Modules/Client/Project/Services/ProjectService";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
+import { container } from 'tsyringe';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import ProjectService from 'Api/Modules/Client/Project/Services/ProjectService';
 
 const dbContext = container.resolve(DbContext);
 
@@ -28,7 +28,7 @@ class JoinProjectController {
         return response.status(HttpStatusCodeEnum.NOT_FOUND).json({
           status_code: HttpStatusCodeEnum.NOT_FOUND,
           status: ERROR,
-          message: "Project not found.",
+          message: 'Project not found.',
         });
       }
 
@@ -43,7 +43,11 @@ class JoinProjectController {
       }
 
       const { userId, role } = decodedToken;
-      await ProjectService.addProjectPeer(projectId, {userId, role}, queryRunner);
+      await ProjectService.addProjectPeer(
+        projectId,
+        { userId, role },
+        queryRunner,
+      );
 
       await queryRunner.commitTransaction();
 
@@ -54,8 +58,8 @@ class JoinProjectController {
       });
     } catch (JoinProjectError) {
       console.log(
-        "🚀 ~ JoinProjectController.handle JoinProjectError ->",
-        JoinProjectError
+        '🚀 ~ JoinProjectController.handle JoinProjectError ->',
+        JoinProjectError,
       );
       await queryRunner.rollbackTransaction();
 

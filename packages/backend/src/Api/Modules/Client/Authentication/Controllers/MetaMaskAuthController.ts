@@ -1,17 +1,21 @@
-import { Request, Response } from "express";
-import MetaMaskAuthService from "Api/Modules/Client/Authentication/Services/MetaMaskAuthService";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
-import { SUCCESS, ERROR, SOMETHING_WENT_WRONG, METAMASK_AUTHENTICATION_SUCCESS } from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { AuthAccountType } from "Api/Modules/Client/Authentication/TypeChecking/AuthAccount";
-import { container } from "tsyringe";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import AuthAccountService from "../Services/AuthAccountService";
-import { JwtHelper } from "Api/Modules/Common/Helpers/JwtHelper";
+import { Request, Response } from 'express';
+import MetaMaskAuthService from 'Api/Modules/Client/Authentication/Services/MetaMaskAuthService';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
+import {
+  SUCCESS,
+  ERROR,
+  SOMETHING_WENT_WRONG,
+  METAMASK_AUTHENTICATION_SUCCESS,
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { AuthAccountType } from 'Api/Modules/Client/Authentication/TypeChecking/AuthAccount';
+import { container } from 'tsyringe';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import AuthAccountService from '../Services/AuthAccountService';
+import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
 
 const dbContext = container.resolve(DbContext);
 
 class MetaMaskAuthController {
-
   public async handle(req: Request, res: Response) {
     const queryRunner = await dbContext.getTransactionalQueryRunner();
     await queryRunner.startTransaction();
@@ -22,24 +26,23 @@ class MetaMaskAuthController {
         return res.status(HttpStatusCodeEnum.BAD_REQUEST).json({
           status_code: HttpStatusCodeEnum.BAD_REQUEST,
           status: ERROR,
-          message: "MetaMask Wallet Address is required",
+          message: 'MetaMask Wallet Address is required',
         });
       }
 
-      const metaMaskAuthAccount = await MetaMaskAuthService.findOrCreateAuthAccount(
-        {
-        userId: JSON.stringify({address}), 
-        auth_provider: AuthAccountType.METAMASK,
-        queryRunner
-        }
-      );
+      const metaMaskAuthAccount =
+        await MetaMaskAuthService.findOrCreateAuthAccount({
+          userId: JSON.stringify({ address }),
+          auth_provider: AuthAccountType.METAMASK,
+          queryRunner,
+        });
 
       if (!metaMaskAuthAccount) {
         await queryRunner.rollbackTransaction();
         return res.status(HttpStatusCodeEnum.NOT_FOUND).json({
           status_code: HttpStatusCodeEnum.NOT_FOUND,
           status: ERROR,
-          message: "USER_NOT_FOUND",
+          message: 'USER_NOT_FOUND',
         });
       }
 
@@ -51,7 +54,7 @@ class MetaMaskAuthController {
         data: metaMaskAuthAccount.forWallet,
       });
     } catch (error) {
-      console.log("MetaMaskAuthController.auth error ->", error);
+      console.log('MetaMaskAuthController.auth error ->', error);
       await queryRunner.rollbackTransaction();
       return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
@@ -72,50 +75,55 @@ class MetaMaskAuthController {
         return res.status(HttpStatusCodeEnum.BAD_REQUEST).json({
           status_code: HttpStatusCodeEnum.BAD_REQUEST,
           status: ERROR,
-          message: "Address and signature are required",
+          message: 'Address and signature are required',
         });
       }
 
-      const isAuthenticated = await MetaMaskAuthService.verifySignature(address, signature, queryRunner);
+      const isAuthenticated = await MetaMaskAuthService.verifySignature(
+        address,
+        signature,
+        queryRunner,
+      );
 
       if (!isAuthenticated) {
         await queryRunner.rollbackTransaction();
         return res.status(HttpStatusCodeEnum.UNAUTHENTICATED).json({
           status_code: HttpStatusCodeEnum.UNAUTHENTICATED,
           status: ERROR,
-          message: "Invalid signature",
+          message: 'Invalid signature',
         });
       }
 
-      const metaMaskAuthAccount = await AuthAccountService.getAuthAccountByUserId(address);
+      const metaMaskAuthAccount =
+        await AuthAccountService.getAuthAccountByUserId(address);
 
       if (!metaMaskAuthAccount) {
         await queryRunner.rollbackTransaction();
         return res.status(HttpStatusCodeEnum.UNAUTHENTICATED).json({
           status_code: HttpStatusCodeEnum.UNAUTHENTICATED,
           status: ERROR,
-          message: "User not found",
+          message: 'User not found',
         });
       }
 
       const token = JwtHelper.signUser({
         userId: metaMaskAuthAccount.userId,
         identifier: metaMaskAuthAccount.identifier,
-        auth_provider: AuthAccountType.METAMASK
+        auth_provider: AuthAccountType.METAMASK,
       });
 
       await queryRunner.commitTransaction();
 
-      return res.
-        setHeader('Authorization', `Bearer ${token}`).
-        status(HttpStatusCodeEnum.OK).
-        json({
-        status_code: HttpStatusCodeEnum.OK,
-        status: SUCCESS,
-        message: METAMASK_AUTHENTICATION_SUCCESS,
-      });
+      return res
+        .setHeader('Authorization', `Bearer ${token}`)
+        .status(HttpStatusCodeEnum.OK)
+        .json({
+          status_code: HttpStatusCodeEnum.OK,
+          status: SUCCESS,
+          message: METAMASK_AUTHENTICATION_SUCCESS,
+        });
     } catch (error) {
-      console.log("MetaMaskAuthController.verify error ->", error);
+      console.log('MetaMaskAuthController.verify error ->', error);
       await queryRunner.rollbackTransaction();
       return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,

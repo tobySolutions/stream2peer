@@ -1,4 +1,4 @@
-import { QueryRunner } from "typeorm";
+import { QueryRunner } from 'typeorm';
 
 export interface DbContextInterface {
   connect(): null;

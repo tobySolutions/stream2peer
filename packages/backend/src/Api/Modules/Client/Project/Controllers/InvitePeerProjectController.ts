@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import { Request, Response } from 'express';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import {
   ERROR,
   INVITATION_SENT,
   SOMETHING_WENT_WRONG,
   SUCCESS,
-} from "Api/Modules/Common/Helpers/Messages/SystemMessages";
-import { AuthRequest } from "TypeChecking/GeneralPurpose/AuthRequest";
-import { container } from "tsyringe";
-import { DbContext } from "Lib/Infra/Internal/DBContext";
-import ProjectService from "Api/Modules/Client/Project/Services/ProjectService";
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import { AuthRequest } from 'TypeChecking/GeneralPurpose/AuthRequest';
+import { container } from 'tsyringe';
+import { DbContext } from 'Lib/Infra/Internal/DBContext';
+import ProjectService from 'Api/Modules/Client/Project/Services/ProjectService';
 
 const dbContext = container.resolve(DbContext);
 
@@ -20,25 +20,21 @@ class ProjectInviteController {
     await queryRunner.startTransaction();
     try {
       const user = (request as AuthRequest).authAccount;
-      const { role, userId } = request.body;
+      const { users } = request.body;
       const { projectId } = request.params;
 
-      const isAuthorized = await ProjectService.getProjectOwnerId(projectId) === user.userId;
+      const isAuthorized =
+        (await ProjectService.getProjectOwnerId(projectId)) === user.userId;
 
       if (!isAuthorized) {
         return response.status(HttpStatusCodeEnum.FORBIDDEN).json({
           status_code: HttpStatusCodeEnum.FORBIDDEN,
           status: ERROR,
-          message: "You are not authorized to invite users to this project.",
+          message: 'You are not authorized to invite users to this project.',
         });
       }
 
-      await ProjectService.sendProjectInvite(
-        userId,
-        projectId,
-        role,
-        queryRunner,
-      )
+      await ProjectService.sendProjectInvite(users, projectId, queryRunner);
 
       await queryRunner.commitTransaction();
 
@@ -49,8 +45,8 @@ class ProjectInviteController {
       });
     } catch (ProjectInviteControllerError) {
       console.log(
-        "🚀 ~ ProjectInviteController.handle ProjectInviteControllerError ->",
-        ProjectInviteControllerError
+        '🚀 ~ ProjectInviteController.handle ProjectInviteControllerError ->',
+        ProjectInviteControllerError,
       );
       await queryRunner.rollbackTransaction();
 

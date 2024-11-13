@@ -1,8 +1,8 @@
-import ApplicationError from "Api/Modules/Common/Exceptions/ApplicationError";
-import { HttpStatusCodeEnum } from "Utils/HttpStatusCodeEnum";
+import ApplicationError from 'Api/Modules/Common/Exceptions/ApplicationError';
+import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 export class NotFoundError extends ApplicationError {
-  constructor(description = "Not found Error") {
+  constructor(description = 'Not found Error') {
     super({
       description,
       httpStatusCode: HttpStatusCodeEnum.NOT_FOUND,

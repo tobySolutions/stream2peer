@@ -1,4 +1,4 @@
 export type GetOneResourceDtoType = {
   identifier: number | string;
-  identifierType: "id" | "identifier" | "slug";
+  identifierType: 'id' | 'identifier' | 'slug';
 };
