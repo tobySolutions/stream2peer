@@ -4,36 +4,71 @@ import Layout from "../layout";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Modal from "../../../lib/modal";
 import { useContext, useEffect, useState } from "react";
-import { FetchAllProjects } from "../../../network/projects/projects";
+import {
+  AddProject,
+  FetchAllProjects,
+} from "../../../network/projects/projects";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../../../context";
+import { useNavigate } from "react-router-dom";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [projectDetails, setProjectDetails] = useState({ title: "", desc: "" });
   const [emails, setEmails] = useState<string[]>([]);
   const [inputEmail, setInputEmail] = useState("");
-  
-  const {setProjectData, ProjectsData} = useContext(StateContext);
+  const [projectingLoading, setProjectLoading] = useState(false);
+
+  const { setProjectData, ProjectsData, setLoading, loading } =
+    useContext(StateContext);
+
+  let navigate = useNavigate();
 
   const getAllProjects = async () => {
+    setProjectLoading(true);
     try {
       const res = await FetchAllProjects();
       console.log(res);
-      setProjectData(res?.results?.data)
+      setProjectData(res?.results?.data);
     } catch (error) {
       console.error(error);
     }
+    setProjectLoading(false);
   };
+
+  const addNewProject = async () => {
+    setLoading(true);
+    try {
+      if (emails.length > 0) {
+        const res = await AddProject({
+          title: projectDetails.title,
+          description: projectDetails.desc,
+          inviteeId: emails.toString(),
+        });
+        console.log(res);
+        toast.success("Project added successfully");
+      } else {
+        const res = await AddProject({
+          title: projectDetails.title,
+          description: projectDetails.desc,
+        });
+        console.log(res);
+        toast.success("Project added successfully");
+      }
+      // setProjectData(res?.results?.data);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message);
+    }
+    setLoading(false);
+    setModalOpen(false);
+    window.location.reload();
+  };
+
   useEffect(() => {
     getAllProjects();
   }, []);
-  const projects = [
-    { id: "1", name: "First Project", description: "Lorem Ipsum" },
-    { id: "2", name: "First Project", description: "Lorem Ipsum" },
-    { id: "3", name: "First Project", description: "Lorem Ipsum" },
-    { id: "4", name: "First Project", description: "Lorem Ipsum" },
-    { id: "5", name: "First Project", description: "Lorem Ipsum" },
-    { id: "6", name: "First Project", description: "Lorem Ipsum" },
-  ];
 
   const handleAddEmail = (e: any) => {
     e.preventDefault();
@@ -58,9 +93,22 @@ function Projects() {
 
   return (
     <Layout>
+      <ToastContainer
+        theme="dark"
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
+        onSubmit={addNewProject}
         children={
           <div>
             <div className="mb-4">
@@ -68,6 +116,13 @@ function Projects() {
               <input
                 type="text"
                 className="w-full h-12 focus:outline-none focus:border-gray-800 rounded-md p-4 mt-2 border border-gray-600 "
+                onChange={(e) =>
+                  setProjectDetails({
+                    ...projectDetails,
+                    title: e.target.value,
+                  })
+                }
+                value={projectDetails.title}
               />
             </div>
             <div className="mb-4">
@@ -75,6 +130,13 @@ function Projects() {
               <textarea
                 rows={4}
                 className="w-full focus:outline-none focus:border-gray-800  rounded-md p-4 mt-2 border border-gray-600 "
+                onChange={(e) =>
+                  setProjectDetails({
+                    ...projectDetails,
+                    desc: e.target.value,
+                  })
+                }
+                value={projectDetails.desc}
               />
             </div>
             <form onSubmit={handleAddEmail}>
@@ -140,11 +202,25 @@ function Projects() {
             <IoAddSharp size={18} /> Add New Project
           </button>
         </div>
-        <div className="grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
-          {ProjectsData.map((project) => (
-            <ProjectCard project={project} />
-          ))}
-        </div>
+        {projectingLoading ? (
+          <div className="grid place-content-center h-[calc(100vh-400px)]">
+            <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+            {ProjectsData?.map((project) => (
+              <div
+                key={project.id}
+                className=""
+                onClick={() =>
+                  navigate(`/dashboard/projects/${project.identifier}`)
+                }
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </Layout>
   );

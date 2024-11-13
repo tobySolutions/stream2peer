@@ -4,6 +4,10 @@
 export type ValueProp = {
   setProjectData: React.Dispatch<React.SetStateAction<ProjectDetails[]>>;
   ProjectsData: ProjectDetails[];
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  livestreamData: any;
+  setLiveStreamData: React.Dispatch<any>;
 };
 
 

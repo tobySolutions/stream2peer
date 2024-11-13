@@ -32,7 +32,7 @@ instance.interceptors.request.use(
       config.headers["Authorization"] = `Bearer ${
         tokens?.accessToken
           ? tokens?.accessToken
-          : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMDBlOTM1OTQtMTBhNy00MDdjLWJkZjMtMWZiMTUwMWE2YjgzIiwidXNlcklkIjoiZW1tYW51ZWxvYmllY2hpbmE4QGdtYWlsLmNvbSIsImF1dGhQcm92aWRlciI6Im1ldGFtYXNrIiwiaWF0IjoxNzMwNDY2NDc2LCJleHAiOjE3MzA2MzkyNzZ9.qZ_WOo5VQFUTJd7_IP6WE8z5bMk2BPQwzjWqpsBd6mg"
+          : import.meta.env.VITE_TEMP_AUTH_TOKEN
       }`;
     // }
     return config;
