@@ -8,6 +8,7 @@ const StateProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [livestreamData, setLiveStreamData] = useState<any>([]);
   const [userData, setUserData] = useState<User>();
+  const [currentStream, setCurrentStream] = useState<any>({});
 
   return (
     <StateContext.Provider
@@ -17,6 +18,8 @@ const StateProvider = ({ children }: { children: ReactNode }) => {
         loading,
         userData,
         setUserData,
+        currentStream,
+        setCurrentStream,
         setLoading,
         livestreamData,
         setLiveStreamData,

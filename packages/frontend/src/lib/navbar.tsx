@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Logo from "/vite.svg";
+import Logo from "/logo.png";
 import { navItems } from "../utils/navContent";
 
 function Navbar() {
@@ -21,8 +21,8 @@ function Navbar() {
     <nav className="bg-dark-gray sticky bottom-0 top-0 right-0 left-0 z-[100] h-[60px] border-b border-primary-border flex items-center justify-between px-[36px] py-[25px]">
       {/* Logo Container */}
       <div className="flex items-center gap-[10px] cursor-pointer">
-        <img src={Logo} alt="Logo" width="60px" height="60px" />
-        <p className="text-white font-montserrat">STREAM2PEER</p>
+        <img src={Logo} alt="Logo" width="200px" height="100px" />
+      
       </div>
 
       {/* Desktop Menu */}
