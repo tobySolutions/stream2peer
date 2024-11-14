@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { ProjectDetails, ValueProp } from "./types";
+import { ProjectDetails, User, ValueProp } from "./types";
 
 export const StateContext = createContext({} as ValueProp);
 
@@ -7,7 +7,7 @@ const StateProvider = ({ children }: { children: ReactNode }) => {
   const [ProjectsData, setProjectData] = useState<ProjectDetails[]>([]);
   const [loading, setLoading] = useState(false);
   const [livestreamData, setLiveStreamData] = useState<any>([]);
-
+  const [userData, setUserData] = useState<User>();
 
   return (
     <StateContext.Provider
@@ -15,6 +15,8 @@ const StateProvider = ({ children }: { children: ReactNode }) => {
         ProjectsData,
         setProjectData,
         loading,
+        userData,
+        setUserData,
         setLoading,
         livestreamData,
         setLiveStreamData,
