@@ -8,3 +8,4 @@
 [ERROR] 2024-11-12 11:17:02 Transaction is not started yet, start transaction before committing or rolling it back.
 [ERROR] 2024-11-12 12:20:11 Not Authenticated
 [ERROR] 2024-11-12 12:20:21 Not Authenticated
+[ERROR] 2024-11-13 22:59:26 MySQLDB Connection Error

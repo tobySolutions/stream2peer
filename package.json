@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:frontend": "cd packages/frontend && pnpm dev",
     "dev:backend": "cd packages/backend && ts-node-dev --respawn --transpile-only --no-notify -r tsconfig-paths/register src/bootstrap.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2",
     "typescript-node": "^0.1.3"
   },
