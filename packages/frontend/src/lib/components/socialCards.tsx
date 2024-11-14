@@ -2,11 +2,20 @@ import React from "react";
 import { FaFacebook } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
+import { ImTwitch } from "react-icons/im";
 import { FaLinkedin } from "react-icons/fa6";
 
 const SocialMediaCards: React.FC = () => {
   return (
     <div className="flex flex-wrap gap-4">
+      <div className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition">
+        <IoLogoYoutube />
+        <span>YouTube Channel</span>
+      </div>
+      <div className="bg-[#9147ff] w-48 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-[#9147ffbe] transition">
+        <ImTwitch />
+        <span>Twitch</span>
+      </div>
       {/* Facebook Page */}
       <div className="relative bg-blue-600 text-white w-48 px-4 py-3 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-blue-700 transition md:opacity-100 md:hover:opacity-75">
         <FaFacebook />
@@ -22,16 +31,19 @@ const SocialMediaCards: React.FC = () => {
       </div>
 
       {/* LinkedIn Page */}
-      <div className="bg-blue-800 w-48 text-white px-4 py-3 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-blue-900 transition">
+      <div className="bg-blue-800 relative w-48 text-white px-4 py-3 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-blue-900 transition">
         <FaLinkedin />
         <span>LinkedIn Page</span>
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg  md:hover:flex md:opacity-0 md:hover:opacity-100">
+          Coming Soon
+        </div>
+        {/* Show "Coming Soon" on mobile */}
+        <div className="md:hidden absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg">
+          Coming Soon
+        </div>
       </div>
 
       {/* YouTube Channel */}
-      <div className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition">
-        <IoLogoYoutube />
-        <span>YouTube Channel</span>
-      </div>
 
       {/* Twitter (X) */}
       <div className="relative bg-black  w-48 text-white px-4 py-3 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-gray-800 transition md:opacity-100 md:hover:opacity-75 border border-primary-border">

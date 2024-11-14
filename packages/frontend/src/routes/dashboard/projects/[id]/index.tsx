@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LivestreamList } from "../../../../lib/components/LivestreamList";
+import { toast, ToastContainer } from "react-toastify";
 import Layout from "../../layout";
 import { IoIosArrowBack } from "react-icons/io";
 import Modal from "../../../../lib/modal";
@@ -10,7 +10,10 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import { streamDestinations } from "../../../../utils/streamDestinations";
 import LivestreamCard from "../../../../lib/components/LivestreamCard";
-import { FetchProjectById } from "../../../../network/projects/projects";
+import {
+  FetchProjectById,
+  sendPeerInvite,
+} from "../../../../network/projects/projects";
 import { IoAddSharp } from "react-icons/io5";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Select } from "antd";
@@ -25,11 +28,22 @@ const ProjectPage = () => {
   let navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("");
   const [ProjectData, setProjectData] = useState<null | any>(null);
-  const [emails, setEmails] = useState<string[]>([]);
+  const [userData, setUserData] = useState<
+    { role: "co-Host" | "Subscriber"; userId: string }[]
+  >([]);
   const [inputEmail, setInputEmail] = useState("");
   const [projectingLoading, setProjectLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<"co-Host" | "Subscriber">(
+    "co-Host"
+  );
+  const [loading, setLoading] = useState(false);
 
-const {livestreamData} = useContext(StateContext)
+  const { livestreamData } = useContext(StateContext);
+
+  const rolesOption: { label: string; value: "co-Host" | "Subscriber" }[] = [
+    { label: "Co-host", value: "co-Host" },
+    { label: "subscriber", value: "Subscriber" },
+  ];
 
   const handlegetProjectDetails = async () => {
     setProjectLoading(true);
@@ -56,16 +70,33 @@ const {livestreamData} = useContext(StateContext)
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleAddEmail = (e: any) => {
+  const handleAddEmail = async (e: any) => {
     e.preventDefault();
-    if (inputEmail && emails.length < 3 && validateEmail(inputEmail)) {
-      setEmails([...emails, inputEmail]);
+    console.log(selectedRole);
+
+    if (inputEmail && userData.length < 3 && validateEmail(inputEmail)) {
+      setUserData([...userData, { role: selectedRole, userId: inputEmail }]);
       setInputEmail("");
     }
   };
 
+  const onSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = await sendPeerInvite(projectId!, { users: userData });
+      console.log(res);
+      setLoading(false);
+      setPeerInviteModalOpen(false);
+      toast.success("Project added successfully");
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+    setUserData([]);
+  };
+
   const handleDeleteEmail = (emailToDelete: string) => {
-    setEmails(emails.filter((email) => email !== emailToDelete));
+    setUserData(userData.filter((user) => user.userId !== emailToDelete));
   };
 
   const closeModal = () => {
@@ -138,6 +169,18 @@ const {livestreamData} = useContext(StateContext)
 
   return (
     <Layout>
+      <ToastContainer
+        theme="dark"
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
@@ -161,31 +204,25 @@ const {livestreamData} = useContext(StateContext)
                   onChange={(e) => setInputEmail(e.target.value)}
                   className="flex-grow border border-gray-600 rounded-md py-2 pl-3 pr-[150px] mr-2 focus:outline-none focus:border-gray-800"
                   placeholder="Enter email"
-                  disabled={emails.length >= 3}
+                  disabled={userData.length >= 3}
                 />
                 <button
                   type="submit"
                   className="bg-orange-500 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
-                  disabled={
-                    emails.length >= 3 ||
-                    !inputEmail ||
-                    !validateEmail(inputEmail)
-                  }
+                  disabled={!inputEmail || !validateEmail(inputEmail)}
                 >
                   Add
                 </button>
                 <div className="absolute right-[74px] top-19 h-[41px] w-36">
                   <Select
-                    options={[
-                      { label: "Co-host", value: "co-host" },
-                      { label: "subscriber", value: "subscriber" },
-                    ]}
+                    options={rolesOption}
                     placeholder="Select user role"
                     className="h-full border-gray-600 rounded-md hover:border-gray-800 focus:outline-none focus:border-gray-800 w-full"
+                    onChange={(e) => setSelectedRole(e)}
                   />
                 </div>
               </div>
-              {emails.length >= 3 && (
+              {userData.length >= 3 && (
                 <p className="text-red-500 text-sm mt-1">
                   You can only add up to 3 emails.
                 </p>
@@ -193,14 +230,14 @@ const {livestreamData} = useContext(StateContext)
             </form>
 
             <div className="mt-4">
-              {emails.map((email, index) => (
+              {userData.map((user, index) => (
                 <div
                   key={index}
                   className="flex justify-between items-center border-b py-2"
                 >
-                  <span className="text-[14px]">{email}</span>
+                  <span className="text-[14px]">{`${user.userId} (${user.role})`}</span>
                   <button
-                    onClick={() => handleDeleteEmail(email)}
+                    onClick={() => handleDeleteEmail(user.userId)}
                     className="text-orange-500 hover:text-orange-700 font-bold"
                   >
                     <FaRegTrashCan />
@@ -208,6 +245,22 @@ const {livestreamData} = useContext(StateContext)
                 </div>
               ))}
             </div>
+            {userData.length > 0 && (
+              <div>
+                <button
+                  className="bg-orange-500 text-primary-white px-4 py-2 rounded"
+                  onClick={onSubmit}
+                >
+                  {loading ? (
+                    <div className="grid place-content-center">
+                      <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#FFFFFF]"></div>
+                    </div>
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         }
         title="Invite Peers"

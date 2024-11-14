@@ -12,6 +12,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../../../context";
 import { useNavigate } from "react-router-dom";
+import { Select } from "antd";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -139,7 +140,7 @@ function Projects() {
                 value={projectDetails.desc}
               />
             </div>
-            <form onSubmit={handleAddEmail}>
+            <form onSubmit={handleAddEmail} className="relative">
               <label htmlFor="email-input" className="block mb-2">
                 Invite users via email
               </label>
@@ -149,7 +150,7 @@ function Projects() {
                   id="email-input"
                   value={inputEmail}
                   onChange={(e) => setInputEmail(e.target.value)}
-                  className="flex-grow border border-gray-600 rounded-md py-2 px-3 mr-2 focus:outline-none focus:border-gray-800"
+                  className="flex-grow border border-gray-600 rounded-md py-2 pl-3 pr-[150px] mr-2 focus:outline-none focus:border-gray-800"
                   placeholder="Enter email"
                   disabled={emails.length >= 3}
                 />
@@ -164,6 +165,16 @@ function Projects() {
                 >
                   Add
                 </button>
+                <div className="absolute right-[74px] top-19 h-[41px] w-36">
+                  <Select
+                    options={[
+                      { label: "Co-host", value: "co-host" },
+                      { label: "subscriber", value: "subscriber" },
+                    ]}
+                    placeholder="Select user role"
+                    className="h-full border-gray-600 rounded-md hover:border-gray-800 focus:outline-none focus:border-gray-800 w-full"
+                  />
+                </div>
               </div>
               {emails.length >= 3 && (
                 <p className="text-red-500 text-sm mt-1">
