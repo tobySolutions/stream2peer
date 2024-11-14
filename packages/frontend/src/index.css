@@ -32,3 +32,9 @@
   padding: 12px;
 
 }
+
+.ant-select-selector {
+  border: 1px solid #555 !important;
+  box-shadow: none !important;
+  color: #555 !important;
+}

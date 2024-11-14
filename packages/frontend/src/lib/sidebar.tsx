@@ -20,9 +20,10 @@ function Sidebar() {
             key={item.value}
             className={`${
               isActive(item.route) ? "bg-white text-dark-gray" : "text-white"
-            } p-2 rounded-md no-underline font-raleway cursor-pointer`}
+            } p-2 rounded-md no-underline font-raleway cursor-pointer flex items-center gap-2`}
             onClick={() => navigate(item.route)}
           >
+            {item.icon}
             {item.label}
           </li>
         ))}

@@ -9,6 +9,7 @@ import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
 import { DemoPlayer } from "./dashboard/livestream";
 import { getSrc } from "@livepeer/react/external";
 import { Livepeer } from "livepeer";
+import { Destination } from "./dashboard/destination";
 
 export default function Routes() {
   const playbackId = import.meta.env.VITE_PLAYBACK_URL;
@@ -35,7 +36,7 @@ export default function Routes() {
       <Route path="/dashboard">
         <Route index element={<DashboardHome />} />
         <Route path="projects" element={<Projects />} />
-        {/* <Route path=":productId" element={<Product />} /> */}
+        <Route path="destination" element={<Destination />} />
       </Route>
       <Route path="/livestream" element={<DemoPlayer />} />
       <Route element={<ProjectPage />} path="/dashboard/projects/:id" />
