@@ -8,6 +8,8 @@ export type ValueProp = {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   livestreamData: any;
   setLiveStreamData: React.Dispatch<any>;
+  currentStream: any;
+  setCurrentStream: React.Dispatch<any>;
 };
 
 

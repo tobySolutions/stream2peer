@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Layout from "../../layout";
 import { IoIosArrowBack } from "react-icons/io";
 import Modal from "../../../../lib/modal";
@@ -19,6 +19,10 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { Select } from "antd";
 import { StateContext } from "../../../../context";
 import { CiCalendar } from "react-icons/ci";
+import {
+  createLiveStream,
+  fetchAllStreams,
+} from "../../../../network/streams/streams-api";
 
 const ProjectPage = () => {
   const { id: projectId } = useParams(); // Extract projectId from the route params
@@ -37,8 +41,29 @@ const ProjectPage = () => {
     "co-Host"
   );
   const [loading, setLoading] = useState(false);
+  type ValuePiece = Date | null;
+  type Value = ValuePiece | [ValuePiece, ValuePiece];
+  const [value, onChange] = useState<Value>(new Date());
+  const [streamData, setStreamData] = useState<{
+    title: string;
+    description: string;
+  }>({ title: "", description: "" });
 
-  const { livestreamData } = useContext(StateContext);
+  const { livestreamData, setCurrentStream, setLiveStreamData } =
+    useContext(StateContext);
+
+  const getAllStreams = async () => {
+    try {
+      const res = await fetchAllStreams(projectId!);
+      console.log(res);
+      setLiveStreamData(res?.result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getAllStreams();
+  }, []);
 
   const rolesOption: { label: string; value: "co-Host" | "Subscriber" }[] = [
     { label: "Co-host", value: "co-Host" },
@@ -50,7 +75,7 @@ const ProjectPage = () => {
     try {
       const res = await FetchProjectById(projectId!);
       console.log(res);
-      setProjectData(res.results);
+      setProjectData(res?.results);
     } catch (err) {
       console.log(err);
     }
@@ -103,88 +128,108 @@ const ProjectPage = () => {
     setModalOpen(false);
   };
 
-  const ModalContent = () => {
-    type ValuePiece = Date | null;
-    type Value = ValuePiece | [ValuePiece, ValuePiece];
-    const [value, onChange] = useState<Value>(new Date());
-    return (
-      <div>
-        <label className="inline-flex items-center mb-2">
-          <input
-            type="radio"
-            name="options"
-            value="instant"
-            checked={selectedOption === "instant"}
-            onChange={handleChange}
-            className="form-radio h-4 w-4 text-blue-600"
-          />
-          <span className="ml-2 text-[14px]"> Start instant livestream</span>
-        </label>
-
-        <label className="inline-flex items-center mb-2 ml-4">
-          <input
-            type="radio"
-            name="options"
-            value="schedule"
-            checked={selectedOption === "schedule"}
-            onChange={handleChange}
-            className="form-radio h-4 w-4 text-blue-600"
-          />
-          <span className="ml-2 text-[14px]">
-            Schedule livestream for later
-          </span>
-        </label>
-
-        {selectedOption !== "" && (
-          <div>
-            <p className="mb-1">Add destinations</p>
-            {streamDestinations.map((destination) => (
-              <div className="flex items-center cursor-pointer gap-1 mb-1">
-                <span>{destination.icon}</span>
-                <p className="text-[14px]">{destination.name}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {selectedOption !== "" && (
-          <div className="mt-2">
-            <label htmlFor="">Title</label>
-            <input
-              type="text"
-              className="w-full h-12 mt-2 border border-gray-600 rounded-md p-4"
-            />
-          </div>
-        )}
-
-        {selectedOption == "schedule" && (
-          <div className="flex flex-col gap-2 mt-4">
-            <p>Select a date and time</p>
-            <DateTimePicker onChange={onChange} value={value} />
-          </div>
-        )}
-      </div>
-    );
+  const handleCreateLiveStream = async () => {
+    try {
+      const res = await createLiveStream(projectId!, {
+        title: streamData.title,
+        description: streamData.description,
+      });
+      console.log(res);
+      setCurrentStream(res?.results);
+      // window.open("/stream")
+      setModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Layout>
-      <ToastContainer
-        theme="dark"
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
-        children={<ModalContent />}
+        onSubmit={handleCreateLiveStream}
+        children={
+          <div>
+            <label className="inline-flex items-center mb-2">
+              <input
+                type="radio"
+                name="options"
+                value="instant"
+                checked={selectedOption === "instant"}
+                onChange={handleChange}
+                className="form-radio h-4 w-4 text-blue-600"
+              />
+              <span className="ml-2 text-[14px]">
+                {" "}
+                Start instant livestream
+              </span>
+            </label>
+
+            <label className="inline-flex items-center mb-2 ml-4">
+              <input
+                type="radio"
+                name="options"
+                value="schedule"
+                checked={selectedOption === "schedule"}
+                onChange={handleChange}
+                className="form-radio h-4 w-4 text-blue-600"
+              />
+              <span className="ml-2 text-[14px]">
+                Schedule livestream for later
+              </span>
+            </label>
+
+            {/* {selectedOption !== "" && (
+              <div>
+                <p className="mb-1">Add destinations</p>
+                {streamDestinations.map((destination) => (
+                  <div className="flex items-center cursor-pointer gap-1 mb-1">
+                    <span>{destination.icon}</span>
+                    <p className="text-[14px]">{destination.name}</p>
+                  </div>
+                ))}
+              </div>
+            )} */}
+
+            {selectedOption !== "" && (
+              <>
+                <div className="mt-2">
+                  <label htmlFor="">Title</label>
+                  <input
+                    type="text"
+                    onChange={(e) =>
+                      setStreamData({ ...streamData, title: e.target.value })
+                    }
+                    className="w-full h-12 mt-2 border border-gray-600 rounded-md p-4"
+                  />
+                </div>
+                <div className="mt-2">
+                  <label htmlFor="">Description</label>
+                  <textarea
+                    name=""
+                    rows={4}
+                    id=""
+                    onChange={(e) =>
+                      setStreamData({
+                        ...streamData,
+                        description: e.target.value,
+                      })
+                    }
+                    className="w-full mt-2 border border-gray-600 rounded-md p-4"
+                  ></textarea>
+                </div>
+              </>
+            )}
+
+            {selectedOption == "schedule" && (
+              <div className="flex flex-col gap-2 mt-4">
+                <p>Select a date and time</p>
+                <DateTimePicker onChange={onChange} value={value} />
+              </div>
+            )}
+          </div>
+        }
         title="Create Livestream"
       />
       <Modal
@@ -321,7 +366,7 @@ const ProjectPage = () => {
 
           {activeTab === "upcoming" ? (
             <div>
-              {livestreamData.length === 0 ? (
+              {livestreamData?.length === 0 ? (
                 <div className="text-primary-white grid place-content-center w-full h-[calc(100vh-400px)] gap-4">
                   <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36">
                     <div className=""></div>
@@ -332,12 +377,11 @@ const ProjectPage = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-6">
                   {livestreamData
-                    .filter(
+                    ?.filter(
                       (item: any) =>
-                        item.status.toLocaleLowerCase() == "live" ||
-                        item.status.toLocaleLowerCase() == "scheduled"
+                        item?.status.toLocaleLowerCase() !== "ended"
                     )
-                    .map((livestream: any) => (
+                    ?.map((livestream: any) => (
                       <LivestreamCard livestream={livestream} />
                     ))}
                 </div>
@@ -345,7 +389,7 @@ const ProjectPage = () => {
             </div>
           ) : (
             <div>
-              {livestreamData.length === 0 ? (
+              {livestreamData?.length === 0 ? (
                 <div className="text-primary-white grid place-content-center w-full h-[calc(100vh-400px)] gap-4 ">
                   <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36">
                     <div className=""></div>
@@ -356,10 +400,7 @@ const ProjectPage = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-6">
                   {livestreamData
-                    .filter(
-                      (item: any) => item.status.toLocaleLowerCase() == "ended"
-                    )
-                    .map((livestream: any) => (
+                    ?.map((livestream: any) => (
                       <LivestreamCard livestream={livestream} />
                     ))}
                 </div>

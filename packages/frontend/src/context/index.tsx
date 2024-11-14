@@ -7,6 +7,7 @@ const StateProvider = ({ children }: { children: ReactNode }) => {
   const [ProjectsData, setProjectData] = useState<ProjectDetails[]>([]);
   const [loading, setLoading] = useState(false);
   const [livestreamData, setLiveStreamData] = useState<any>([]);
+  const [currentStream, setCurrentStream] = useState<any>({})
 
 
   return (
@@ -15,6 +16,8 @@ const StateProvider = ({ children }: { children: ReactNode }) => {
         ProjectsData,
         setProjectData,
         loading,
+        currentStream,
+        setCurrentStream,
         setLoading,
         livestreamData,
         setLiveStreamData,

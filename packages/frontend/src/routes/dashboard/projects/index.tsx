@@ -8,7 +8,7 @@ import {
   AddProject,
   FetchAllProjects,
 } from "../../../network/projects/projects";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../../../context";
 import { useNavigate } from "react-router-dom";
@@ -94,18 +94,6 @@ function Projects() {
 
   return (
     <Layout>
-      <ToastContainer
-        theme="dark"
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}

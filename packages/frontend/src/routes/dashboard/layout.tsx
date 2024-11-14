@@ -11,7 +11,18 @@ type LayoutProps = {
 function Layout({ children }: LayoutProps) {
   return (
     <div className="">
-      
+      <ToastContainer
+        theme="dark"
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Navbar />
       <div className="flex h-full items-start relative bg-black">
         <Sidebar />

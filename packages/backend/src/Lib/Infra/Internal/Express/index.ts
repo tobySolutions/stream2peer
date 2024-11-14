@@ -71,6 +71,7 @@ export default class Express {
   }
 
   public static getCorsWhiteList(): Array<string> {
+    console.log(expressConfig.corsWhitelist)
     return expressConfig.corsWhitelist;
   }
 
