@@ -51,7 +51,7 @@ export default class Express {
   #attachMiddlewares() {
     this.app.use(bodyParser.urlencoded({ extended: false }));
 
-    // this.app.use(helmet());
+    this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(
       cors({
@@ -70,9 +70,9 @@ export default class Express {
     this.loggingProvider.info(ROUTES_ATTACHED);
   }
 
-  // public static getCorsWhiteList(): Array<string> {
-  //   return expressConfig.corsWhitelist;
-  // }
+  public static getCorsWhiteList(): Array<string> {
+    return expressConfig.corsWhitelist;
+  }
 
   #attachErrorHandlers() {
     // https://www.codeconcisely.com/posts/how-to-handle-errors-in-express-with-typescript/
