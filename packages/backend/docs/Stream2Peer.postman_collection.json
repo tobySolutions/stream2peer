@@ -1,484 +1,731 @@
 {
-  "info": {
-    "_postman_id": "0cdfa4c6-b011-4d44-a453-2827b35d060b",
-    "name": "Stream2Peer",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-    "_exporter_id": "20800726"
-  },
-  "item": [
-    {
-      "name": "Auth",
-      "item": [
-        {
-          "name": "google",
-          "item": [
-            {
-              "name": "generate google auth url",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3Mjk4NzM1NTIsImV4cCI6MTczMDA0NjM1Mn0.-Kdl3YzOyCJXvd9E-uI3ESpCA7ykN9A_s-6zOahqlC4"
-                  }
-                },
-                "method": "POST",
-                "header": [],
-                "url": "{{base_url}}/auth/google"
-              },
-              "response": []
-            },
-            {
-              "name": "url callback",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "https://accounts.google.com/o/oauth2/auth?client_id=602969011181-2f4f8r9t5hrhmtr9rd1pl7vkn4q2r3v4.apps.googleusercontent.com&redirect_uri=http://localhost:8000/Interface/auth/google/callback&response_type=code&scope=email",
-                  "protocol": "https",
-                  "host": ["accounts", "google", "com"],
-                  "path": ["o", "oauth2", "auth"],
-                  "query": [
-                    {
-                      "key": "client_id",
-                      "value": "602969011181-2f4f8r9t5hrhmtr9rd1pl7vkn4q2r3v4.apps.googleusercontent.com"
-                    },
-                    {
-                      "key": "redirect_uri",
-                      "value": "http://localhost:8000/Interface/auth/google/callback"
-                    },
-                    {
-                      "key": "response_type",
-                      "value": "code"
-                    },
-                    {
-                      "key": "scope",
-                      "value": "email"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "metamask",
-          "item": [
-            {
-              "name": "user-wallet initiation",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "url": "localhost:8000/Interface/auth/meta-mask/auth"
-              },
-              "response": []
-            },
-            {
-              "name": "wallet verification",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "url": "localhost:8000/Interface/auth/meta-mask/verify"
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "github",
-          "item": [
-            {
-              "name": "generate github auth url",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "url": "localhost:8000/Interface/auth/github"
-              },
-              "response": []
-            },
-            {
-              "name": "url callback",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "https://github.com/login/oauth/authorize?client_id=Ov23liylaZFhAVh8WqZz&redirect_uri=http://localhost:8000/Interface/auth/github/callback&scope=user:email",
-                  "protocol": "https",
-                  "host": ["github", "com"],
-                  "path": ["login", "oauth", "authorize"],
-                  "query": [
-                    {
-                      "key": "client_id",
-                      "value": "Ov23liylaZFhAVh8WqZz"
-                    },
-                    {
-                      "key": "redirect_uri",
-                      "value": "http://localhost:8000/Interface/auth/github/callback"
-                    },
-                    {
-                      "key": "scope",
-                      "value": "user:email"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "email-auth",
-          "item": []
-        }
-      ]
-    },
-    {
-      "name": "Project",
-      "item": [
-        {
-          "name": "Create Project",
-          "item": [
-            {
-              "name": "Create Project",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {}
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"title\": \"Project Gamma\",\r\n  \"description\": \"This is a description of Project Alpha.\",\r\n  \"imageUrl\": \"https://example.com/images/project-alpha.png\",\r\n  \"inviteeId\": \"excellencejumo@gmail.com\"\r\n}\r\n",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "{{base_url}}/project/create"
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Peer Invite",
-          "item": [
-            {
-              "name": "Invite Peer to Project",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
-                  }
-                },
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"excellencejumo@gmail.com\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/project/invite/:projectId",
-                  "host": ["{{base_url}}"],
-                  "path": ["project", "invite", ":projectId"],
-                  "variable": [
-                    {
-                      "key": "projectId",
-                      "value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Update Project",
-          "item": [
-            {
-              "name": "Update Project",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
-                  }
-                },
-                "method": "PUT",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"title\":\"Project Vinicius\",\r\n    \"description\":\"Star Player\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/project/update/:projectId",
-                  "host": ["{{base_url}}"],
-                  "path": ["project", "update", ":projectId"],
-                  "variable": [
-                    {
-                      "key": "projectId",
-                      "value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Join Project",
-          "item": [
-            {
-              "name": "Join project",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3Mjk4NzM1NTIsImV4cCI6MTczMDA0NjM1Mn0.-Kdl3YzOyCJXvd9E-uI3ESpCA7ykN9A_s-6zOahqlC4"
-                  }
-                },
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/project/join/:projectId?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJleGNlbGxlbmNlanVtb0BnbWFpbC5jb20iLCJwcm9qZWN0SWQiOiJlMDNiY2M4Mi1jNWFmLTRmODgtOTRmNy1lM2E3NjMwNjU1ZjIiLCJyb2xlIjoiY28tSG9zdCIsImlhdCI6MTcyOTg3MTgzOSwiZXhwIjoxNzMwMDQ0NjM5fQ.xrgyfjg-yw-GMuXVKFlTvbSr9nb13sBeU_HCIqO5DYU",
-                  "host": ["{{base_url}}"],
-                  "path": ["project", "join", ":projectId"],
-                  "query": [
-                    {
-                      "key": "token",
-                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJleGNlbGxlbmNlanVtb0BnbWFpbC5jb20iLCJwcm9qZWN0SWQiOiJlMDNiY2M4Mi1jNWFmLTRmODgtOTRmNy1lM2E3NjMwNjU1ZjIiLCJyb2xlIjoiY28tSG9zdCIsImlhdCI6MTcyOTg3MTgzOSwiZXhwIjoxNzMwMDQ0NjM5fQ.xrgyfjg-yw-GMuXVKFlTvbSr9nb13sBeU_HCIqO5DYU"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "key": "projectId",
-                      "value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Delete Project",
-          "item": [
-            {
-              "name": "Delete project",
-              "request": {
-                "method": "DELETE",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/project/delete/:projectId",
-                  "host": ["{{base_url}}"],
-                  "path": ["project", "delete", ":projectId"],
-                  "variable": [
-                    {
-                      "key": "projectId",
-                      "value": "585beceb-cc7b-4723-9400-baebd4a6d86d"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Fetch All Projects",
-          "item": [
-            {
-              "name": "Get All Projects",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
-                  }
-                },
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/project/all",
-                  "host": ["{{base_url}}"],
-                  "path": ["project", "all"],
-                  "query": [
-                    {
-                      "key": "skip",
-                      "value": "5",
-                      "disabled": true
-                    },
-                    {
-                      "key": "limit",
-                      "value": "5",
-                      "disabled": true
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Fetch Single Project",
-          "item": [
-            {
-              "name": "Get Project By ID",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": {
-                    "token": ""
-                  }
-                },
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/project/fetch/:projectId",
-                  "host": ["{{base_url}}"],
-                  "path": ["project", "fetch", ":projectId"],
-                  "variable": [
-                    {
-                      "key": "projectId",
-                      "value": "585beceb-cc7b-4723-9400-baebd4a6d86d"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        }
-      ],
-      "auth": {
-        "type": "bearer",
-        "bearer": {}
-      },
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "type": "text/javascript",
-            "packages": {},
-            "exec": [""]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "packages": {},
-            "exec": [""]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Stream",
-      "item": [
-        {
-          "name": "create-stream",
-          "item": []
-        },
-        {
-          "name": "schedule-stream",
-          "item": []
-        },
-        {
-          "name": "share-stream-link",
-          "item": []
-        },
-        {
-          "name": "stream-quality",
-          "item": []
-        },
-        {
-          "name": "stream-mail-notification",
-          "item": []
-        }
-      ]
-    },
-    {
-      "name": "Profile",
-      "item": []
-    },
-    {
-      "name": "Video-Support",
-      "item": []
-    }
-  ],
-  "auth": {
-    "type": "bearer",
-    "bearer": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
-    }
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [""]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [""]
-      }
-    }
-  ]
+	"info": {
+		"_postman_id": "0cdfa4c6-b011-4d44-a453-2827b35d060b",
+		"name": "Stream2Peer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20800726"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "google",
+					"item": [
+						{
+							"name": "generate google auth url",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzEzNjQ3NjIsImV4cCI6MTczMTUzNzU2Mn0.Oour4rWMbudheFBhFoCUAan978GfBG51Oli_j6jJk78"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "{{base_url}}/auth/google"
+							},
+							"response": []
+						},
+						{
+							"name": "url callback",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://accounts.google.com/o/oauth2/auth?client_id=602969011181-2f4f8r9t5hrhmtr9rd1pl7vkn4q2r3v4.apps.googleusercontent.com&redirect_uri=http://localhost:8000/Interface/auth/google/callback&response_type=code&scope=email",
+									"protocol": "https",
+									"host": [
+										"accounts",
+										"google",
+										"com"
+									],
+									"path": [
+										"o",
+										"oauth2",
+										"auth"
+									],
+									"query": [
+										{
+											"key": "client_id",
+											"value": "602969011181-2f4f8r9t5hrhmtr9rd1pl7vkn4q2r3v4.apps.googleusercontent.com"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "http://localhost:8000/Interface/auth/google/callback"
+										},
+										{
+											"key": "response_type",
+											"value": "code"
+										},
+										{
+											"key": "scope",
+											"value": "email"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "metamask",
+					"item": [
+						{
+							"name": "user-wallet initiation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": "localhost:8000/Interface/auth/meta-mask/auth"
+							},
+							"response": []
+						},
+						{
+							"name": "wallet verification",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": "localhost:8000/Interface/auth/meta-mask/verify"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "github",
+					"item": [
+						{
+							"name": "generate github auth url",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": "localhost:8000/Interface/auth/github"
+							},
+							"response": []
+						},
+						{
+							"name": "url callback",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://github.com/login/oauth/authorize?client_id=Ov23liylaZFhAVh8WqZz&redirect_uri=http://localhost:8000/Interface/auth/github/callback&scope=user:email",
+									"protocol": "https",
+									"host": [
+										"github",
+										"com"
+									],
+									"path": [
+										"login",
+										"oauth",
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "client_id",
+											"value": "Ov23liylaZFhAVh8WqZz"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "http://localhost:8000/Interface/auth/github/callback"
+										},
+										{
+											"key": "scope",
+											"value": "user:email"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "email-auth",
+					"item": [
+						{
+							"name": "Email-Login",
+							"item": []
+						},
+						{
+							"name": "Generate Email Login Link",
+							"item": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "Create Project",
+					"item": [
+						{
+							"name": "Create Project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Project Gamma\",\r\n  \"description\": \"This is a description of Project Alpha.\",\r\n  \"imageUrl\": \"https://example.com/images/project-alpha.png\",\r\n  \"inviteeId\": \"excellencejumo@gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/project/create"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Peer Invite",
+					"item": [
+						{
+							"name": "Invite Peer to Project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"excellencejumo@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/project/invite/:projectId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"project",
+										"invite",
+										":projectId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update Project",
+					"item": [
+						{
+							"name": "Update Project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"Project Vinicius\",\r\n    \"description\":\"Star Player\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/project/update/:projectId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"project",
+										"update",
+										":projectId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Join Project",
+					"item": [
+						{
+							"name": "Join project",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3Mjk4NzM1NTIsImV4cCI6MTczMDA0NjM1Mn0.-Kdl3YzOyCJXvd9E-uI3ESpCA7ykN9A_s-6zOahqlC4"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/project/join/:projectId?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJleGNlbGxlbmNlanVtb0BnbWFpbC5jb20iLCJwcm9qZWN0SWQiOiJlMDNiY2M4Mi1jNWFmLTRmODgtOTRmNy1lM2E3NjMwNjU1ZjIiLCJyb2xlIjoiY28tSG9zdCIsImlhdCI6MTcyOTg3MTgzOSwiZXhwIjoxNzMwMDQ0NjM5fQ.xrgyfjg-yw-GMuXVKFlTvbSr9nb13sBeU_HCIqO5DYU",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"project",
+										"join",
+										":projectId"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJleGNlbGxlbmNlanVtb0BnbWFpbC5jb20iLCJwcm9qZWN0SWQiOiJlMDNiY2M4Mi1jNWFmLTRmODgtOTRmNy1lM2E3NjMwNjU1ZjIiLCJyb2xlIjoiY28tSG9zdCIsImlhdCI6MTcyOTg3MTgzOSwiZXhwIjoxNzMwMDQ0NjM5fQ.xrgyfjg-yw-GMuXVKFlTvbSr9nb13sBeU_HCIqO5DYU"
+										}
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete Project",
+					"item": [
+						{
+							"name": "Delete project",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/project/delete/:projectId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"project",
+										"delete",
+										":projectId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "585beceb-cc7b-4723-9400-baebd4a6d86d"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fetch All Projects",
+					"item": [
+						{
+							"name": "Get All Projects",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/project/all",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"project",
+										"all"
+									],
+									"query": [
+										{
+											"key": "skip",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "5",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fetch Single Project",
+					"item": [
+						{
+							"name": "Get Project By ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": ""
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/project/fetch/:projectId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"project",
+										"fetch",
+										":projectId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "585beceb-cc7b-4723-9400-baebd4a6d86d"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": {}
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Stream",
+			"item": [
+				{
+					"name": "MultiStream",
+					"item": [
+						{
+							"name": "Attach Social Media Accounts",
+							"item": [
+								{
+									"name": "YOUTUBE",
+									"item": []
+								},
+								{
+									"name": "TWITCH",
+									"item": []
+								},
+								{
+									"name": "LINKEDIN",
+									"item": []
+								},
+								{
+									"name": "TWITTER",
+									"item": []
+								},
+								{
+									"name": "FACEBOOK",
+									"item": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "STREAM",
+					"item": [
+						{
+							"name": "Create Stream",
+							"item": [
+								{
+									"name": "CREATE STREAM",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"title\":\"YOUTUBE STREAM\",\r\n    \"description\":\"LATEST UPDATE AROUND\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/Stream/:projectId/Create",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"Stream",
+												":projectId",
+												"Create"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Update Stream",
+							"item": []
+						},
+						{
+							"name": "Delete Stream",
+							"item": [
+								{
+									"name": "New Request",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+											}
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/stream/:projectId/Delete/:streamId",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"stream",
+												":projectId",
+												"Delete",
+												":streamId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+												},
+												{
+													"key": "streamId",
+													"value": "face5745-3be7-4e35-9544-4b2a08f96741"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fetch Streams",
+							"item": [
+								{
+									"name": "Fetch All Streams",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+											}
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/stream/:projectId/fetch/all",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"stream",
+												":projectId",
+												"fetch",
+												"all"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Fetch Single Stream",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+											}
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/stream/:projectId/FetchByIdentifier/:streamId",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"stream",
+												":projectId",
+												"FetchByIdentifier",
+												":streamId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+												},
+												{
+													"key": "streamId",
+													"value": "1f880ef1-ccfa-4716-9de4-cfd3ec9f0ac6"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
 }
