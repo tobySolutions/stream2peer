@@ -117,7 +117,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   };
 
   return (
-    <div className="block bg-dark-gray rounded-lg p-6 shadow-md transition-shadow border border-primary-border duration-300 hover:shadow-lg">
+    <div className="block cursor-pointer bg-dark-gray rounded-lg p-6 shadow-md transition-shadow border border-primary-border duration-300 hover:shadow-lg">
       <Modal
         isOpen={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}
