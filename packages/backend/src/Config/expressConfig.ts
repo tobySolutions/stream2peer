@@ -1,4 +1,4 @@
-import toArray from "Utils/transformString";
+import {toArray} from "Utils/transformString";
 
 export const expressConfig = {
   env: process.env['EXPRESS_NODE_ENV']!,

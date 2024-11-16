@@ -33,7 +33,6 @@ class DeleteStreamController {
       }
 
       await queryRunner.commitTransaction();
-
       return response.status(HttpStatusCodeEnum.NO_CONTENT).json({
         status_code: HttpStatusCodeEnum.NO_CONTENT,
         status: SUCCESS,

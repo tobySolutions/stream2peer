@@ -16,14 +16,14 @@ import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
 const dbContext = container.resolve(DbContext);
 
 class MetaMaskAuthController {
-  public async handle(req: Request, res: Response) {
+  public async handle(request: Request, response: Response) {
     const queryRunner = await dbContext.getTransactionalQueryRunner();
     await queryRunner.startTransaction();
 
     try {
-      const { address } = req.body;
+      const { address } = request.body;
       if (!address) {
-        return res.status(HttpStatusCodeEnum.BAD_REQUEST).json({
+        return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
           status_code: HttpStatusCodeEnum.BAD_REQUEST,
           status: ERROR,
           message: 'MetaMask Wallet Address is required',
@@ -39,7 +39,7 @@ class MetaMaskAuthController {
 
       if (!metaMaskAuthAccount) {
         await queryRunner.rollbackTransaction();
-        return res.status(HttpStatusCodeEnum.NOT_FOUND).json({
+        return response.status(HttpStatusCodeEnum.NOT_FOUND).json({
           status_code: HttpStatusCodeEnum.NOT_FOUND,
           status: ERROR,
           message: 'USER_NOT_FOUND',
@@ -48,7 +48,7 @@ class MetaMaskAuthController {
 
       await queryRunner.commitTransaction();
 
-      return res.status(HttpStatusCodeEnum.OK).json({
+      return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,
         data: metaMaskAuthAccount.forWallet,
@@ -56,7 +56,7 @@ class MetaMaskAuthController {
     } catch (error) {
       console.log('MetaMaskAuthController.auth error ->', error);
       await queryRunner.rollbackTransaction();
-      return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
+      return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,
         message: SOMETHING_WENT_WRONG,
@@ -64,15 +64,15 @@ class MetaMaskAuthController {
     }
   }
 
-  public async verify(req: Request, res: Response) {
+  public async verify(request: Request, response: Response) {
     const queryRunner = await dbContext.getTransactionalQueryRunner();
     await queryRunner.startTransaction();
 
     try {
-      const { address, signature } = req.body;
+      const { address, signature } = request.body;
 
       if (!address || !signature) {
-        return res.status(HttpStatusCodeEnum.BAD_REQUEST).json({
+        return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
           status_code: HttpStatusCodeEnum.BAD_REQUEST,
           status: ERROR,
           message: 'Address and signature are required',
@@ -87,7 +87,7 @@ class MetaMaskAuthController {
 
       if (!isAuthenticated) {
         await queryRunner.rollbackTransaction();
-        return res.status(HttpStatusCodeEnum.UNAUTHENTICATED).json({
+        return response.status(HttpStatusCodeEnum.UNAUTHENTICATED).json({
           status_code: HttpStatusCodeEnum.UNAUTHENTICATED,
           status: ERROR,
           message: 'Invalid signature',
@@ -99,7 +99,7 @@ class MetaMaskAuthController {
 
       if (!metaMaskAuthAccount) {
         await queryRunner.rollbackTransaction();
-        return res.status(HttpStatusCodeEnum.UNAUTHENTICATED).json({
+        return response.status(HttpStatusCodeEnum.UNAUTHENTICATED).json({
           status_code: HttpStatusCodeEnum.UNAUTHENTICATED,
           status: ERROR,
           message: 'User not found',
@@ -114,7 +114,7 @@ class MetaMaskAuthController {
 
       await queryRunner.commitTransaction();
 
-      return res
+      return response
         .setHeader('Authorization', `Bearer ${token}`)
         .status(HttpStatusCodeEnum.OK)
         .json({
@@ -125,7 +125,7 @@ class MetaMaskAuthController {
     } catch (error) {
       console.log('MetaMaskAuthController.verify error ->', error);
       await queryRunner.rollbackTransaction();
-      return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
+      return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,
         message: SOMETHING_WENT_WRONG,

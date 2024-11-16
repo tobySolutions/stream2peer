@@ -7,7 +7,7 @@ import {
   StreamProfile,
   Type,
 } from 'Api/Modules/Client/Stream/TypeChecking/StreamData';
-import { StreamDestination } from 'Api/Modules/Client/Stream/TypeChecking/MultiStreamUserDestination';
+import { Platform } from 'Api/Modules/Client/Stream/TypeChecking/MultiStreamUserDestination';
 
 @Entity('streams')
 export class Stream extends BaseEntity {
@@ -58,8 +58,8 @@ export class Stream extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   profiles: StreamProfile[];
 
-  @Column({ type: 'json', nullable: true })
-  destinations: StreamDestination[];
+  @Column({ type: 'enum', enum: Platform, nullable: true })
+  destinations: Platform[];
 
   @Column({ type: 'text', nullable: true })
   encryptedStreamData: string;

@@ -15,17 +15,17 @@ import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
 const dbContext = container.resolve(DbContext);
 
 class GitHubAuthController {
-  public async handle(req: Request, res: Response) {
+  public async handle(req: Request, response: Response) {
     try {
       const gitHubAuthUrl = GitHubAuthService.getGitHubAuthUrl();
-      return res.status(HttpStatusCodeEnum.OK).json({
+      return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,
         data: { authUrl: gitHubAuthUrl },
       });
     } catch (error) {
       console.log('GitHubAuthController.handle error ->', error);
-      return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
+      return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,
         message: SOMETHING_WENT_WRONG,

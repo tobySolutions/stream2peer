@@ -12,8 +12,8 @@ import routes from 'Api/Routes';
 import { errorHandler } from 'Api/Modules/Common/Exceptions/ErrorHandler';
 import {
   MIDDLEWARE_ATTACHED,
-  MySQLDB_CONNECTED,
-  MySQLDB_CONNECTION_ERROR,
+  MYSQLDB_CONNECTED,
+  MYSQLDB_CONNECTION_ERROR,
   ROUTES_ATTACHED,
 } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import { DbContext } from 'Lib/Infra/Internal/DBContext';
@@ -33,14 +33,14 @@ export default class Express {
     this.app = express();
     Promise.resolve(this.#connectMySQLDatabase())
       .then(() => {
-        this.loggingProvider.info(MySQLDB_CONNECTED);
+        this.loggingProvider.info(MYSQLDB_CONNECTED);
       })
       .catch((MySQLDBConnectionError) => {
         console.log(
           '🚀 ~ Express. MySQLDBConnectionError ->',
           MySQLDBConnectionError,
         );
-        this.loggingProvider.error(MySQLDB_CONNECTION_ERROR);
+        this.loggingProvider.error(MYSQLDB_CONNECTION_ERROR);
       });
 
     this.#attachMiddlewares();
@@ -78,7 +78,7 @@ export default class Express {
     // https://www.codeconcisely.com/posts/how-to-handle-errors-in-express-with-typescript/
 
     this.app.use(
-      (err: Error, req: Request, res: Response, next: NextFunction) => {
+      (err: Error, request: Request, response: Response, next: NextFunction) => {
         console.log(err);
         this.loggingProvider.error(err.message);
         next(err);
@@ -87,8 +87,8 @@ export default class Express {
 
     this.app.use(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (err: Error, req: Request, res: Response, next: NextFunction) => {
-        errorHandler.handleError(err, res);
+      (err: Error, request: Request, response: Response, next: NextFunction) => {
+        errorHandler.handleError(err, response);
       },
     );
   }
