@@ -11,7 +11,6 @@ import { AuthAccount } from 'Api/Modules/Client/Authentication/Entities/AuthAcco
 import { ProjectPeer } from '../TypeChecking/ProjectRole';
 import { BaseEntity } from 'src/Entities/Base';
 import { Stream } from 'Api/Modules/Client/Stream/Entities/Stream';
-import { MultiStreamToken } from '../../Stream/TypeChecking/MultiStreamUserDestination';
 
 @Entity('projects')
 export class Project extends BaseEntity {
@@ -33,9 +32,6 @@ export class Project extends BaseEntity {
   @Column({ type: 'simple-json' })
   peers_roles: ProjectPeer[];
 
-  @Column({ type: 'simple-json', nullable:true })
-  stream_tokens: MultiStreamToken[];
-
   @OneToMany(() => Stream, (stream) => stream.project)
   streams: Stream[];
 
@@ -54,7 +50,7 @@ export class Project extends BaseEntity {
       image_url: this.image_url,
       owner: this.owner,
       peers_roles: this.peers_roles,
-      stream_tokens: this.stream_tokens,
+      platforms: this.owner.stream_tokens.map((platform)=>platform.type),
     };
   }
 
@@ -65,7 +61,7 @@ export class Project extends BaseEntity {
       title: this.title,
       description: this.description,
       image_url: this.image_url,
-      stream_tokens: this.stream_tokens,
+      platforms: this.owner.stream_tokens.map((platform)=>platform.type),
     };
   }
 }

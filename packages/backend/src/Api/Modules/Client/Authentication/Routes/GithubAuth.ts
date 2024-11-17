@@ -4,8 +4,8 @@ import GitHubAuthController from 'Api/Modules/Client/Authentication/Controllers/
 
 const routes = Router();
 
-routes.post('/auth/github', validate, GitHubAuthController.handle);
+routes.post('/github', validate, GitHubAuthController.handle);
 
-routes.get('/auth/github/callback', validate, GitHubAuthController.callback);
+routes.get('/github/callback', validate, GitHubAuthController.callback);
 
 export default routes;

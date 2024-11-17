@@ -3,4 +3,5 @@ export enum StreamStatus {
   LIVE = 'Live',
   SUSPENDED = 'Suspended',
   ENDED = 'Ended',
+  SCHEDULED = 'Scheduled',
 }

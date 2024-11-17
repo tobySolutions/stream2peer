@@ -1,3 +1,4 @@
+import { Platform } from './MultiStreamUserDestination';
 import { PlaybackPolicy, StreamProfile } from './StreamData';
 
 export type createStreamDto = {
@@ -7,7 +8,7 @@ export type createStreamDto = {
   playBackPolicy?: object;
   profiles?: StreamProfile[];
   scheduleDate?: Date;
-  platforms?: MultistreamTarget[];
+  platforms?: Set<Platform>;
 };
 
 export type MultistreamSpec = {

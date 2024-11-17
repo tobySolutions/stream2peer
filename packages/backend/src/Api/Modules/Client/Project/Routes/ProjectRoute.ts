@@ -61,9 +61,6 @@ routes.get(
   ListProjectsController.handle,
 );
 
-//Users that havent signed up on our platform yet,
-//Users will be redirected to signup on the platform first.
-//Email signup page with authentication link to the platform.
 routes.post(
   '/Invite/:projectId',
   asyncMiddlewareHandler(authenticateUser),

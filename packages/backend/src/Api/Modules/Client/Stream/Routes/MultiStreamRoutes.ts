@@ -1,13 +1,15 @@
-//auth-routes(2) for each
-//refresh tokens to get new access tokens as access tokens expire after a while
-//get stream-key routes as well
-//3/4 routes for each auth_provider
-//youtube
+import { Router } from 'express';
+import TwitchRoutes from './MultiMediaRoutes/TwitchRoutes';
+// import YoutubeRoutes from './MultiMediaRoutes/YoutubeRoutes';
+// import FacebookRoutes from './MultiMediaRoutes/FacebookRoutes';
+// import InstagramRoutes from './MultiMediaRoutes/InstagramRoutes';
+// import LinkedinRoutes from './MultiMediaRoutes/LinkedinRoutes';
+const routes = Router();
 
-//twitch
+routes.use('', TwitchRoutes);
+// routes.use('', YoutubeRoutes);
+// routes.use('', FacebookRoutes);
+// routes.use('', InstagramRoutes);
+// routes.use('', LinkedinRoutes);
 
-
-
-//linkedin
-//twitter
-//facebook
+export default routes;

@@ -11,7 +11,7 @@ export function transformPlatform(
     [Platform.Youtube]: 'rtmp://a.rtmp.youtube.com/live2/',
     [Platform.Twitch]: 'rtmp://live.twitch.tv/app/',
     [Platform.Facebook]: 'rtmp://live-api.facebook.com:443/rtmp/',
-    [Platform.X]: null, //X is currently not supported ---->>>>TDL
+    [Platform.X]: '', //COMING SOON
   };
 
   if (platform == Platform.X) {
