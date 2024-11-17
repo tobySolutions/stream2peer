@@ -3,7 +3,8 @@ import { Request, Response, Router } from 'express';
 import AuthRoutes from 'Api/Modules/Client/Authentication/Routes/index';
 import ProjectRoutes from 'Api/Modules/Client/Project/Routes/ProjectRoute';
 import StreamRoutes from 'Api/Modules/Client/Stream/Routes/StreamRoutes';
-// import NotificationRoutes from 'Api/Modules/Client/_Notification/Routes/NotificationRoutes';
+import MultiStreamRoutes from 'Api/Modules/Client/Stream/Routes/MultiStreamRoutes';
+import NotificationRoutes from 'Api/Modules/Client/Authentication/Routes/Notification';
 import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 import {
@@ -16,7 +17,8 @@ const routes = Router();
 routes.use('/Auth', AuthRoutes);
 routes.use('/Project', ProjectRoutes);
 routes.use('/Stream', StreamRoutes);
-// routes.use('/Notification', NotificationRoutes);
+routes.use('/MultiStream', MultiStreamRoutes);
+routes.use('/Notification', NotificationRoutes);
 
 
 routes.use('/', (request: Request, response: Response) => {

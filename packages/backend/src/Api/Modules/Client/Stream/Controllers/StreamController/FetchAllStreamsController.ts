@@ -21,7 +21,7 @@ class FetchAllStreamsController {
       }
 
       const streams = await StreamService.getAllStreams(projectId);
-      console.log(streams);
+
       return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,

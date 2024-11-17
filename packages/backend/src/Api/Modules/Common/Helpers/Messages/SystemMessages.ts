@@ -2,8 +2,8 @@ export const PROVIDER_NOT_FOUND = 'Provider Was Not Found';
 export const MIDDLEWARE_ATTACHED = 'Middleware Attached Successfully';
 export const NOT_ALLOWED_BY_CORS = 'This Origin is not allowed by CORS';
 export const SERVER_STARTED = `Server Started`;
-export const MySQLDB_CONNECTED = 'MySQLDb Connected Successfully';
-export const MySQLDB_CONNECTION_ERROR = 'MySQLDB Connection Error';
+export const MYSQLDB_CONNECTED = 'MySQLDb Connected Successfully';
+export const MYSQLDB_CONNECTION_ERROR = 'MySQLDB Connection Error';
 export const EXPRESS_BOOTSTRAPPED = 'Express Bootstrapped Successfully';
 export const EXPRESS_BOOTSTRAPPED_ERROR = 'Express Bootstrap Failure';
 export const ROUTES_ATTACHED = 'Routes Attached Successfully';
@@ -21,6 +21,7 @@ export const TOKEN_EXPIRED =
   'This Token has Expired. Please Request a Fresh One.';
 export const NO_TOKEN_RECORD = 'No Token Record in Database';
 export const INVALID_TOKEN_TYPE = 'Invalid Token Type';
+export const AUTHORIZATION_CODE_MISSING = 'Authorization code is missing';
 
 export const UNAUTHORIZED_OPERATION =
   'You are not authorized to perform this Operation';
@@ -74,6 +75,18 @@ export const METAMASK_AUTHENTICATION_SUCCESS =
   'MetaMask Authentication Successful. Welcome to Stream2Peer!';
 export const METAMASK_AUTHENTICATION_FAILURE =
   'MetaMask Authentication Failed. Please try again or use another method.';
+
+export const TWITCH_AUTHENTICATION_SUCCESS = 
+  'Twitch Authentication Successful. You can now multistream on your twitch account.';
+
+export const TWITCH_AUTHENTICATION_FAILURE = 
+  'Twitch Authentication Failed. Please try again or use another method.';
+
+export const YOUTUBE_AUTHENTICATION_SUCCESS = 
+  'Youtube Authentication Successful. You can now multistream on your YouTube account.';
+
+export const YOUTUBE_AUTHENTICATION_FAILURE = 
+  'Youtube Authentication Failed. Please try again or use another method.';
 
 /* --------------------------  Authentication -> Password Messages  ---------------------*/
 export const PASSWORD_RESET_TOKEN_EMAIL_SUBJECT = 'Stream2Peer Password Reset';

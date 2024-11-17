@@ -2,13 +2,16 @@ import { autoInjectable } from 'tsyringe';
 import { DbContext } from 'Lib/Infra/Internal/DBContext';
 import { AuthAccount } from 'Api/Modules/Client/Authentication/Entities/AuthAccount';
 import { NULL_OBJECT } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
-import { DateTime } from 'luxon';
 import { Repository } from 'typeorm';
 import {
   CreateAuthAccountRecordDto,
   UpdateAuthAccountRecordArgs,
 } from 'Api/Modules/Client/Authentication/TypeChecking/AuthAccount';
 import { AuthAccountType } from '../TypeChecking/AuthAccount';
+import { GetRequestDto } from 'TypeChecking/GeneralPurpose/GetRequestDto';
+import { HttpClient } from 'Lib/Infra/Internal/HttpClient';
+import _ from 'lodash';
+import { MultiStreamToken } from '../../Stream/TypeChecking/MultiStreamUserDestination';
 
 @autoInjectable()
 class AuthAccountService {
@@ -24,9 +27,11 @@ class AuthAccountService {
     createAuthAccountRecordArgs: CreateAuthAccountRecordDto,
   ) {
     const { userId, authProvider, queryRunner } = createAuthAccountRecordArgs;
+    const username = await this.getAnimeUsername();
     const newAuthAccountData = {
       userId,
-      authProvider,
+      username,
+      authProvider
     };
 
     const authAccount = new AuthAccount();
@@ -92,16 +97,48 @@ class AuthAccountService {
     await this.authAccountRepository.save(authAccount);
   }
 
-  public async updateAuthAccountLastLoginDate(userId: string) {
-    const updateAuthAccountRecordArgs: UpdateAuthAccountRecordArgs = {
-      userId,
-      identifierType: 'userId',
-      updateAuthAccountPayload: {
-        lastLoginDate: DateTime.now(),
-      },
-    };
-    return await this.updateAuthAccountRecord(updateAuthAccountRecordArgs);
+  public async getNotificationByIdentifier(user: AuthAccount, notificationId: string) {
+      const notification = user.notifications.find(notification=>notification.identifier==notificationId);
+      return notification;
   }
+
+  public async getAnimeUsername():Promise<string>{
+    const getRequestDto: GetRequestDto = {
+      url: 'https://api.jikan.moe/v4/random/characters',
+    };
+
+    const responseData = await HttpClient.get(getRequestDto);
+    const username = _.join(responseData.data.name.split(' '), '-');
+
+    return username;
+  }
+
+  public async updateStreamTokens(
+    userId: string,
+    newStreamToken: MultiStreamToken,
+  ) {
+    const authAccount = await this.getAuthAccountByUserId(userId);
+  
+    if (authAccount === NULL_OBJECT) return NULL_OBJECT;
+  
+    const existingStreamTokens = authAccount.stream_tokens || [];
+  
+    const platformIndex = existingStreamTokens.findIndex(
+      (token) => token.type === newStreamToken.type,
+    );
+  
+    if (platformIndex > -1) {
+      existingStreamTokens[platformIndex] = newStreamToken;
+    } else {
+      existingStreamTokens.push(newStreamToken);
+    }
+  
+    authAccount.stream_tokens = existingStreamTokens;
+  
+    await this.authAccountRepository.save(authAccount);
+    return authAccount;
+  }
+  
 }
 
 export default new AuthAccountService();

@@ -15,17 +15,17 @@ import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
 const dbContext = container.resolve(DbContext);
 
 class GoogleAuthController {
-  public async handle(req: Request, res: Response) {
+  public async handle(request: Request, response: Response) {
     try {
       const googleAuthUrl = GoogleAuthService.getGoogleAuthUrl();
-      return res.status(HttpStatusCodeEnum.OK).json({
+      return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,
         data: { authUrl: googleAuthUrl },
       });
     } catch (error) {
       console.log('GoogleAuthController.handle error ->', error);
-      return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
+      return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,
         message: SOMETHING_WENT_WRONG,
