@@ -4,8 +4,8 @@ import GoogleAuthController from 'Api/Modules/Client/Authentication/Controllers/
 
 const routes = Router();
 
-routes.post('/google', validate, GoogleAuthController.handle);
+routes.get('/google', validate, GoogleAuthController.handle);
 
-routes.get('/google/callback', validate, GoogleAuthController.callback);
+routes.post('/google/callback', validate, GoogleAuthController.callback);
 
 export default routes;
