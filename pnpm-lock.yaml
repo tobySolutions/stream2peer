@@ -205,6 +205,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      frontend:
+        specifier: 'file:'
+        version: file:packages/frontend(@babel/core@7.26.0)(@types/node@22.9.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(typescript@5.6.3)(zod@3.23.8)
       livepeer:
         specifier: ^3.4.0
         version: 3.4.0(@babel/core@7.26.0)(@types/node@22.9.0)(ts-node@10.9.2)(typescript@5.6.3)(zod@3.23.8)
@@ -8046,6 +8049,10 @@ packages:
   'file:':
     resolution: {directory: '', type: directory}
     name: stream2peer
+    dependencies:
+      body-parser: 1.20.3
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   file:packages/backend(@babel/core@7.26.0)(@types/node@22.9.0)(typescript@5.6.3)(zod@3.23.8):
@@ -8116,5 +8123,47 @@ packages:
       - typeorm-aurora-data-api-driver
       - typescript
       - utf-8-validate
+      - zod
+    dev: false
+
+  file:packages/frontend(@babel/core@7.26.0)(@types/node@22.9.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(typescript@5.6.3)(zod@3.23.8):
+    resolution: {directory: packages/frontend, type: directory}
+    id: file:packages/frontend
+    name: frontend
+    dependencies:
+      '@livepeer/react': 4.2.8(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
+      antd: 5.22.1(react-dom@18.3.1)(react@18.3.1)
+      axios: 1.7.7
+      clsx: 2.1.1
+      livepeer: 3.4.0(@babel/core@7.26.0)(@types/node@22.9.0)(ts-node@10.9.2)(typescript@5.6.3)(zod@3.23.8)
+      react: 18.3.1
+      react-calendar: 5.1.0(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
+      react-clock: 5.1.0(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
+      react-datetime-picker: 6.0.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
+      react-dom: 18.3.1(react@18.3.1)
+      react-icons: 5.3.0(react@18.3.1)
+      react-router-dom: 6.28.0(react-dom@18.3.1)(react@18.3.1)
+      react-toastify: 10.0.6(react-dom@18.3.1)(react@18.3.1)
+      zustand: 5.0.1(@types/react@18.3.12)(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@jest/transform'
+      - '@jest/types'
+      - '@types/node'
+      - '@types/react'
+      - '@types/react-dom'
+      - babel-jest
+      - babel-plugin-macros
+      - date-fns
+      - debug
+      - esbuild
+      - immer
+      - luxon
+      - moment
+      - node-notifier
+      - supports-color
+      - ts-node
+      - typescript
+      - use-sync-external-store
       - zod
     dev: false
