@@ -50,7 +50,6 @@ class GitHubAuthController {
 
       const token = await GitHubAuthService.getGitHubToken(code.toString());
       const userInfo = await GitHubAuthService.getGitHubUserInfo(token);
-
       const gitHubAuthAccount = await GitHubAuthService.findOrCreateAuthAccount(
         {
           userId: userInfo.login,
