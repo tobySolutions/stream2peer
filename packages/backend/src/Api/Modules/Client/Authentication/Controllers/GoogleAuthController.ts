@@ -38,7 +38,7 @@ class GoogleAuthController {
     await queryRunner.startTransaction();
 
     try {
-      const { code } = request.query;
+      const { code } = request.body;
 
       if (!code) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
@@ -83,6 +83,8 @@ class GoogleAuthController {
           status_code: HttpStatusCodeEnum.OK,
           status: SUCCESS,
           message: GOOGLE_AUTHENTICATION_SUCCESS,
+          token: `Bearer ${jwtToken}`,
+          data: googleAuthAccount.getProfile()
         });
     } catch (error) {
       console.log('GoogleAuthController.callback error ->', error);
