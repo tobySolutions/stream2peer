@@ -18,3 +18,6 @@
 [ERROR] 2024-11-17 23:19:32 Unexpected token " in JSON at position 0
 [ERROR] 2024-11-18 15:27:16 Unexpected token " in JSON at position 0
 [ERROR] 2024-11-18 16:01:58 Handshake inactivity timeout
+[ERROR] 2024-11-18 16:23:20 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 16:25:25 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 16:41:33 Transaction is not started yet, start transaction before committing or rolling it back.

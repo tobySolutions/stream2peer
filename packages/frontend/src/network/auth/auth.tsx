@@ -26,18 +26,14 @@ export const generateAuthWithGithubUrl =
 
 export const getUserDetails = async (code: string) => {
   try {
-    const response = await instance.post(
-      `/auth/google/callback?code=${code}`,
-      {}
-    );
+    const { data } = await instance.post(`/auth/github/callback`, {
+      code,
+    });
 
-    // const token = headers["Authorization"].split(" ")[1];
-
-    // console.log(token);
-
-    // storeDataInCookie("accessToken", token, 1);
-    console.log(response.data);
-    return response.data;
+    console.log(data);
+    const token = data.token.split(" ")[1];
+    storeDataInCookie("accessToken", token, 1);
+    return data;
   } catch (error) {
     console.error(error);
   }
