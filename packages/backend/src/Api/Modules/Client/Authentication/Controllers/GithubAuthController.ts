@@ -15,17 +15,17 @@ import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
 const dbContext = container.resolve(DbContext);
 
 class GitHubAuthController {
-  public async handle(req: Request, res: Response) {
+  public async handle(req: Request, response: Response) {
     try {
       const gitHubAuthUrl = GitHubAuthService.getGitHubAuthUrl();
-      return res.status(HttpStatusCodeEnum.OK).json({
+      return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,
         data: { authUrl: gitHubAuthUrl },
       });
     } catch (error) {
       console.log('GitHubAuthController.handle error ->', error);
-      return res.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
+      return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,
         message: SOMETHING_WENT_WRONG,
@@ -38,7 +38,7 @@ class GitHubAuthController {
 
     await queryRunner.startTransaction();
     try {
-      const { code } = request.query;
+      const { code } = request.body;
 
       if (!code) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
@@ -50,7 +50,6 @@ class GitHubAuthController {
 
       const token = await GitHubAuthService.getGitHubToken(code.toString());
       const userInfo = await GitHubAuthService.getGitHubUserInfo(token);
-
       const gitHubAuthAccount = await GitHubAuthService.findOrCreateAuthAccount(
         {
           userId: userInfo.login,
@@ -82,6 +81,8 @@ class GitHubAuthController {
           status_code: HttpStatusCodeEnum.OK,
           status: SUCCESS,
           message: GITHUB_AUTHENTICATION_SUCCESS,
+          token: `Bearer ${jwtToken}`,
+          data: gitHubAuthAccount.getProfile()
         });
     } catch (error) {
       console.log('GitHubAuthController.callback error ->', error);

@@ -3,7 +3,8 @@ import { BaseEntity } from 'Entities/Base';
 import { AuthAccountType } from '../TypeChecking/AuthAccount';
 import { Project } from 'Api/Modules/Client/Project/Entities/Project';
 import { MultiStreamToken } from '../../Stream/TypeChecking/MultiStreamUserDestination';
-import { Notification } from '../TypeChecking/Notification';
+import { Notification, NotificationStatus } from '../TypeChecking/Notification';
+import { shortenText } from 'Utils/transformString';
 
 @Entity('auth_accounts')
 export class AuthAccount extends BaseEntity {
@@ -12,6 +13,9 @@ export class AuthAccount extends BaseEntity {
 
   @Column({ type: 'varchar' })
   userId: string;
+
+  @Column({type:'varchar'})
+  username: string;
 
   @Column({
     type: 'enum',
@@ -28,10 +32,27 @@ export class AuthAccount extends BaseEntity {
   @ManyToMany(() => Project, (project) => project.peers_ids)
   projects: Project[];
 
-  public get forWallet() {
+  public forWallet() {
     return {
       address: JSON.parse(this.userId).address,
       nonce: JSON.parse(this.userId).nonce,
     };
+  }
+
+  public getProfile() {
+    return {
+      username: this.username,
+      auth_provider: this.auth_provider,
+      notifications: this.notifications?.map(notification=>(shortenText(notification.text))),
+      notificationsCount: this.notifications?.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
+      projects: this.projects?.map(project=>project.listView)
+    };
+  }
+
+    public getNotifications(){
+      return{
+        notifications: this.notifications?.map(notification=>(shortenText(notification.text))),
+        notificationsCount: this.notifications?.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
+    }
   }
 }

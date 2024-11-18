@@ -1,5 +1,5 @@
 import DbQueryRunner from 'TypeChecking/QueryRunner';
-import { DateTime } from 'luxon';
+import { AuthAccount } from '../Entities/AuthAccount';
 
 export enum AuthAccountType {
   GOOGLE = 'google',
@@ -13,16 +13,8 @@ export type CreateAuthAccountRecordDto = {
   authProviderId: string;
 } & DbQueryRunner;
 
-type UpdateAuthAccountRecordArgsPayload = {
-  authProvider?: string;
-  userId?: string;
-  lastLoginDate?: DateTime;
-  isActive?: boolean;
-  isDeleted?: boolean;
-};
-
 export type UpdateAuthAccountRecordArgs = {
   identifierType: 'id' | 'identifier' | 'userId';
   userId: string;
-  updateAuthAccountPayload: UpdateAuthAccountRecordArgsPayload;
+  updateAuthAccountPayload: Partial<AuthAccount>;
 };

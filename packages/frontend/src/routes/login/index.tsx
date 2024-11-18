@@ -5,6 +5,10 @@ import { emailRegex } from "../../utils/utils";
 import Button from "../../lib/Button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
+import {
+  generateAuthWithGithubUrl,
+  generateAuthWithGoogleUrl,
+} from "../../network/auth/auth";
 
 export type FormValuesType = {
   email: string;
@@ -43,17 +47,28 @@ function Login() {
     }
   };
 
-  const handleGoogleSignIn = () => {
-    // Implement Google sign-in logic here
+  const handleGoogleSignIn = async () => {
     console.log("Google sign-in clicked");
+    try {
+      const { data } = await generateAuthWithGoogleUrl();
+      window.location.href = data.authUrl;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleGitHubSignIn = () => {
-    // Implement GitHub sign-in logic here
+  const handleGitHubSignIn = async () => {
     console.log("GitHub sign-in clicked");
+    try {
+      const { data } = await generateAuthWithGithubUrl();
+      console.log(data);
+      window.location.href = data.authUrl;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleMetaMaskSignIn = () => {
+  const handleMetaMaskSignIn = async () => {
     // Implement MetaMask sign-in logic here
     console.log("MetaMask sign-in clicked");
   };

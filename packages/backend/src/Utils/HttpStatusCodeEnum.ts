@@ -10,7 +10,6 @@ export enum HttpStatusCodeEnum {
   NOT_FOUND = 404, // Resource not found
   METHOD_NOT_ALLOWED = 405, // HTTP method not allowed
   CONFLICT = 409, // Conflict in the request
-
   UNPROCESSABLE_ENTITY = 422, // Validation error in the request
 
   TOO_MANY_REQUESTS = 429, // Too many requests sent in a given amount of time

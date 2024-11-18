@@ -1,9 +1,3 @@
-export type StreamDestination = {
-  platform: Platform;
-  url: string;
-  token?: string;
-};
-
 export enum Platform {
   Linkedin = 'Linkedin',
   Youtube = 'Youtube',
@@ -14,8 +8,9 @@ export enum Platform {
 
 export type Token = {
   accessToken?: string,
-  refreshToken?: string,
+  refreshToken: string,
 }
+
 export type MultiStreamToken = {
   type: Platform;
   token: Token;
