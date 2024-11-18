@@ -4,7 +4,6 @@ import AuthRoutes from 'Api/Modules/Client/Authentication/Routes/index';
 import ProjectRoutes from 'Api/Modules/Client/Project/Routes/ProjectRoute';
 import StreamRoutes from 'Api/Modules/Client/Stream/Routes/StreamRoutes';
 import MultiStreamRoutes from 'Api/Modules/Client/Stream/Routes/MultiStreamRoutes';
-// import NotificationRoutes from 'Api/Modules/Client/Authentication/Routes/Notification';
 import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 
 import {
@@ -18,7 +17,10 @@ routes.use('/Auth', AuthRoutes);
 routes.use('/Project', ProjectRoutes);
 routes.use('/Stream', StreamRoutes);
 routes.use('/MultiStream', MultiStreamRoutes);
+<<<<<<< HEAD
 // routes.use('/Notification', NotificationRoutes);
+=======
+>>>>>>> efaed7b92788c786c637b68f7eefb4faebac8fd2
 
 routes.use('/', (request: Request, response: Response) => {
   response.status(HttpStatusCodeEnum.OK).json({
