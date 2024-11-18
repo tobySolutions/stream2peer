@@ -13,17 +13,17 @@ export const generateAuthWithGoogleUrl =
 
 export const generateAuthWithGithubUrl =
   async (): Promise<GoogleAuthUrlResponse> => {
-    const { data } = await instance.post(`/auth/auth/github`, {});
+    const { data } = await instance.post(`/auth/github`, {});
     return data;
   };
 
-// export const generateAuthWithGithubUrl =
+// export const generateßAuthWithGithubUrl =
 //   async (): Promise<GoogleAuthUrlResponse> => {
 //     const { data } = await instance.post(`/auth/github`, {});
 //     return data;
 //   };
 
 export const getUserDetails = async (code: string) => {
-  const { data } = await instance.post(`/a`, code);
+  const { data } = await instance.post(`/auth/github/callback`, code);
   return data;
 };
