@@ -38,7 +38,7 @@ class GitHubAuthController {
 
     await queryRunner.startTransaction();
     try {
-      const { code } = request.query;
+      const { code } = request.body;
 
       if (!code) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
@@ -82,6 +82,7 @@ class GitHubAuthController {
           status_code: HttpStatusCodeEnum.OK,
           status: SUCCESS,
           message: GITHUB_AUTHENTICATION_SUCCESS,
+          data: gitHubAuthAccount.getProfile()
         });
     } catch (error) {
       console.log('GitHubAuthController.callback error ->', error);
