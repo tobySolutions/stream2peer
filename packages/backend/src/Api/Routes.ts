@@ -17,10 +17,6 @@ routes.use('/Auth', AuthRoutes);
 routes.use('/Project', ProjectRoutes);
 routes.use('/Stream', StreamRoutes);
 routes.use('/MultiStream', MultiStreamRoutes);
-<<<<<<< HEAD
-// routes.use('/Notification', NotificationRoutes);
-=======
->>>>>>> efaed7b92788c786c637b68f7eefb4faebac8fd2
 
 routes.use('/', (request: Request, response: Response) => {
   response.status(HttpStatusCodeEnum.OK).json({
