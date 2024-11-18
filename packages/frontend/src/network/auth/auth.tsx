@@ -1,3 +1,4 @@
+import { storeDataInCookie } from "../../utils/utils";
 import instance from "../axios";
 import { GoogleAuthUrlResponse } from "./types";
 
@@ -7,13 +8,13 @@ import { GoogleAuthUrlResponse } from "./types";
 // };
 export const generateAuthWithGoogleUrl =
   async (): Promise<GoogleAuthUrlResponse> => {
-    const { data } = await instance.post(`/auth/google`, {});
+    const { data } = await instance.get(`/auth/google`);
     return data;
   };
 
 export const generateAuthWithGithubUrl =
   async (): Promise<GoogleAuthUrlResponse> => {
-    const { data } = await instance.post(`/auth/github`, {});
+    const { data } = await instance.get(`/auth/github`);
     return data;
   };
 
@@ -24,6 +25,20 @@ export const generateAuthWithGithubUrl =
 //   };
 
 export const getUserDetails = async (code: string) => {
-  const { data } = await instance.post(`/auth/github/callback`, code);
-  return data;
+  try {
+    const response = await instance.post(
+      `/auth/google/callback?code=${code}`,
+      {}
+    );
+
+    // const token = headers["Authorization"].split(" ")[1];
+
+    // console.log(token);
+
+    // storeDataInCookie("accessToken", token, 1);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
