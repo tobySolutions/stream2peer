@@ -82,6 +82,7 @@ class GitHubAuthController {
           status_code: HttpStatusCodeEnum.OK,
           status: SUCCESS,
           message: GITHUB_AUTHENTICATION_SUCCESS,
+          token: `Bearer ${jwtToken}`,
           data: gitHubAuthAccount.getProfile()
         });
     } catch (error) {

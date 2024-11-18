@@ -83,6 +83,7 @@ class GoogleAuthController {
           status_code: HttpStatusCodeEnum.OK,
           status: SUCCESS,
           message: GOOGLE_AUTHENTICATION_SUCCESS,
+          token: `Bearer ${jwtToken}`,
           data: googleAuthAccount.getProfile()
         });
     } catch (error) {
