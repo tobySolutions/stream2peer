@@ -4,27 +4,48 @@ import { FaRegFolderOpen } from "react-icons/fa6";
 import { useContext, useEffect, useState } from "react";
 import { getUserDetails } from "../../../network/auth/auth";
 import { StateContext } from "../../../context";
+import { getDataInCookie, storeDataInCookie } from "../../../utils/utils";
+import { ImUser } from "react-icons/im";
 
 function DashboardHome() {
   const [params] = useSearchParams();
-  const [userCode, setUserCode] = useState<string>();
-  const { userData, setUserData } = useContext<any>(StateContext);
+  // const { userData, setUserData } = useContext<any>(StateContext);
+  const [user, setUser] = useState();
+  const userCode = params.get("code") ?? "";
+  storeDataInCookie("userCode", userCode, 1);
 
   useEffect(() => {
-    async function getUserData() {
-      const userCode = params.get("code");
-      console.log(userCode, "code");
-      if (userCode) {
-        const userDataResponse = await getUserDetails(userCode);
-        setUserData(userDataResponse);
-        console.log(userData);
+    const userCodeFromCookie = getDataInCookie("userCode");
+    // if (!userCodeFromCookie) return;
+    if (userCodeFromCookie !== "") {
+      async function getUserData() {
+        console.log("hey");
+        try {
+          const userDataResponse = await getUserDetails(userCodeFromCookie);
+
+          if (userDataResponse?.statusCode === 200) {
+            console.log("success");
+            storeDataInCookie(
+              "userDataResponse",
+              JSON.stringify(userDataResponse.data),
+              1
+            );
+          }
+
+          console.log(
+            JSON.parse(getDataInCookie("userDataResponse")),
+            "I don enter jor"
+          );
+        } catch (error) {
+          console.error(error);
+        }
       }
+      getUserData();
     }
 
-    getUserData();
-
     return () => {};
-  }, [params]);
+  }, [userCode]);
+
   return (
     <Layout>
       <div className="text-primary-white ">

@@ -1,2 +1,89 @@
-[ERROR] 2024-11-19 16:30:49 Not Authenticated
-[ERROR] 2024-11-19 16:30:49 Not Authenticated
+[ERROR] 2024-11-14 22:54:36 Not Authenticated
+[ERROR] 2024-11-14 22:54:36 Not Authenticated
+[ERROR] 2024-11-14 22:54:39 Not Authenticated
+[ERROR] 2024-11-14 22:54:39 Not Authenticated
+[ERROR] 2024-11-14 22:54:42 Not Authenticated
+[ERROR] 2024-11-14 22:54:42 Not Authenticated
+[ERROR] 2024-11-14 22:54:47 Not Authenticated
+[ERROR] 2024-11-14 22:54:47 Not Authenticated
+[ERROR] 2024-11-14 22:54:50 Not Authenticated
+[ERROR] 2024-11-14 22:54:50 Not Authenticated
+[ERROR] 2024-11-14 22:55:11 Not Authenticated
+[ERROR] 2024-11-14 22:55:11 Not Authenticated
+[ERROR] 2024-11-17 23:03:27 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-17 23:06:02 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-17 23:08:14 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-17 23:10:06 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-17 23:11:50 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-17 23:19:32 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-18 15:27:16 Unexpected token " in JSON at position 0
+[ERROR] 2024-11-18 16:01:58 Handshake inactivity timeout
+[ERROR] 2024-11-18 16:23:20 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 16:25:25 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 16:41:33 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 18:28:55 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 18:35:25 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-18 18:46:08 Not Authenticated
+[ERROR] 2024-11-18 18:46:08 Not Authenticated
+[ERROR] 2024-11-18 18:46:18 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-19 11:06:10 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-19 11:07:09 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-19 11:09:02 Transaction is not started yet, start transaction before committing or rolling it back.
+[ERROR] 2024-11-19 11:48:01 MySQLDB Connection Error
+[ERROR] 2024-11-19 11:48:05 Connection is not established with mysql database
+[ERROR] 2024-11-19 11:48:42 MySQLDB Connection Error
+[ERROR] 2024-11-19 11:48:54 MySQLDB Connection Error
+[ERROR] 2024-11-19 13:59:58 Handshake inactivity timeout
+[ERROR] 2024-11-19 14:02:25 getaddrinfo ENOTFOUND stream2peer.c7i6kyswyw55.us-east-1.rds.amazonaws.com
+[ERROR] 2024-11-19 14:15:24 getaddrinfo ENOTFOUND stream2peer.c7i6kyswyw55.us-east-1.rds.amazonaws.com
+[ERROR] 2024-11-19 14:16:10 MySQLDB Connection Error
+[ERROR] 2024-11-19 14:42:11 MySQLDB Connection Error
+[ERROR] 2024-11-19 14:47:00 Handshake inactivity timeout
+[ERROR] 2024-11-19 15:06:38 Not Authenticated
+[ERROR] 2024-11-19 15:06:38 Not Authenticated
+[ERROR] 2024-11-19 15:06:40 Not Authenticated
+[ERROR] 2024-11-19 15:06:40 Not Authenticated
+[ERROR] 2024-11-19 15:06:55 Not Authenticated
+[ERROR] 2024-11-19 15:06:55 Not Authenticated
+[ERROR] 2024-11-19 15:06:57 Not Authenticated
+[ERROR] 2024-11-19 15:06:57 Not Authenticated
+[ERROR] 2024-11-19 15:07:09 Not Authenticated
+[ERROR] 2024-11-19 15:07:09 Not Authenticated
+[ERROR] 2024-11-19 15:07:35 Not Authenticated
+[ERROR] 2024-11-19 15:07:35 Not Authenticated
+[ERROR] 2024-11-19 15:07:38 Not Authenticated
+[ERROR] 2024-11-19 15:07:38 Not Authenticated
+[ERROR] 2024-11-19 15:08:29 Not Authenticated
+[ERROR] 2024-11-19 15:09:59 Not Authenticated
+[ERROR] 2024-11-19 15:09:59 Not Authenticated
+[ERROR] 2024-11-19 15:09:59 Not Authenticated
+[ERROR] 2024-11-19 15:09:59 Not Authenticated
+[ERROR] 2024-11-19 15:10:00 Not Authenticated
+[ERROR] 2024-11-19 15:10:00 Not Authenticated
+[ERROR] 2024-11-19 15:10:03 Not Authenticated
+[ERROR] 2024-11-19 15:10:03 Not Authenticated
+[ERROR] 2024-11-19 15:10:05 Not Authenticated
+[ERROR] 2024-11-19 15:10:05 Not Authenticated
+[ERROR] 2024-11-19 15:10:07 Not Authenticated
+[ERROR] 2024-11-19 15:10:07 Not Authenticated
+[ERROR] 2024-11-19 15:10:09 Not Authenticated
+[ERROR] 2024-11-19 15:10:09 Not Authenticated
+[ERROR] 2024-11-19 15:10:12 Not Authenticated
+[ERROR] 2024-11-19 15:10:12 Not Authenticated
+[ERROR] 2024-11-19 15:11:30 Not Authenticated
+[ERROR] 2024-11-19 15:12:54 Not Authenticated
+[ERROR] 2024-11-19 15:12:54 Not Authenticated
+[ERROR] 2024-11-19 15:12:55 Not Authenticated
+[ERROR] 2024-11-19 15:12:55 Not Authenticated
+[ERROR] 2024-11-19 15:12:56 Not Authenticated
+[ERROR] 2024-11-19 15:12:56 Not Authenticated
+[ERROR] 2024-11-19 15:12:57 Not Authenticated
+[ERROR] 2024-11-19 15:12:57 Not Authenticated
+[ERROR] 2024-11-19 15:13:25 Not Authenticated
+[ERROR] 2024-11-19 15:13:25 Not Authenticated
+[ERROR] 2024-11-19 15:13:36 Not Authenticated
+[ERROR] 2024-11-19 15:13:36 Not Authenticated
+[ERROR] 2024-11-19 15:13:38 Not Authenticated
+[ERROR] 2024-11-19 15:13:38 Not Authenticated
+[ERROR] 2024-11-19 15:13:53 Not Authenticated
+[ERROR] 2024-11-19 15:13:53 Not Authenticated
