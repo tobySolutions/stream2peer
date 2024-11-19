@@ -4,41 +4,47 @@ import { FaRegFolderOpen } from "react-icons/fa6";
 import { useContext, useEffect, useState } from "react";
 import { getUserDetails } from "../../../network/auth/auth";
 import { StateContext } from "../../../context";
+import { getDataInCookie, storeDataInCookie } from "../../../utils/utils";
+import { ImUser } from "react-icons/im";
 
 function DashboardHome() {
   const [params] = useSearchParams();
-  const { userData, setUserData } = useContext<any>(StateContext);
+  // const { userData, setUserData } = useContext<any>(StateContext);
+  const [user, setUser] = useState();
   const userCode = params.get("code") ?? "";
+  storeDataInCookie("userCode", userCode, 1);
 
-  // useEffect(() => {
-  //   if (!userCode) return;
+  useEffect(() => {
+    const userCodeFromCookie = getDataInCookie("userCode");
+    // if (!userCodeFromCookie) return;
+    if (userCodeFromCookie !== "") {
+      async function getUserData() {
+        console.log("hey");
+        try {
+          const userDataResponse = await getUserDetails(userCodeFromCookie);
 
-  //   async function getUserData() {
-  //     console.log("hey");
-  //     try {
-  //       const userDataResponse = await getUserDetails(userCode);
-  //       setUserData(userDataResponse);
-  //       console.log(userData);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
+          if (userDataResponse?.statusCode === 200) {
+            console.log("success");
+            storeDataInCookie(
+              "userDataResponse",
+              JSON.stringify(userDataResponse.data),
+              1
+            );
+          }
 
-  //   getUserData();
-
-  //   return () => {};
-  // }, []);
-
-  function getUserDataFromButtonCLick() {
-    console.log("kilode");
-    try {
-      const userDataResponse = getUserDetails(userCode);
-      setUserData(userDataResponse);
-      console.log(userData);
-    } catch (error) {
-      console.error(error);
+          console.log(
+            JSON.parse(getDataInCookie("userDataResponse")),
+            "I don enter jor"
+          );
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      getUserData();
     }
-  }
+
+    return () => {};
+  }, [userCode]);
 
   return (
     <Layout>
@@ -59,9 +65,6 @@ function DashboardHome() {
               start multistreaming
             </a>
           </p>
-          <button className="bg-yellow-500" onClick={getUserDataFromButtonCLick}>
-            Use code to get data
-          </button>
         </div>
       </div>
     </Layout>
