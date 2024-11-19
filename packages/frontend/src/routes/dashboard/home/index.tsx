@@ -7,24 +7,39 @@ import { StateContext } from "../../../context";
 
 function DashboardHome() {
   const [params] = useSearchParams();
-  const [userCode, setUserCode] = useState<string>();
   const { userData, setUserData } = useContext<any>(StateContext);
+  const userCode = params.get("code") ?? "";
 
-  useEffect(() => {
-    async function getUserData() {
-      const userCode = params.get("code");
-      console.log(userCode, "code");
-      if (userCode) {
-        const userDataResponse = await getUserDetails(userCode);
-        setUserData(userDataResponse);
-        console.log(userData);
-      }
+  // useEffect(() => {
+  //   if (!userCode) return;
+
+  //   async function getUserData() {
+  //     console.log("hey");
+  //     try {
+  //       const userDataResponse = await getUserDetails(userCode);
+  //       setUserData(userDataResponse);
+  //       console.log(userData);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+
+  //   getUserData();
+
+  //   return () => {};
+  // }, []);
+
+  function getUserDataFromButtonCLick() {
+    console.log("kilode");
+    try {
+      const userDataResponse = getUserDetails(userCode);
+      setUserData(userDataResponse);
+      console.log(userData);
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    getUserData();
-
-    return () => {};
-  }, [params]);
   return (
     <Layout>
       <div className="text-primary-white ">
@@ -44,6 +59,9 @@ function DashboardHome() {
               start multistreaming
             </a>
           </p>
+          <button className="bg-yellow-500" onClick={getUserDataFromButtonCLick}>
+            Use code to get data
+          </button>
         </div>
       </div>
     </Layout>
