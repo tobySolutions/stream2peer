@@ -42,17 +42,18 @@ export class AuthAccount extends BaseEntity {
   public getProfile() {
     return {
       username: this.username,
+      userId: this.userId,
       auth_provider: this.auth_provider,
-      notifications: this.notifications.map(notification=>(shortenText(notification.text))),
-      notificationsCount: this.notifications.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
-      projects: this.projects.map(project=>project.listView)
+      notifications: this.notifications?.map(notification=>(shortenText(notification.text))),
+      notificationsCount: this.notifications?.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
+      projects: this.projects?.map(project=>project.listView)
     };
   }
 
     public getNotifications(){
       return{
-        notifications: this.notifications.map(notification=>(shortenText(notification.text))),
-        notificationsCount: this.notifications.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
+        notifications: this.notifications?.map(notification=>(shortenText(notification.text))),
+        notificationsCount: this.notifications?.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
     }
   }
 }
