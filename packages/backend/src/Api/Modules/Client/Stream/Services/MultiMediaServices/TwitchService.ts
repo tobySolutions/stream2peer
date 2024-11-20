@@ -39,8 +39,28 @@ class TwitchAuthService {
     return response.access_token;
   }
 
+  public async getUserDetails(accessToken: string) {
+    try {
+      const response = await HttpClient.get({
+        url: 'https://api.twitch.tv/helix/users',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Client-Id': authConfig.twitchClientId,
+        },
+      });
+      if (response.data && response.data.length > 0) {
+        return response.data[0];
+      }
+      console.log('Failed to fetch user details: No user data found.');
+      return NULL_OBJECT;
+    } catch (getUserDetailsError) {
+      console.error('Error fetching user details ->', getUserDetailsError);
+      return NULL_OBJECT;
+    }
+  }
+
   public async getStreamKey(refreshToken: string, authCalls: number = 0): Promise<string | null>{
-    const MAX_AUTH_CALLS = 5;
+    const MAX_AUTH_CALLS = 2;
     try {
       if (authCalls >= MAX_AUTH_CALLS) {
         console.log('Maximum auth attempts reached. Returning NULL_OBJECT.');
@@ -48,15 +68,23 @@ class TwitchAuthService {
       }
 
       const newAccessToken = await this.refreshAccessToken(refreshToken);
+
+      const userDetails = await this.getUserDetails(newAccessToken);
+      if (!userDetails || !userDetails.id) {
+        console.error('Failed to fetch broadcaster_id. Returning NULL_OBJECT.');
+        return NULL_OBJECT;
+      }
+
+      const broadcasterId = userDetails.id;
+      //1172109585
       const response = await HttpClient.get({
-        url: 'https://api.twitch.tv/helix/streams/key',
+        url: `https://api.twitch.tv/helix/streams/key?broadcaster_id=${broadcasterId}`,
         headers: {
           'Authorization': `Bearer ${newAccessToken}`,
           'Client-Id': authConfig.twitchClientId,
         },
       });
-
-      return response.data.stream_key;
+      return response.data[0].stream_key;
     } catch (getStreamKeyError) {
       console.log('Error in getStreamKey, refreshing token...', getStreamKeyError);
       return this.getStreamKey(refreshToken, authCalls + 1); 

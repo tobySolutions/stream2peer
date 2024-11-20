@@ -50,7 +50,7 @@ export class Project extends BaseEntity {
       image_url: this.image_url,
       owner: this.owner,
       peers_roles: this.peers_roles,
-      platforms: this.owner.stream_tokens.map((platform)=>platform.type),
+      platforms: this.owner.stream_tokens?.map((platform)=>platform.type),
     };
   }
 
@@ -61,7 +61,7 @@ export class Project extends BaseEntity {
       title: this.title,
       description: this.description,
       image_url: this.image_url,
-      platforms: this.owner.stream_tokens.map((platform)=>platform.type),
+      platforms: this.owner.stream_tokens?.map((platform)=>platform.type),
     };
   }
 }

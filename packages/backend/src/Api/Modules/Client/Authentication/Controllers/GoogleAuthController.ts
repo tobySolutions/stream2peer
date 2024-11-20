@@ -49,6 +49,13 @@ class GoogleAuthController {
       }
 
       const token = await GoogleAuthService.getGoogleToken(code.toString());
+      if (!token) {
+        return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
+          status_code: HttpStatusCodeEnum.BAD_REQUEST,
+          status: ERROR,
+          message: 'Token not found',
+        });
+      }
       const userInfo = await GoogleAuthService.getGoogleUserInfo(token);
 
       const googleAuthAccount = await GoogleAuthService.findOrCreateAuthAccount(

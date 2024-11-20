@@ -6,7 +6,7 @@ import TwitchRoutes from './MultiMediaRoutes/TwitchRoutes';
 // import LinkedinRoutes from './MultiMediaRoutes/LinkedinRoutes';
 const routes = Router();
 
-routes.use('', TwitchRoutes);
+routes.use('/twitch', TwitchRoutes);
 // routes.use('', YoutubeRoutes);
 // routes.use('', FacebookRoutes);
 // routes.use('', InstagramRoutes);
