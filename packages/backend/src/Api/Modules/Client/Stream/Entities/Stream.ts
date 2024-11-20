@@ -77,8 +77,8 @@ export class Stream extends BaseEntity {
       playbackId: this.playbackId,
       isPublic: this.playBackPolicy.type === Type.Public ? true : false,
       schedule: this.schedule,
-      profiles: JSON.parse(this.profiles as unknown as string),
-      destinations: JSON.parse(this.destinations as unknown as string),
+      profiles: this.profiles,
+      destinations: this.destinations,
       startedAt: this.startedAt,
       endedAt: this.endedAt,
     };
@@ -95,8 +95,8 @@ export class Stream extends BaseEntity {
       playbackId: this.playbackId,
       isPublic: this.playBackPolicy.type === Type.Public ? true : false,
       schedule: this.schedule,
-      profiles: JSON.parse(this.profiles as unknown as string),
-      destinations: JSON.parse(this.destinations as unknown as string),
+      profiles: this.profiles,
+      destinations: this.destinations,
       startedAt: this.startedAt,
       endedAt: this.endedAt,
     };

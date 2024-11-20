@@ -26,7 +26,7 @@ class ProfileController {
       return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,
-        data: userProfile.getProfile,
+        data: userProfile.getProfile(),
       });
     } catch (error) {
       console.log('ProfileController.handle error ->', error);
