@@ -201,14 +201,14 @@
 								"auth": {
 									"type": "bearer",
 									"bearer": {
-										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTcyOTg1NjE0MCwiZXhwIjoxNzMwMDI4OTQwfQ.inC2o8RGAXZjZBySpKUJTVt81_OMWcL3rXd5xtN9Sb8"
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
 									}
 								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"excellencejumo@gmail.com\"\r\n}",
+									"raw": "{\"users\" :[{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"excellencejumo@gmail.com\"\r\n},{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"adedamolaadejumo484@gmail.com\"\r\n}]}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -493,29 +493,41 @@
 					"name": "MultiStream",
 					"item": [
 						{
-							"name": "Attach Social Media Accounts",
+							"name": "YOUTUBE",
+							"item": []
+						},
+						{
+							"name": "TWITCH",
 							"item": [
 								{
-									"name": "YOUTUBE",
-									"item": []
+									"name": "generate twitch auth url",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
 								},
 								{
-									"name": "TWITCH",
-									"item": []
-								},
-								{
-									"name": "LINKEDIN",
-									"item": []
-								},
-								{
-									"name": "TWITTER",
-									"item": []
-								},
-								{
-									"name": "FACEBOOK",
-									"item": []
+									"name": "twitch callback",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
 								}
 							]
+						},
+						{
+							"name": "LINKEDIN",
+							"item": []
+						},
+						{
+							"name": "TWITTER",
+							"item": []
+						},
+						{
+							"name": "FACEBOOK",
+							"item": []
 						}
 					]
 				},

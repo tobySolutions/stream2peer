@@ -6,7 +6,11 @@ import { asyncMiddlewareHandler } from 'Utils/asyncMiddlewareHandler';
 
 const routes = Router();
 
-routes.post('/twitch/auth', asyncMiddlewareHandler(authenticateUser), validate, TwitchAuthController.handle);
-routes.get('/twitch/callback', asyncMiddlewareHandler(authenticateUser), validate, TwitchAuthController.callback);
+routes.get('/auth',
+    // asyncMiddlewareHandler(authenticateUser), 
+    validate, TwitchAuthController.handle);
+routes.post('/callback',
+    asyncMiddlewareHandler(authenticateUser), 
+    validate, TwitchAuthController.callback);
 
 export default routes;

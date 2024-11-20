@@ -1,0 +1,43 @@
+import { storeDataInCookie } from "../../utils/utils";
+import instance from "../axios";
+import { GoogleAuthUrlResponse } from "./types";
+
+const errorCodes = [400, 401, 403, 404, 500];
+
+// export const login = async (payload: AddProjectProps) => {
+//   const { data } = await instance.post(`/project/create`, payload);
+//   return data;
+// };
+export const generateAuthWithGoogleUrl =
+  async (): Promise<GoogleAuthUrlResponse> => {
+    const { data } = await instance.get(`/auth/google`);
+    return data;
+  };
+
+export const generateAuthWithGithubUrl =
+  async (): Promise<GoogleAuthUrlResponse> => {
+    const { data } = await instance.get(`/auth/github`);
+    return data;
+  };
+
+// export const generateAuthWithGithubUrl =
+//   async (): Promise<GoogleAuthUrlResponse> => {
+//     const { data } = await instance.post(`/auth/github`, {});
+//     return data;
+//   };
+
+export const getUserDetails = async (code: string) => {
+  const { data } = await instance.post(`/auth/github/callback`, {
+    code,
+  });
+
+  if (data["status_code"] === 200) {
+    console.log(data, "200");
+    const token = data.token.split(" ")[1];
+    storeDataInCookie("accessToken", token, 1);
+    return {
+      data,
+      statusCode: data["status_code"],
+    };
+  }
+};

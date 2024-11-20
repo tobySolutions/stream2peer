@@ -30,7 +30,7 @@ class NotificationController {
         return response.status(HttpStatusCodeEnum.OK).json({
             status_code: HttpStatusCodeEnum.OK,
             status: SUCCESS,
-            data: userProfile.getNotifications,
+            data: userProfile.getNotifications(),
         });
     } catch (error) {
       console.log('NotificationController.handle error ->', error);

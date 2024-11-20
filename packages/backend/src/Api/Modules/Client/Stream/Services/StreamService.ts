@@ -40,9 +40,10 @@ class StreamService {
     const { projectId, title, description, profiles, scheduleDate, platforms } =
       streamData;
 
-    const project = await this.projectRepository.findOne({
-      where: { identifier: projectId },
-    });
+      const project = await this.projectRepository.findOne({
+        where: { identifier: projectId },
+        relations: ['owner'],
+      });
     if (!project) return NULL_OBJECT;
 
     const stream = new Stream();
@@ -65,9 +66,11 @@ class StreamService {
     });
 
     try {
-      const streamTokens = project.owner.stream_tokens;
-      const multistreamTargets = await this.generateMultistreamTargets(platforms, title, streamTokens);
-
+      const streamTokens = project.owner?.stream_tokens;
+      let multistreamTargets;
+      if(streamTokens){
+        multistreamTargets = await this.generateMultistreamTargets(platforms, title, streamTokens);
+      }
       await LivepeerService.createStream(
         stream,
         streamProfiles,

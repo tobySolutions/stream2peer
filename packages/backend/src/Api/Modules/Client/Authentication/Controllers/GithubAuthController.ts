@@ -49,8 +49,14 @@ class GitHubAuthController {
       }
 
       const token = await GitHubAuthService.getGitHubToken(code.toString());
+      if (!token) {
+        return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
+          status_code: HttpStatusCodeEnum.BAD_REQUEST,
+          status: ERROR,
+          message: 'Token not found',
+        });
+      }
       const userInfo = await GitHubAuthService.getGitHubUserInfo(token);
-
       const gitHubAuthAccount = await GitHubAuthService.findOrCreateAuthAccount(
         {
           userId: userInfo.login,
@@ -83,7 +89,7 @@ class GitHubAuthController {
           status: SUCCESS,
           message: GITHUB_AUTHENTICATION_SUCCESS,
           token: `Bearer ${jwtToken}`,
-          data: gitHubAuthAccount.getProfile()
+          data: gitHubAuthAccount.getProfile(),
         });
     } catch (error) {
       console.log('GitHubAuthController.callback error ->', error);

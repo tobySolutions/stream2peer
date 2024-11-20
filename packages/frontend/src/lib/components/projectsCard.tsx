@@ -19,8 +19,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
     desc: string;
   }>({ title: project?.title, desc: project?.description });
 
-
-  const {setLoading} = useContext(StateContext);
+  const { setLoading } = useContext(StateContext);
 
   const handleDeleteProject = async (id: string) => {
     setDeleteLoading(true);

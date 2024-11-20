@@ -7,10 +7,10 @@ import StateProvider from "./context/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <StateProvider>
-        <App />
-      </StateProvider>
-    </BrowserRouter>
+  <BrowserRouter>
+    <StateProvider>
+      <App />
+    </StateProvider>
+  </BrowserRouter>
   </StrictMode>
 );
