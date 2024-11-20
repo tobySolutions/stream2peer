@@ -14,6 +14,8 @@ import {
   StopIcon,
   StopScreenshareIcon,
 } from "@livepeer/react/assets";
+import Logo from "/logo.png";
+
 import { BsChevronDown } from "react-icons/bs";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { FaRegStopCircle } from "react-icons/fa";
@@ -28,7 +30,7 @@ import { Livepeer } from "livepeer";
 
 export function BroadcastWithControls() {
 
-  const ingestUrl = getIngest("c6e2-1tz7-t419-vnvb");
+  const ingestUrl = getIngest("9b63-6u95-ye09-q0xs");
    const livepeer = new Livepeer({
      apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
    });
@@ -66,7 +68,7 @@ export function BroadcastWithControls() {
         <Broadcast.Container className="w-[100vw] h-screen overflow-hidden rounded-sm bg-gray-950">
           <Broadcast.Video
             title="Live stream"
-            className="w-full h-full text-primary-white"
+            className="justify-start w-full flex text-primary-white"
             color="white"
           />
 
@@ -161,9 +163,12 @@ export function BroadcastWithControls() {
               </Broadcast.EnabledTrigger>
             </Broadcast.EnabledIndicator>
           </Broadcast.Controls>
+          <div className="absolute top-2 left-2">
+            <img src={Logo} alt="Logo" width="120px" height="50px" />
+          </div>
 
           <Broadcast.LoadingIndicator asChild matcher={false}>
-            <div className="absolute overflow-hidden py-1 px-2 rounded-full top-1 left-1 bg-black/50 flex items-center backdrop-blur">
+            <div className="absolute overflow-hidden py-1 px-2 rounded-full top-8 left-2 bg-black/50 flex items-center backdrop-blur gap-3">
               <Broadcast.StatusIndicator
                 matcher="live"
                 className="flex gap-2 items-center"

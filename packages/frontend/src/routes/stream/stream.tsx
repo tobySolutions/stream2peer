@@ -5,8 +5,13 @@ import { useContext, useEffect, useState } from "react";
 import { getSrc } from "@livepeer/react/external";
 import { Livepeer } from "livepeer";
 import { StateContext } from "../../context";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Stream = () => {
+  const { id: playbackId } = useParams();
+  // console.log(playbackId)
+  let navigate = useNavigate();
   const [streamSource, setStreamSource] = useState<Src[] | null>(null);
 
   const { currentStream } = useContext(StateContext);
@@ -16,11 +21,15 @@ export const Stream = () => {
   });
 
   const getPlaybackSource = async () => {
-    const playbackInfo = await livepeer.playback.get("c6e2jusy55anjf6y");
-  
-    const src = getSrc(playbackInfo.playbackInfo);
-    setStreamSource(src);
-    return src;
+    if (playbackId) {
+      const playbackInfo = await livepeer.playback?.get(playbackId!);
+
+      const src = getSrc(playbackInfo.playbackInfo);
+      setStreamSource(src);
+      return src;
+    }else {
+      navigate("/")
+    }
   };
 
   useEffect(() => {

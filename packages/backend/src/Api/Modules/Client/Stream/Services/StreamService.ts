@@ -65,7 +65,7 @@ class StreamService {
     });
 
     try {
-      const streamTokens = project.owner.stream_tokens;
+      const streamTokens = project.owner?.stream_tokens;
       const multistreamTargets = await this.generateMultistreamTargets(platforms, title, streamTokens);
 
       await LivepeerService.createStream(

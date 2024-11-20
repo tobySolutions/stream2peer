@@ -24,7 +24,7 @@ const LivestreamComponent = () => {
     <div>
       <button onClick={createStream}>Start Broadcast</button>
       {streamKey && ingestUrl && (
-        <Broadcast.Root streamKey={streamKey} ingestUrl={ingestUrl}>
+        <Broadcast.Root ingestUrl={ingestUrl}>
           <Broadcast.Container>
             <Broadcast.Video />
             <Broadcast.Controls />
