@@ -16,3 +16,7 @@ export const fetchAllStreams = async (
   const { data } = await instance.get(`/Stream/${projectId}/fetch/all`);
   return data;
 };
+
+export const connectToTwitch = async () => {
+  const { data } = await instance.get(`/Stream/`)
+}

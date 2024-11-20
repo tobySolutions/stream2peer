@@ -30,7 +30,7 @@ export default function Routes() {
       <Route element={<ProjectPage />} path="/dashboard/projects/:id" />
       <Route element={<JoinProject />} path="/projects/join/:id" />
       <Route path="/stream/:id" element={<Stream />} />
-      <Route path="/broadcast" element={<BroadcastWithControls />} />
+      <Route path="/broadcast/:id" element={<BroadcastWithControls />} />
       <Route
         element={<LivestreamPage />}
         path="/dashboard/projects/livestream/:id"

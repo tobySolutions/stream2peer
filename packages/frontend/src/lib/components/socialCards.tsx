@@ -6,6 +6,12 @@ import { ImTwitch } from "react-icons/im";
 import { FaLinkedin } from "react-icons/fa6";
 
 const SocialMediaCards: React.FC = () => {
+
+
+  const handleTwitchConnect = () => {
+
+  }
+  
   return (
     <div className="flex flex-wrap gap-4">
       <div className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition">

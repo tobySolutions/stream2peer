@@ -25,26 +25,17 @@ import * as Popover from "@radix-ui/react-popover";
 import React, { useEffect } from "react";
 import { getIngest } from "@livepeer/react/external";
 import { Livepeer } from "livepeer";
+import { useParams } from "react-router-dom";
 
 // import { toast } from "sonner";
 
 export function BroadcastWithControls() {
 
-  const ingestUrl = getIngest("9b63-6u95-ye09-q0xs");
-   const livepeer = new Livepeer({
-     apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
-   });
-  
-  const testRun = async() => {
-    const result = await livepeer.multistream.getAll();
-  
-      // Handle the result
-      console.log(result)
-  }
+  const { id: streamkey } = useParams();
 
-  // useEffect(() => {
-  //   testRun();
-  // },[])
+
+  const ingestUrl = getIngest(streamkey);
+   
 
   return !ingestUrl ? (
     <BroadcastLoading
