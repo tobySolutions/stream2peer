@@ -50,6 +50,9 @@ export class Stream extends BaseEntity {
   livepeerStreamId: string;
 
   @Column({ type: 'varchar', nullable: true })
+  streamKey: string;
+
+  @Column({ type: 'varchar', nullable: true })
   playbackId: string;
 
   @Column({ type: 'json', nullable: true })
@@ -74,6 +77,7 @@ export class Stream extends BaseEntity {
       status: this.status,
       viewers: this.viewers,
       lastSeen: this.lastSeen,
+      streamKey: this.streamKey,
       playbackId: this.playbackId,
       isPublic: this.playBackPolicy.type === Type.Public ? true : false,
       schedule: this.schedule,
@@ -92,6 +96,7 @@ export class Stream extends BaseEntity {
       status: this.status,
       viewers: this.viewers,
       lastSeen: this.lastSeen,
+      streamKey: this.streamKey,
       playbackId: this.playbackId,
       isPublic: this.playBackPolicy.type === Type.Public ? true : false,
       schedule: this.schedule,

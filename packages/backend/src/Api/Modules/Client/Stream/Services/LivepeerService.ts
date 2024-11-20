@@ -49,6 +49,7 @@ class LivePeerService {
       Object.assign(streamData, {
         livepeerStreamId: createdStream.stream?.id,
         playbackId: createdStream.stream?.playbackId,
+        streamKey: createdStream.stream?.streamKey,
         encryptedStreamData: JSON.stringify(createdStream.stream),
       });
       return createdStream.stream;
@@ -75,9 +76,9 @@ class LivePeerService {
       }
       existingStream.stream?.multistream?.targets?.push(target);
 
-      await this.livepeerClient.stream.update(streamId, {
+      await this.livepeerClient.stream.update({
         multistream: { targets: existingStream.stream?.multistream?.targets },
-      });
+      },streamId);
       return true;
     } catch (attachMultistreamError) {
       console.error(
@@ -101,9 +102,9 @@ class LivePeerService {
         existingStream!.stream!.profiles!.push(profile),
       );
 
-      await this.livepeerClient.stream.update(streamId, {
+      await this.livepeerClient.stream.update({
         profiles: existingStream?.stream?.profiles,
-      });
+      },streamId);
       return true;
     } catch (updateProfilesError) {
       console.error(
@@ -122,7 +123,7 @@ class LivePeerService {
     updateData: Partial<LivepeerUpdateStreamDto>,
   ): Promise<boolean> {
     try {
-      await this.livepeerClient.stream.update(streamId, updateData);
+      await this.livepeerClient.stream.update(updateData,streamId);
       return true;
     } catch (updateStreamError) {
       console.error(
@@ -170,9 +171,9 @@ class LivePeerService {
    */
   public async suspendStream(streamId: string): Promise<boolean> {
     try {
-      await this.livepeerClient.stream.update(streamId, {
+      await this.livepeerClient.stream.update({
         suspended: true,
-      });
+      }, streamId);
       return true;
     } catch (suspendStreamError) {
       console.error(
@@ -188,9 +189,9 @@ class LivePeerService {
    */
   public async activateStream(streamId: string): Promise<boolean> {
     try {
-      await this.livepeerClient.stream.update(streamId, {
+      await this.livepeerClient.stream.update({
         suspended: false,
-      });
+      },streamId);
       return true;
     } catch (activateStreamError) {
       console.error(
