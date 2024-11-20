@@ -18,10 +18,10 @@
 								"auth": {
 									"type": "bearer",
 									"bearer": {
-										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzEzNjQ3NjIsImV4cCI6MTczMTUzNzU2Mn0.Oour4rWMbudheFBhFoCUAan978GfBG51Oli_j6jJk78"
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
 									}
 								},
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"url": "{{base_url}}/auth/google"
 							},
@@ -503,15 +503,41 @@
 									"name": "generate twitch auth url",
 									"request": {
 										"method": "GET",
-										"header": []
+										"header": [],
+										"url": "{{base_url}}/MultiStream/twitch/auth"
 									},
 									"response": []
 								},
 								{
-									"name": "twitch callback",
+									"name": "TWITCH CALLBACK",
 									"request": {
-										"method": "GET",
-										"header": []
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
+											}
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/interface/multistream/twitch/callback?code=70r1r0cfsmqk7rqchyiihpvqscnner",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"interface",
+												"multistream",
+												"twitch",
+												"callback"
+											],
+											"query": [
+												{
+													"key": "code",
+													"value": "70r1r0cfsmqk7rqchyiihpvqscnner"
+												}
+											]
+										}
 									},
 									"response": []
 								}
@@ -543,7 +569,7 @@
 										"auth": {
 											"type": "bearer",
 											"bearer": {
-												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
 											}
 										},
 										"method": "POST",
@@ -556,7 +582,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"title\":\"YOUTUBE STREAM\",\r\n    \"description\":\"LATEST UPDATE AROUND\"\r\n}",
+											"raw": "{\r\n    \"title\":\"TWITCH STREAMYARD\",\r\n    \"description\":\"Testing twitch broadcast from livepeer\",\r\n    \"platforms\":[\"Twitch\"]//please pay attention to how it is written\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -639,7 +665,7 @@
 										"auth": {
 											"type": "bearer",
 											"bearer": {
-												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
 											}
 										},
 										"method": "GET",
