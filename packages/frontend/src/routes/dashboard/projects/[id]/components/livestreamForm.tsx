@@ -1,3 +1,4 @@
+import { Select } from "antd";
 import React from "react";
 import DateTimePicker from "react-datetime-picker";
 
@@ -16,6 +17,12 @@ interface LivestreamFormProps {
   >;
   selectedDate: Date | null;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  handleChange: any;
+  platforms: {
+    label: string;
+    icon: JSX.Element;
+    value: "Twitch" | "Youtube";
+  }[];
 }
 
 const LivestreamForm: React.FC<LivestreamFormProps> = ({
@@ -23,7 +30,11 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
   setStreamDetails,
   selectedDate,
   setSelectedDate,
+  platforms,
+  handleChange
 }) => {
+  const { Option } = Select;
+
   return (
     <div>
       <div className="mb-4">
@@ -85,11 +96,25 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
       </div>
 
       {streamDetails.type === "schedule" && (
-        <div className="flex flex-col gap-2 mt-4">
+        <div className="flex flex-col gap-2 my-4">
           <label>Select a date and time</label>
           <DateTimePicker value={selectedDate} onChange={setSelectedDate} />
         </div>
       )}
+      <Select
+        placeholder="Select a platform"
+        style={{ width: 200 }}
+        onChange={handleChange} // Handle change event
+      >
+        {platforms.map((platform) => (
+          <Option key={platform.value} value={platform.value}>
+            <div className="flex items-center gap-1">
+              {platform.icon}
+              <span style={{ marginLeft: 8 }}>{platform.label}</span>
+            </div>
+          </Option>
+        ))}
+      </Select>
     </div>
   );
 };

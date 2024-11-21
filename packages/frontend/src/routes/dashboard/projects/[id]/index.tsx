@@ -22,7 +22,26 @@ import {
 } from "../../../../network/streams/streams-api";
 import LivestreamForm from "./components/livestreamForm";
 import PeerInviteForm from "./components/peerInviteForm";
+import { IoLogoYoutube } from "react-icons/io5";
+import { FaXTwitter } from "react-icons/fa6";
+import { ImTwitch } from "react-icons/im";
 
+const platforms: {
+  label: string;
+  icon: JSX.Element;
+  value: "Twitch" | "Youtube";
+}[] = [
+  {
+    label: "YouTube",
+    value: "Youtube",
+    icon: <IoLogoYoutube style={{ color: "#FF0000" }} />,
+  },
+  {
+    label: "Twitch",
+    value: "Twitch",
+    icon: <ImTwitch style={{ color: "#9146FF" }} />,
+  },
+];
 const ProjectPage = () => {
   const { id: projectId } = useParams();
   const navigate = useNavigate();
@@ -52,6 +71,8 @@ const ProjectPage = () => {
   const [selectedRole, setSelectedRole] = useState<"co-Host" | "Subscriber">(
     "co-Host"
   );
+  const [selectedPlatform, setSelectedPlatform] = useState<
+    ("Twitch" | "Youtube")[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [loading, setLoading] = useState({
     project: false,
@@ -109,6 +130,7 @@ const ProjectPage = () => {
         title: streamDetails.title,
         description: streamDetails.description,
         ...(modalState.type === "schedule" && { date: selectedDate }),
+        platforms: selectedPlatform
       };
       const response = await createLiveStream(projectId!, payload);
       setCurrentStream(response?.results);
@@ -143,6 +165,11 @@ const ProjectPage = () => {
 
   const handleDeleteEmail = (email: string) => {
     setUserData((prev) => prev.filter((user) => user.userId !== email));
+  };
+
+  const handleChange = (value: "Twitch" | "Youtube") => {
+    console.log("Selected Platform:", value);
+    setSelectedPlatform([...selectedPlatform, value]); // Update state or perform other actions
   };
 
   // Render
@@ -212,6 +239,8 @@ const ProjectPage = () => {
       >
         <LivestreamForm
           streamDetails={streamDetails}
+          platforms={platforms}
+          handleChange={handleChange}
           setStreamDetails={setStreamDetails}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}

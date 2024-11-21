@@ -21,7 +21,7 @@ const LivestreamCard = ({ livestream, type }: any) => {
      };
   const viewDetails = () => {
     // Calls the onView function passed from parent with the livestream id
-    navigate(`/broadcast/${livestream?.streamkey}`)
+    navigate(`/broadcast/${livestream?.streamKey}`)
   };
 
   console.log(livestream)
