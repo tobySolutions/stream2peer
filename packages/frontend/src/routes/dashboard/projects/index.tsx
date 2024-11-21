@@ -8,6 +8,7 @@ import {
   AddProject,
   FetchAllProjects,
 } from "../../../network/projects/projects";
+import { ImFilesEmpty } from "react-icons/im";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StateContext } from "../../../context";
@@ -204,6 +205,14 @@ function Projects() {
         {projectingLoading ? (
           <div className="grid place-content-center h-[calc(100vh-400px)]">
             <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+          </div>
+        ) : ProjectsData?.length === 0 ? (
+          <div className="text-primary-white grid place-content-center w-full h-[calc(100vh-200px)] gap-4">
+            <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36">
+              <div className=""></div>
+              <ImFilesEmpty size={40} />
+              <p>No projects added yet.</p>
+            </div>
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-6 mt-4">

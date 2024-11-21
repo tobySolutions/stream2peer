@@ -26,7 +26,7 @@ class ListUserProjectsController {
         status: SUCCESS,
         message: INFORMATION_RETRIEVED,
         results: {
-          data: projects.data.map((project) => project.listView()),
+          data: projects.data?.map((project) => project.listView()),
           meta: projects.meta,
         },
       });

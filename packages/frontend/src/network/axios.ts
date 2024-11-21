@@ -5,7 +5,7 @@ let tokens: { accessToken: string; refreshToken: string } | null = null;
 
 if (typeof window !== "undefined") {
   tokens = {
-    accessToken: getDataInCookie("access_token"),
+    accessToken: getDataInCookie("accessToken"),
     refreshToken: getDataInCookie("refresh_token"),
   };
 }

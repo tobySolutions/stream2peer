@@ -27,7 +27,7 @@ export const generateAuthWithGithubUrl =
 //   };
 
 export const getUserDetails = async (code: string) => {
-  const { data } = await instance.post(`/auth/github/callback`, {
+  const { data } = await instance.post(`/auth/google/callback`, {
     code,
   });
 

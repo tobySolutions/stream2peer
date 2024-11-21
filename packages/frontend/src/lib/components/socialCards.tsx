@@ -4,15 +4,28 @@ import { IoLogoYoutube } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
 import { ImTwitch } from "react-icons/im";
 import { FaLinkedin } from "react-icons/fa6";
+import { connectToTwitch } from "../../network/streams/streams-api";
 
 const SocialMediaCards: React.FC = () => {
+  const handleTwitchConnect = async () => {
+    try {
+      const { data } = await connectToTwitch();
+      window.location.href = data.authUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex flex-wrap gap-4">
       <div className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition">
         <IoLogoYoutube />
         <span>YouTube Channel</span>
       </div>
-      <div className="bg-[#9147ff] w-48 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-[#9147ffbe] transition">
+      <div
+        onClick={handleTwitchConnect}
+        className="bg-[#9147ff] w-48 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-[#9147ffbe] transition"
+      >
         <ImTwitch />
         <span>Twitch</span>
       </div>
