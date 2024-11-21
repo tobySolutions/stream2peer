@@ -26,8 +26,8 @@ export const generateAuthWithGithubUrl =
 //     return data;
 //   };
 
-export const getUserDetails = async (code: string) => {
-  const { data } = await instance.post(`/auth/google/callback`, {
+export const getUserDetails = async (code: string, provider: string) => {
+  const { data } = await instance.post(`/auth/${provider}/callback`, {
     code,
   });
 
@@ -39,5 +39,26 @@ export const getUserDetails = async (code: string) => {
       data,
       statusCode: data["status_code"],
     };
+  }
+};
+
+export const handleGoogleSignIn = async () => {
+  console.log("Google sign-in clicked");
+  try {
+    const { data } = await generateAuthWithGoogleUrl();
+    window.location.href = data.authUrl;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const handleGitHubSignIn = async () => {
+  console.log("GitHub sign-in clicked");
+  try {
+    const { data } = await generateAuthWithGithubUrl();
+    console.log(data);
+    window.location.href = data.authUrl;
+  } catch (error) {
+    console.error(error);
   }
 };

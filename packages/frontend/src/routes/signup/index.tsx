@@ -53,10 +53,10 @@ function SignUp() {
     console.log("GitHub sign-in clicked");
   };
 
-  const handleMetaMaskSignIn = () => {
-    // Implement MetaMask sign-in logic here
-    console.log("MetaMask sign-in clicked");
-  };
+  // const handleMetaMaskSignIn = () => {
+  //   // Implement MetaMask sign-in logic here
+  //   console.log("MetaMask sign-in clicked");
+  // };
 
   return (
     <div>
@@ -84,14 +84,14 @@ function SignUp() {
                 <FaGithub className="mr-2" />
                 Sign up with GitHub
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={handleMetaMaskSignIn}
                 className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
               >
                 <MetaMaskIcon className="mr-2" />
                 Sign up with MetaMask
-              </button>
+              </button> */}
             </div>
 
             <div className="text-center text-white my-5">

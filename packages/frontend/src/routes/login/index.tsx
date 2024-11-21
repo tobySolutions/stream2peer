@@ -1,14 +1,22 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Navbar from "../../lib/navbar";
 import Input from "../../lib/Input";
-import { emailRegex } from "../../utils/utils";
+import {
+  emailRegex,
+  getDataInCookie,
+  storeDataInCookie,
+} from "../../utils/utils";
 import Button from "../../lib/Button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
+
+// import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
+
 import {
-  generateAuthWithGithubUrl,
-  generateAuthWithGoogleUrl,
+  getUserDetails,
+  handleGitHubSignIn,
+  handleGoogleSignIn,
 } from "../../network/auth/auth";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export type FormValuesType = {
   email: string;
@@ -20,11 +28,60 @@ const defaultFormValues = {
 };
 
 function Login() {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState<FormValuesType>({
     ...defaultFormValues,
   });
 
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+
+  const userCode = params.get("code") ?? "";
+
+  storeDataInCookie("userCode", userCode, 1);
+
+  useEffect(() => {
+    const userCodeFromCookie = getDataInCookie("userCode");
+
+    const isGoogleInUrl = window.location.href.includes("google")
+      ? "google"
+      : "github";
+
+    if (userCodeFromCookie !== "") {
+      async function getUserData() {
+        console.log("hey");
+        try {
+          const userDataResponse = await getUserDetails(
+            userCodeFromCookie,
+            isGoogleInUrl
+          );
+
+          if (userDataResponse?.statusCode === 200) {
+            const token = userDataResponse.data.token.split(" ")[1];
+            console.log("success");
+            storeDataInCookie(
+              "userDataResponse",
+              JSON.stringify(userDataResponse.data),
+              1
+            );
+            storeDataInCookie("userToken", token, 2);
+            navigate("/dashboard");
+          }
+
+          console.log(
+            JSON.parse(getDataInCookie("userDataResponse")),
+            "I don enter jor"
+          );
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      getUserData();
+    }
+
+    return () => {};
+  }, [userCode]);
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,32 +102,6 @@ function Login() {
         setIsButtonDisabled(shouldBeDisabled);
       }
     }
-  };
-
-  const handleGoogleSignIn = async () => {
-    console.log("Google sign-in clicked");
-    try {
-      const { data } = await generateAuthWithGoogleUrl();
-      window.location.href = data.authUrl;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleGitHubSignIn = async () => {
-    console.log("GitHub sign-in clicked");
-    try {
-      const { data } = await generateAuthWithGithubUrl();
-      console.log(data);
-      window.location.href = data.authUrl;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleMetaMaskSignIn = async () => {
-    // Implement MetaMask sign-in logic here
-    console.log("MetaMask sign-in clicked");
   };
 
   return (
@@ -129,14 +160,14 @@ function Login() {
                 <FaGithub className="mr-2" />
                 Sign in with GitHub
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={handleMetaMaskSignIn}
                 className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
               >
                 <MetaMaskIcon className="mr-2" />
                 Sign in with MetaMask
-              </button>
+              </button> */}
             </div>
 
             <div className="my-[.8rem] text-white text-[15px] text-center">
