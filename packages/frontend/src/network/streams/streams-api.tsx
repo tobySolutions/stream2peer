@@ -27,8 +27,6 @@ export const validateTwitch = async (code: string) => {
 
   if (data["status_code"] === 200) {
     console.log(data, "200");
-    const token = data.token.split(" ")[1];
-    // storeDataInCookie("accessToken", token, 1);
     return {
       data,
       statusCode: data["status_code"],
