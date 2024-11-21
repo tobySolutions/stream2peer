@@ -13,21 +13,10 @@ import { Destination } from "./dashboard/destination";
 import { JoinProject } from "./dashboard/projects/join-project";
 import { Stream } from "./stream/stream";
 import PrivateRoute from "../lib/PrivateRoute";
+import { BroadcastWithControls } from "./stream/broadcast";
+
 
 export default function Routes() {
-  const playbackId = import.meta.env.VITE_PLAYBACK_URL;
-
-  const livepeer = new Livepeer({
-    apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
-  });
-
-  const getPlaybackSource = async () => {
-    const playbackInfo = await livepeer.playback.get(playbackId);
-
-    const src = getSrc(playbackInfo.playbackInfo);
-
-    return src;
-  };
 
   return (
     <BaseRoutes>
@@ -76,6 +65,13 @@ export default function Routes() {
           </PrivateRoute>
         }
       />
+       <Route path="destination" 
+        element={
+        <PrivateRoute>
+         <Destination />
+        </PrivateRoute>
+        } 
+      />
       <Route
         path="/projects/join/:id"
         element={
@@ -92,7 +88,24 @@ export default function Routes() {
           </PrivateRoute>
         }
       />
+      <Route 
+        path="/stream/:id" 
+        element={
+         <PrivateRoute>
+           <Stream />
+         </PrivateRoute>
+          } 
+        />
+      <Route 
+        path="/broadcast/:id" 
+        element={
+          <PrivateRoute>
+            <BroadcastWithControls />
+           /PrivateRoute>
+          } 
+        />
       <Route
+        element={<LivestreamPage />}
         path="/dashboard/projects/livestream/:id"
         element={
           <PrivateRoute>
