@@ -1,12 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../layout";
 import { MdOutlineLinkOff } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import SocialMediaCards from "../../../lib/components/socialCards";
+import { validateTwitch } from "../../../network/streams/streams-api";
+import { useLocation, useParams } from "react-router-dom";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
   const [destinationData, setDestinationData] = useState([]);
+
+  const location = useLocation(); // Access the location object
+  const queryParams = new URLSearchParams(location.search);
+
+  const handleTwitchValidation = async () => {
+    try {
+      const response = await validateTwitch(queryParams.get("code")!);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (queryParams.get("code")) {
+      handleTwitchValidation();
+    }
+  }, []);
   return (
     <Layout>
       <div className="text-primary-white">
@@ -53,7 +73,7 @@ export const Destination = () => {
               to it as often as you like.
             </p>
             <div className="my-4">
-                <SocialMediaCards/>
+              <SocialMediaCards />
             </div>
           </div>
         )}
