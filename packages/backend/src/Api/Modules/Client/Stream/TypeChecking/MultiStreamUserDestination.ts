@@ -7,9 +7,9 @@ export enum Platform {
 }
 
 export type Token = {
-  accessToken?: string,
-  refreshToken: string,
-}
+  accessToken?: string;
+  refreshToken: string;
+};
 
 export type MultiStreamToken = {
   type: Platform;

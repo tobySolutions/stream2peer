@@ -31,7 +31,7 @@ class AuthAccountService {
     const newAuthAccountData = {
       userId,
       username,
-      authProvider
+      authProvider,
     };
 
     const authAccount = new AuthAccount();
@@ -97,12 +97,17 @@ class AuthAccountService {
     await this.authAccountRepository.save(authAccount);
   }
 
-  public async getNotificationByIdentifier(user: AuthAccount, notificationId: string) {
-      const notification = user.notifications.find(notification=>notification.identifier==notificationId);
-      return notification;
+  public async getNotificationByIdentifier(
+    user: AuthAccount,
+    notificationId: string,
+  ) {
+    const notification = user.notifications.find(
+      (notification) => notification.identifier == notificationId,
+    );
+    return notification;
   }
 
-  public async getAnimeUsername():Promise<string>{
+  public async getAnimeUsername(): Promise<string> {
     const getRequestDto: GetRequestDto = {
       url: 'https://api.jikan.moe/v4/random/characters',
     };
@@ -118,27 +123,26 @@ class AuthAccountService {
     newStreamToken: MultiStreamToken,
   ) {
     const authAccount = await this.getAuthAccountByUserId(userId);
-  
+
     if (authAccount === NULL_OBJECT) return NULL_OBJECT;
-  
+
     const existingStreamTokens = authAccount.stream_tokens || [];
-  
+
     const platformIndex = existingStreamTokens.findIndex(
       (token) => token.type === newStreamToken.type,
     );
-  
+
     if (platformIndex > -1) {
       existingStreamTokens[platformIndex] = newStreamToken;
     } else {
       existingStreamTokens.push(newStreamToken);
     }
-  
+
     authAccount.stream_tokens = existingStreamTokens;
-  
+
     await this.authAccountRepository.save(authAccount);
     return authAccount;
   }
-  
 }
 
 export default new AuthAccountService();

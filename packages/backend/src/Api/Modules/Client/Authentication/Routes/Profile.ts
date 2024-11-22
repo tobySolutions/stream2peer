@@ -6,6 +6,11 @@ import { authenticateUser } from 'Api/Middleware/isAuthenticated';
 
 const routes = Router();
 
-routes.get('/profile', asyncMiddlewareHandler(authenticateUser), validate, ProfileController.handle);
+routes.get(
+  '/profile',
+  asyncMiddlewareHandler(authenticateUser),
+  validate,
+  ProfileController.handle,
+);
 
 export default routes;

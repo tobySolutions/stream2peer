@@ -91,7 +91,7 @@ class GoogleAuthController {
           status: SUCCESS,
           message: GOOGLE_AUTHENTICATION_SUCCESS,
           token: `Bearer ${jwtToken}`,
-          data: googleAuthAccount.getProfile()
+          data: googleAuthAccount.getProfile(),
         });
     } catch (error) {
       console.log('GoogleAuthController.callback error ->', error);

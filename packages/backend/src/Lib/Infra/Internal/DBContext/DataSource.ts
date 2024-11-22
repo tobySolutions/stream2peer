@@ -15,7 +15,10 @@ export const AppDataSource = new DataSource({
   password: dbConfig.password,
   database: dbConfig.dbName,
   entities: [AuthAccount, Project, Stream],
-  migrations: [CreateTables1729503760012,UpdateAuthProjectStreamEntities1731363722903],
+  migrations: [
+    CreateTables1729503760012,
+    UpdateAuthProjectStreamEntities1731363722903,
+  ],
   synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
 });

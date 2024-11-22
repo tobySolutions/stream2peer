@@ -76,16 +76,16 @@ export const METAMASK_AUTHENTICATION_SUCCESS =
 export const METAMASK_AUTHENTICATION_FAILURE =
   'MetaMask Authentication Failed. Please try again or use another method.';
 
-export const TWITCH_AUTHENTICATION_SUCCESS = 
+export const TWITCH_AUTHENTICATION_SUCCESS =
   'Twitch Authentication Successful. You can now multistream on your twitch account.';
 
-export const TWITCH_AUTHENTICATION_FAILURE = 
+export const TWITCH_AUTHENTICATION_FAILURE =
   'Twitch Authentication Failed. Please try again or use another method.';
 
-export const YOUTUBE_AUTHENTICATION_SUCCESS = 
+export const YOUTUBE_AUTHENTICATION_SUCCESS =
   'Youtube Authentication Successful. You can now multistream on your YouTube account.';
 
-export const YOUTUBE_AUTHENTICATION_FAILURE = 
+export const YOUTUBE_AUTHENTICATION_FAILURE =
   'Youtube Authentication Failed. Please try again or use another method.';
 
 /* --------------------------  Authentication -> Password Messages  ---------------------*/

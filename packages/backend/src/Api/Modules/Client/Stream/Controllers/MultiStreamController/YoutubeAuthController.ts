@@ -39,7 +39,9 @@ class YouTubeAuthController {
         });
       }
 
-      const tokenData = await YouTubeAuthService.exchangeCodeForTokens(code.toString());
+      const tokenData = await YouTubeAuthService.exchangeCodeForTokens(
+        code.toString(),
+      );
       return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
         status: SUCCESS,

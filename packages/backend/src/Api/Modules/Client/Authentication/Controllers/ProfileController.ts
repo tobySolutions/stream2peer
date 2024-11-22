@@ -11,17 +11,19 @@ import { AuthRequest } from 'Api/TypeChecking';
 class ProfileController {
   public async handle(request: Request, response: Response) {
     try {
-        const user = (request as AuthRequest).authAccount;
+      const user = (request as AuthRequest).authAccount;
 
-        const userProfile = await AuthAccountService.getAuthAccountByUserId(user.userId);
+      const userProfile = await AuthAccountService.getAuthAccountByUserId(
+        user.userId,
+      );
 
-        if (!userProfile) {
-            return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
-            status_code: HttpStatusCodeEnum.BAD_REQUEST,
-            status: ERROR,
-            message: 'User Account Not Found',
-            });
-        }
+      if (!userProfile) {
+        return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
+          status_code: HttpStatusCodeEnum.BAD_REQUEST,
+          status: ERROR,
+          message: 'User Account Not Found',
+        });
+      }
 
       return response.status(HttpStatusCodeEnum.OK).json({
         status_code: HttpStatusCodeEnum.OK,
@@ -37,7 +39,6 @@ class ProfileController {
       });
     }
   }
-
 }
 
 export default new ProfileController();
