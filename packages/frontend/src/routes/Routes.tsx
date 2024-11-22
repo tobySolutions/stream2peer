@@ -12,41 +12,106 @@ import { Livepeer } from "livepeer";
 import { Destination } from "./dashboard/destination";
 import { JoinProject } from "./dashboard/projects/join-project";
 import { Stream } from "./stream/stream";
+import PrivateRoute from "../lib/PrivateRoute";
+import { BroadcastWithControls } from "./stream/broadcast";
+
 
 export default function Routes() {
-  const playbackId = import.meta.env.VITE_PLAYBACK_URL;
-
-  const livepeer = new Livepeer({
-    apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
-  });
-
-  const getPlaybackSource = async () => {
-    const playbackInfo = await livepeer.playback.get(playbackId);
-
-    const src = getSrc(playbackInfo.playbackInfo);
-
-    return src;
-  };
-
-  // const src = await getPlaybackSource();
 
   return (
     <BaseRoutes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/dashboard">
-        <Route index element={<DashboardHome />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="destination" element={<Destination />} />
-      </Route>
-      <Route path="/livestream" element={<DemoPlayer />} />
-      <Route element={<ProjectPage />} path="/dashboard/projects/:id" />
-      <Route element={<JoinProject />} path="/projects/join/:id" />
-      <Route path="/stream" element={<Stream/>}/>
+
+      {/* Protected Routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <DashboardHome />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/dashboard/projects"
+        element={
+          <PrivateRoute>
+            <Projects />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/dashboard/destination"
+        element={
+          <PrivateRoute>
+            <Destination />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/livestream"
+        element={
+          <PrivateRoute>
+            <DemoPlayer />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/dashboard/projects/:id"
+        element={
+          <PrivateRoute>
+            <ProjectPage />
+          </PrivateRoute>
+        }
+      />
+       <Route path="destination" 
+        element={
+        <PrivateRoute>
+         <Destination />
+        </PrivateRoute>
+        } 
+      />
+      <Route
+        path="/projects/join/:id"
+        element={
+          <PrivateRoute>
+            <JoinProject />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/stream"
+        element={
+          <PrivateRoute>
+            <Stream />
+          </PrivateRoute>
+        }
+      />
+      <Route 
+        path="/stream/:id" 
+        element={
+         <PrivateRoute>
+           <Stream />
+         </PrivateRoute>
+          } 
+        />
+      <Route 
+        path="/broadcast/:id" 
+        element={
+          <PrivateRoute>
+            <BroadcastWithControls />
+           /PrivateRoute>
+          } 
+        />
       <Route
         element={<LivestreamPage />}
         path="/dashboard/projects/livestream/:id"
+        element={
+          <PrivateRoute>
+            <LivestreamPage />
+          </PrivateRoute>
+        }
       />
     </BaseRoutes>
   );
