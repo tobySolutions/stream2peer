@@ -2,14 +2,12 @@ import { Router } from 'express';
 import GoogleAuthRoutes from './GoogleAuth';
 import GithubAuthRoutes from './GithubAuth';
 import MetaMaskAuthRoutes from './MetaMaskAuth';
-import ProfileRoutes from './Profile';
-// import NotificationRoutes from './Notification';
+import EmailAuthRoutes from './EmailAuth';
 const routes = Router();
 
 routes.use('', GoogleAuthRoutes);
 routes.use('', GithubAuthRoutes);
 routes.use('', MetaMaskAuthRoutes);
-routes.use('', ProfileRoutes);
-// routes.use('', NotificationRoutes);
+routes.use('', EmailAuthRoutes);
 
 export default routes;

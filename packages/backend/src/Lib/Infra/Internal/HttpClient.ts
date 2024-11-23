@@ -11,7 +11,7 @@ export class HttpClient {
     const axiosInstance = axios.create({ headers });
 
     try {
-      const response = await axiosInstance.get(url, { params });
+      const response = await axiosInstance.get(url, params);
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosGetRequestError: any) {
@@ -28,7 +28,7 @@ export class HttpClient {
     const axiosInstance = axios.create({ headers });
 
     try {
-      const response = await axiosInstance.post(url, { params }, body);
+      const response = await axiosInstance.post(url, body, params);
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosPostRequestError: any) {

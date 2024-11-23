@@ -5,12 +5,13 @@ export enum AuthAccountType {
   GOOGLE = 'google',
   GITHUB = 'github',
   METAMASK = 'metamask',
+  EMAIL = 'email'
 }
 
 export type CreateAuthAccountRecordDto = {
-  userId: number;
-  authProvider: string;
-  authProviderId: string;
+  userId: string;
+  auth_provider: string;
+  auth_providerId?: string;
 } & DbQueryRunner;
 
 export type UpdateAuthAccountRecordArgs = {

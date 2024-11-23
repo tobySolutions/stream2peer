@@ -4,10 +4,17 @@ import * as process from 'process';
 export const businessConfig = {
   projectInviteLink: process.env['STREAM_PEER_LIVE_LINK'],
 
+  signInTokenLength: parseInt(process.env['SIGN_IN_TOKEN_LENGTH']!, 6),
+
   emailTokenLength: parseInt(process.env['EMAIL_TOKEN_LENGTH']!, 10),
 
   passwordResetTokenLength: parseInt(
     process.env['PASSWORD_RESET_TOKEN_LENGTH']!,
+  ),
+
+  signInTokenExpiresInMinutes: parseInt(
+    process.env['SIGN_IN_TOKEN_EXPIRES_IN_MINUTES']!,
+    1,
   ),
 
   emailTokenExpiresInMinutes: parseInt(

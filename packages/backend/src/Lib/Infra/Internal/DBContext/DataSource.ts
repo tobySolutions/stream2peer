@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { dbConfig } from 'Config/dbConfig';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AuthAccount } from 'Api/Modules/Client/Authentication/Entities/AuthAccount';
+import { AuthTokens } from 'Api/Modules/Client/Authentication/Entities/AuthTokens';
 import { Project } from 'Api/Modules/Client/Project/Entities/Project';
 import { Stream } from 'Api/Modules/Client/Stream/Entities/Stream';
 import { CreateTables1729503760012 } from 'src/Migrations/1729503760012-createTables';
@@ -14,7 +15,7 @@ export const AppDataSource = new DataSource({
   username: dbConfig.username,
   password: dbConfig.password,
   database: dbConfig.dbName,
-  entities: [AuthAccount, Project, Stream],
+  entities: [AuthAccount, AuthTokens, Project, Stream],
   migrations: [
     CreateTables1729503760012,
     UpdateAuthProjectStreamEntities1731363722903,

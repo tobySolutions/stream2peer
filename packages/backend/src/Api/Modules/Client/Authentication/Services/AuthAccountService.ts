@@ -12,6 +12,7 @@ import { GetRequestDto } from 'TypeChecking/GeneralPurpose/GetRequestDto';
 import { HttpClient } from 'Lib/Infra/Internal/HttpClient';
 import _ from 'lodash';
 import { MultiStreamToken } from '../../Stream/TypeChecking/MultiStreamUserDestination';
+import { FindOrCreateAuthAccountDto } from '../TypeChecking/FindOrCreateAuthAccountDto';
 
 @autoInjectable()
 class AuthAccountService {
@@ -26,12 +27,12 @@ class AuthAccountService {
   public async createAuthAccountRecord(
     createAuthAccountRecordArgs: CreateAuthAccountRecordDto,
   ) {
-    const { userId, authProvider, queryRunner } = createAuthAccountRecordArgs;
+    const { userId, auth_provider, queryRunner } = createAuthAccountRecordArgs;
     const username = await this.getAnimeUsername();
     const newAuthAccountData = {
       userId,
       username,
-      authProvider,
+      auth_provider,
     };
 
     const authAccount = new AuthAccount();
@@ -40,6 +41,21 @@ class AuthAccountService {
 
     await queryRunner.manager.save(authAccount);
 
+    return authAccount;
+  }
+
+  public async findOrCreateAuthAccount(
+    findOrCreateAuthAccountDto: FindOrCreateAuthAccountDto,
+  ) {
+    const { userId, queryRunner } = findOrCreateAuthAccountDto;
+
+    let authAccount = await queryRunner.manager.findOne(AuthAccount, {
+      where: { userId },
+    });
+
+    if (!authAccount) {
+      authAccount = await this.createAuthAccountRecord(findOrCreateAuthAccountDto);
+    }
     return authAccount;
   }
 

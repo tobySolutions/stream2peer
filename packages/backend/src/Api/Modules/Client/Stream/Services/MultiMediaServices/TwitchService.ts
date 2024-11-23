@@ -75,8 +75,9 @@ class TwitchAuthService {
   //instant stream
   public async getStreamKey(
     refreshToken: string,
+    title: string,
+    scheduleDate: string,
     authCalls: number = 0,
-    
   ): Promise<string | null> {
     const MAX_AUTH_CALLS = 2;
     try {

@@ -78,9 +78,9 @@ class StreamService {
       if (streamTokens) {
         multistreamTargets = await this.generateMultistreamTargets(
           platforms,
-          title,
-          scheduleDate,
           streamTokens,
+          title,
+          scheduleDate?.toISOString().slice(0,16),
         );
       }
       await LivepeerService.createStream(
