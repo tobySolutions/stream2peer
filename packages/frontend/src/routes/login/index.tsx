@@ -86,6 +86,7 @@ function Login() {
     event.preventDefault();
 
     const { email } = formValues;
+    console.log(email);
     storeDataInCookie("emailAddress", email, 1);
     sendUserAuthOtpMail(email);
     navigate(`/otp`);

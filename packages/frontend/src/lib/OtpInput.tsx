@@ -12,7 +12,7 @@ export function OtpInput({ otp, setOtp }: OtpInputProps) {
         value={otp}
         onChange={setOtp}
         numInputs={6}
-        inputType="number"
+        inputType="text"
         inputStyle="otp-input"
         renderSeparator={<span> </span>}
         renderInput={(props) => <input {...props} />}

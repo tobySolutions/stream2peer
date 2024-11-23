@@ -27,7 +27,7 @@ function Otp() {
         payload.email,
         payload.token
       );
-      if (userDataResponse?.statusCode === 200) {
+      if (userDataResponse.statusCode === 200) {
         const token = userDataResponse.data.token.split(" ")[1];
         storeDataInCookie(
           "userDataResponse",
@@ -42,7 +42,7 @@ function Otp() {
     }
   };
 
-  console.log(otp);
+
 
   return (
     <div>
