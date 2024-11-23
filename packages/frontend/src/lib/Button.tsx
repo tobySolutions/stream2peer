@@ -3,9 +3,10 @@ import clsx from "clsx";
 type ButtonProps = {
   isDisabled?: boolean;
   className?: string;
+  text?: string;
 };
 
-function Button({ isDisabled, className }: ButtonProps) {
+function Button({ isDisabled, className, text }: ButtonProps) {
   return (
     <button
       type="submit"
@@ -18,7 +19,7 @@ function Button({ isDisabled, className }: ButtonProps) {
         className
       )}
     >
-      Submit
+      {text}
     </button>
   );
 }
