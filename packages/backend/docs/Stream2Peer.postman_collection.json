@@ -166,7 +166,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\":\"dasijr22@gmail.com\",\r\n    \"token\":\"250EB8\"\r\n}",
+											"raw": "{\r\n    \"email\":\"dasijr22@gmail.com\",\r\n    \"token\":\"3F01E9\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -760,10 +760,46 @@
 							"name": "Generate Access Token",
 							"item": [
 								{
-									"name": "New Request",
+									"name": "Get Access Token",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiZGYxMzc4ZWItMjBkNy00YjFjLWIyMjEtMDczY2QzNmZmYjk0IiwidXNlcklkIjoiZGFzaWpyMjJAZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoiZW1haWwiLCJpYXQiOjE3MzIzOTMwMTEsImV4cCI6MTczMjU2NTgxMX0.2uP5OiQ09POkUSTueUFwJQQfzD76sLHwbJokhKsOP-s"
+											}
+										},
 										"method": "GET",
-										"header": []
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/Stream/:projectId/fetch/access-token",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"Stream",
+												":projectId",
+												"fetch",
+												"access-token"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": "e5da8295-cc15-4cae-b00c-fbdde82d7488"
+												}
+											]
+										}
 									},
 									"response": []
 								}
