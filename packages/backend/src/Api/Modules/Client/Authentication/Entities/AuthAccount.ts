@@ -44,6 +44,7 @@ export class AuthAccount extends BaseEntity {
       username: this.username,
       userId: this.userId,
       auth_provider: this.auth_provider,
+      platforms: this.stream_tokens?.map(platform=>(platform.type)),
       notifications: this.notifications?.map(notification=>(shortenText(notification.text))),
       notificationsCount: this.notifications?.filter(notification=>(notification.status!=NotificationStatus.READ)).length,
       projects: this.projects?.map(project=>project.listView)
