@@ -62,3 +62,16 @@ export const handleGitHubSignIn = async () => {
     console.error(error);
   }
 };
+
+export const sendUserAuthOtpMail = async (email: string) => {
+  const { data } = await instance.post(`/auth/send-otp`, { email });
+  return data;
+};
+
+export const verifyUserOtp = async (email: string, otp: string) => {
+  const { data } = await instance.post(`/auth/verify-otp`, {
+    email,
+    otp,
+  });
+  return data;
+};

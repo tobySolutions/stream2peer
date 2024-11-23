@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router-dom";
 import Layout from "../layout";
 import { FaRegFolderOpen } from "react-icons/fa6";
 
