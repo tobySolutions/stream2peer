@@ -1,4 +1,3 @@
-
 import {
   DisableAudioIcon,
   DisableVideoIcon,
@@ -24,18 +23,14 @@ import * as Popover from "@radix-ui/react-popover";
 // import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { getIngest } from "@livepeer/react/external";
-import { Livepeer } from "livepeer";
 import { useParams } from "react-router-dom";
 
 // import { toast } from "sonner";
 
 export function BroadcastWithControls() {
-
   const { id: streamkey } = useParams();
 
-
   const ingestUrl = getIngest(streamkey);
-   
 
   return !ingestUrl ? (
     <BroadcastLoading

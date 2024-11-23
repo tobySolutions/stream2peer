@@ -15,16 +15,15 @@ import {
   getUserDetails,
   handleGitHubSignIn,
   handleGoogleSignIn,
+  sendUserAuthOtpMail,
 } from "../../network/auth/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export type FormValuesType = {
   email: string;
-  password: string;
 };
 const defaultFormValues = {
   email: "",
-  password: "",
 };
 
 function Login() {
@@ -86,7 +85,11 @@ function Login() {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // await submitForm(formValues, resetFormValues);
+    const { email } = formValues;
+    console.log(email);
+    storeDataInCookie("emailAddress", email, 1);
+    sendUserAuthOtpMail(email);
+    navigate(`/otp`);
   };
 
   const handleInputChange = (name: string, value: string) => {
@@ -124,20 +127,8 @@ function Login() {
                 label="Email address"
               />
             </div>
-            <div className="my-[.6rem] lg:my-[1.3rem]  text-white text-[15px]">
-              <Input
-                type="password"
-                name="password"
-                value={formValues.password}
-                isRequired
-                minLength={8}
-                maxLength={16}
-                onChange={(value) => handleInputChange("password", value)}
-                label="Password"
-              />
-            </div>
 
-            <Button className="w-full text-[1rem] my-[.8rem]" />
+            <Button className="w-full text-[1rem] my-[.8rem]" text="Login" />
 
             <div className="text-center text-white my-5">
               <span>or</span>

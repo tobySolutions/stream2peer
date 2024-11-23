@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .montserrat {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -30,7 +28,18 @@
 .react-datetime-picker__wrapper {
   border-radius: 10px;
   padding: 12px;
+}
 
+.otp-input {
+  width: 4rem !important;
+  height: 4rem !important;
+  border: 1px solid #555;
+  margin: 0.5rem !important;
+  background: #000;
+  border-radius: 10px;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
 }
 
 .ant-select-selector {
