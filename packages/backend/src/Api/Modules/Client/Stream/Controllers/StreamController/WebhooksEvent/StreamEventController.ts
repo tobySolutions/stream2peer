@@ -20,26 +20,26 @@ class StreamEventController {
     await queryRunner.startTransaction();
 
     try {
-        const streamData = request.body;
-        let streamEvent;
-        console.log(streamData.event)
-        switch (streamData.event) {
+      const streamData = request.body;
+      let streamEvent;
+      console.log(streamData.event);
+      switch (streamData.event) {
         case 'stream.started':
-            streamEvent = await StreamService.updateStreamStatus(
-                streamData.stream.id,
-                StreamStatus.LIVE,
-                queryRunner,
-              );
+          streamEvent = await StreamService.updateStreamStatus(
+            streamData.stream.id,
+            StreamStatus.LIVE,
+            queryRunner,
+          );
           break;
         case 'stream.idle':
-            streamEvent = await StreamService.updateStreamStatus(
-              streamData.stream.id,
-                StreamStatus.SUSPENDED,
-                queryRunner,
-              );
+          streamEvent = await StreamService.updateStreamStatus(
+            streamData.stream.id,
+            StreamStatus.SUSPENDED,
+            queryRunner,
+          );
           break;
         default:
-            throw new Error("Invalid Event Type");
+          throw new Error('Invalid Event Type');
       }
 
       if (streamEvent == NULL_OBJECT) {

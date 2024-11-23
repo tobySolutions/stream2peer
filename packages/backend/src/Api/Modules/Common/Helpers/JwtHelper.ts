@@ -54,7 +54,7 @@ export class JwtHelper {
     });
   }
 
-  public static generateAccessToken(user: Partial<IAuthAccount>){
+  public static generateAccessToken(user: Partial<IAuthAccount>) {
     return jwt.sign(
       {
         userId: user.userId,
