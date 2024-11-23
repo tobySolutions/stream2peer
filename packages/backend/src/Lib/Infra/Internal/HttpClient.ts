@@ -6,12 +6,12 @@ import { DeleteRequestDto } from 'TypeChecking/GeneralPurpose/DeleteRequestDto';
 
 export class HttpClient {
   public static async get(getRequestDto: GetRequestDto) {
-    const { url, headers } = getRequestDto;
+    const { url, headers, params } = getRequestDto;
 
     const axiosInstance = axios.create({ headers });
 
     try {
-      const response = await axiosInstance.get(url);
+      const response = await axiosInstance.get(url, { params });
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosGetRequestError: any) {
@@ -23,12 +23,12 @@ export class HttpClient {
   }
 
   public static async post(postRequestDto: PostRequestDto) {
-    const { url, headers, body } = postRequestDto;
+    const { url, headers, params, body } = postRequestDto;
 
     const axiosInstance = axios.create({ headers });
 
     try {
-      const response = await axiosInstance.post(url, body);
+      const response = await axiosInstance.post(url, { params }, body);
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosPostRequestError: any) {

@@ -21,6 +21,7 @@ import {
 } from '../TypeChecking/MultiStreamUserDestination';
 import { transformPlatform } from '../Utils/StreamHelper';
 import TwitchService from './MultiMediaServices/TwitchService';
+import YoutubeService from './MultiMediaServices/YoutubeService';
 
 @autoInjectable()
 class StreamService {
@@ -78,6 +79,7 @@ class StreamService {
         multistreamTargets = await this.generateMultistreamTargets(
           platforms,
           title,
+          scheduleDate,
           streamTokens,
         );
       }
@@ -268,8 +270,9 @@ class StreamService {
 
   private async generateMultistreamTargets(
     platforms: Set<Platform> | undefined,
-    title: string,
     streamTokens: MultiStreamToken[],
+    title: string,
+    scheduleDate: string = new Date().toISOString().slice(0, 16),
   ): Promise<MultistreamTarget[]> {
     if (!platforms) return [];
 
@@ -286,7 +289,7 @@ class StreamService {
         }
 
         const refreshToken = platformToken.token.refreshToken;
-        const token = await this.getPlatformStreamKey(platform, refreshToken);
+        const token = await this.getPlatformStreamKey(platform, refreshToken, title, scheduleDate);
         if (!token) {
           console.log(`No token found for platform: ${platform}`);
           continue;
@@ -306,12 +309,14 @@ class StreamService {
   private async getPlatformStreamKey(
     platform: Platform,
     refreshToken: string,
+    title: string,
+    scheduleDate: string,
   ): Promise<string | null> {
     switch (platform) {
       case Platform.Youtube:
-        return '';
+        return YoutubeService.getStreamKey(refreshToken,title,scheduleDate);
       case Platform.Twitch:
-        return await TwitchService.getStreamKey(refreshToken);
+        return await TwitchService.getStreamKey(refreshToken,title,scheduleDate);
       case Platform.Facebook:
         return '';
       case Platform.Linkedin:

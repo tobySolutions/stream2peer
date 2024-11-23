@@ -13,33 +13,43 @@ class TwitchAuthService {
   }
 
   public async exchangeCodeForTokens(code: string) {
-    const response = await HttpClient.post({
-      url: 'https://id.twitch.tv/oauth2/token',
-      body: {
-        client_id: authConfig.twitchClientId,
-        client_secret: authConfig.twitchClientSecret,
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri: authConfig.twitchRedirectURI,
-      },
-    });
-    return {
-      accessToken: response.access_token,
-      refreshToken: response.refresh_token,
-    };
+    try {
+      const response = await HttpClient.post({
+        url: 'https://id.twitch.tv/oauth2/token',
+        body: {
+          client_id: authConfig.twitchClientId,
+          client_secret: authConfig.twitchClientSecret,
+          code,
+          grant_type: 'authorization_code',
+          redirect_uri: authConfig.twitchRedirectURI,
+        },
+      });
+      return {
+        accessToken: response.access_token,
+        refreshToken: response.refresh_token,
+      };
+    } catch (exchangeCodeError) {
+      console.error('Error exchanging code for tokens ->', exchangeCodeError);
+      return NULL_OBJECT;
+    }
   }
 
   public async refreshAccessToken(refreshToken: string) {
-    const response = await HttpClient.post({
-      url: 'https://id.twitch.tv/oauth2/token',
-      body: {
-        client_id: authConfig.twitchClientId,
-        client_secret: authConfig.twitchClientSecret,
-        refresh_token: refreshToken,
-        grant_type: 'refresh_token',
-      },
-    });
-    return response.access_token;
+    try {
+      const response = await HttpClient.post({
+        url: 'https://id.twitch.tv/oauth2/token',
+        body: {
+          client_id: authConfig.twitchClientId,
+          client_secret: authConfig.twitchClientSecret,
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token',
+        },
+      });
+      return response.access_token;
+    } catch (refreshTokenError) {
+      console.error('Error refreshing access token ->', refreshTokenError);
+      return NULL_OBJECT;
+    }
   }
 
   public async getUserDetails(accessToken: string) {
@@ -62,9 +72,11 @@ class TwitchAuthService {
     }
   }
 
+  //instant stream
   public async getStreamKey(
     refreshToken: string,
     authCalls: number = 0,
+    
   ): Promise<string | null> {
     const MAX_AUTH_CALLS = 2;
     try {
@@ -82,7 +94,6 @@ class TwitchAuthService {
       }
 
       const broadcasterId = userDetails.id;
-      //1172109585
       const response = await HttpClient.get({
         url: `https://api.twitch.tv/helix/streams/key?broadcaster_id=${broadcasterId}`,
         headers: {
@@ -90,7 +101,7 @@ class TwitchAuthService {
           'Client-Id': authConfig.twitchClientId,
         },
       });
-      return response.data[0].stream_key;
+      return response.data[0]?.stream_key;
     } catch (getStreamKeyError) {
       console.log(
         'Error in getStreamKey, refreshing token...',
@@ -98,6 +109,11 @@ class TwitchAuthService {
       );
       return this.getStreamKey(refreshToken, authCalls + 1);
     }
+  }
+
+  //scheduled stream
+  public async getScheduledStreamKey(){
+    //-->TDL
   }
 }
 

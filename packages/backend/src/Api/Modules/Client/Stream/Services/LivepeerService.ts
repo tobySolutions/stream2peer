@@ -32,17 +32,6 @@ class LivePeerService {
         playbackPolicy: playBackPolicy,
         multistream: {
           targets: platforms,
-          //[
-          //   {
-          //     profile: "720p",
-          //     videoOnly: false,
-          //     id: "PUSH123",
-          //     spec: {
-          //       name: "My target",
-          //       url: "rtmps://live.my-service.tv/channel/secretKey",
-          //     },
-          //   },
-          // ],
         },
       });
 
