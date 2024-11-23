@@ -11,7 +11,9 @@ export function transformPlatform(
     [Platform.Youtube]: 'rtmp://a.rtmp.youtube.com/live2/',
     [Platform.Twitch]: 'rtmp://live.twitch.tv/app/',
     [Platform.Facebook]: 'rtmp://live-api.facebook.com:443/rtmp/',
-    [Platform.X]: '', //COMING SOON
+    [Platform.X]: '', //COMING SOON,
+    [Platform.Zoom]: '', //COMING SOON,
+    [Platform.Instagram]: '' //COMING SOON, 
   };
 
   if (platform == Platform.X) {

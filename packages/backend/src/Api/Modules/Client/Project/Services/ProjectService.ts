@@ -350,9 +350,9 @@ class ProjectService {
       where: { identifier: projectId },
     });
 
-    if(project?.stream_tokens){
+    if (project?.stream_tokens) {
       const validTokenTypes = new Set(
-       project?.stream_tokens
+        project?.stream_tokens
           .filter((token) => token.token)
           .map((token) => token.type),
       );
@@ -364,7 +364,7 @@ class ProjectService {
           error: `The following platforms are not authenticated for multistreaming: ${missingTokens.join(', ')}`,
         };
       }
-  }
+    }
     return { error: null };
   }
 }

@@ -4,12 +4,14 @@ export enum Platform {
   Twitch = 'Twitch',
   Facebook = 'Facebook',
   X = 'Twitter',
+  Zoom = 'Zoom',
+  Instagram = 'Instagram',
 }
 
 export type Token = {
-  accessToken?: string,
-  refreshToken: string,
-}
+  accessToken?: string;
+  refreshToken: string;
+};
 
 export type MultiStreamToken = {
   type: Platform;

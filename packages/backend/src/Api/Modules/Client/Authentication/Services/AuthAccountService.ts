@@ -12,6 +12,7 @@ import { GetRequestDto } from 'TypeChecking/GeneralPurpose/GetRequestDto';
 import { HttpClient } from 'Lib/Infra/Internal/HttpClient';
 import _ from 'lodash';
 import { MultiStreamToken } from '../../Stream/TypeChecking/MultiStreamUserDestination';
+import { FindOrCreateAuthAccountDto } from '../TypeChecking/FindOrCreateAuthAccountDto';
 
 @autoInjectable()
 class AuthAccountService {
@@ -26,12 +27,12 @@ class AuthAccountService {
   public async createAuthAccountRecord(
     createAuthAccountRecordArgs: CreateAuthAccountRecordDto,
   ) {
-    const { userId, authProvider, queryRunner } = createAuthAccountRecordArgs;
+    const { userId, auth_provider, queryRunner } = createAuthAccountRecordArgs;
     const username = await this.getAnimeUsername();
     const newAuthAccountData = {
       userId,
       username,
-      authProvider
+      auth_provider,
     };
 
     const authAccount = new AuthAccount();
@@ -40,6 +41,21 @@ class AuthAccountService {
 
     await queryRunner.manager.save(authAccount);
 
+    return authAccount;
+  }
+
+  public async findOrCreateAuthAccount(
+    findOrCreateAuthAccountDto: FindOrCreateAuthAccountDto,
+  ) {
+    const { userId, queryRunner } = findOrCreateAuthAccountDto;
+
+    let authAccount = await queryRunner.manager.findOne(AuthAccount, {
+      where: { userId },
+    });
+
+    if (!authAccount) {
+      authAccount = await this.createAuthAccountRecord(findOrCreateAuthAccountDto);
+    }
     return authAccount;
   }
 
@@ -97,12 +113,17 @@ class AuthAccountService {
     await this.authAccountRepository.save(authAccount);
   }
 
-  public async getNotificationByIdentifier(user: AuthAccount, notificationId: string) {
-      const notification = user.notifications.find(notification=>notification.identifier==notificationId);
-      return notification;
+  public async getNotificationByIdentifier(
+    user: AuthAccount,
+    notificationId: string,
+  ) {
+    const notification = user.notifications.find(
+      (notification) => notification.identifier == notificationId,
+    );
+    return notification;
   }
 
-  public async getAnimeUsername():Promise<string>{
+  public async getAnimeUsername(): Promise<string> {
     const getRequestDto: GetRequestDto = {
       url: 'https://api.jikan.moe/v4/random/characters',
     };
@@ -118,27 +139,26 @@ class AuthAccountService {
     newStreamToken: MultiStreamToken,
   ) {
     const authAccount = await this.getAuthAccountByUserId(userId);
-  
+
     if (authAccount === NULL_OBJECT) return NULL_OBJECT;
-  
+
     const existingStreamTokens = authAccount.stream_tokens || [];
-  
+
     const platformIndex = existingStreamTokens.findIndex(
       (token) => token.type === newStreamToken.type,
     );
-  
+
     if (platformIndex > -1) {
       existingStreamTokens[platformIndex] = newStreamToken;
     } else {
       existingStreamTokens.push(newStreamToken);
     }
-  
+
     authAccount.stream_tokens = existingStreamTokens;
-  
+
     await this.authAccountRepository.save(authAccount);
     return authAccount;
   }
-  
 }
 
 export default new AuthAccountService();

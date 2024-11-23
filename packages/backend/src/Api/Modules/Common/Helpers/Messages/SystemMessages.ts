@@ -22,6 +22,7 @@ export const TOKEN_EXPIRED =
 export const NO_TOKEN_RECORD = 'No Token Record in Database';
 export const INVALID_TOKEN_TYPE = 'Invalid Token Type';
 export const AUTHORIZATION_CODE_MISSING = 'Authorization code is missing';
+export const TOKEN_VALIDATION_SUCCESS = 'Token Validated Successfully';
 
 export const UNAUTHORIZED_OPERATION =
   'You are not authorized to perform this Operation';
@@ -61,6 +62,9 @@ export const CRITICAL_ERROR_EXITING =
 export const ENV_NOT_FOUND_ERROR = '.env File is missing';
 
 /* --------------------------  Authentication Messages  ---------------------*/
+export const EMAIL_SIGN_IN_TOKEN_REQUEST_SUCCESS = 
+  'Email Sign In Token Request Success'
+
 export const GOOGLE_AUTHENTICATION_SUCCESS =
   'Google Authentication Successful. Welcome to Stream2Peer!';
 export const GOOGLE_AUTHENTICATION_FAILURE =
@@ -76,16 +80,16 @@ export const METAMASK_AUTHENTICATION_SUCCESS =
 export const METAMASK_AUTHENTICATION_FAILURE =
   'MetaMask Authentication Failed. Please try again or use another method.';
 
-export const TWITCH_AUTHENTICATION_SUCCESS = 
+export const TWITCH_AUTHENTICATION_SUCCESS =
   'Twitch Authentication Successful. You can now multistream on your twitch account.';
 
-export const TWITCH_AUTHENTICATION_FAILURE = 
+export const TWITCH_AUTHENTICATION_FAILURE =
   'Twitch Authentication Failed. Please try again or use another method.';
 
-export const YOUTUBE_AUTHENTICATION_SUCCESS = 
+export const YOUTUBE_AUTHENTICATION_SUCCESS =
   'Youtube Authentication Successful. You can now multistream on your YouTube account.';
 
-export const YOUTUBE_AUTHENTICATION_FAILURE = 
+export const YOUTUBE_AUTHENTICATION_FAILURE =
   'Youtube Authentication Failed. Please try again or use another method.';
 
 /* --------------------------  Authentication -> Password Messages  ---------------------*/

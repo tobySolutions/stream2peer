@@ -46,7 +46,9 @@ class TwitchAuthController {
         });
       }
 
-      const tokenData = await TwitchAuthService.exchangeCodeForTokens(code.toString());
+      const tokenData = await TwitchAuthService.exchangeCodeForTokens(
+        code.toString(),
+      );
 
       if (tokenData == NULL_OBJECT) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
@@ -57,15 +59,15 @@ class TwitchAuthController {
       }
 
       const updatedAuthAccount = await AuthAccountService.updateStreamTokens(
-          user.userId,
-          {
-            type: Platform.Twitch,
-            token: {
-              accessToken: tokenData.accessToken,
-              refreshToken: tokenData.refreshToken,  
-            }    
-          }
-      )
+        user.userId,
+        {
+          type: Platform.Twitch,
+          token: {
+            accessToken: tokenData.accessToken,
+            refreshToken: tokenData.refreshToken,
+          },
+        },
+      );
 
       if (updatedAuthAccount == NULL_OBJECT) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({

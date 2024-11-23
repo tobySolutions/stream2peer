@@ -1,11 +1,10 @@
 export enum NotificationStatus {
-    READ = 'read',
-    UNREAD = 'unread'
+  READ = 'read',
+  UNREAD = 'unread',
 }
 
 export type Notification = {
-    identifier: string,
-    text: string,
-    status: NotificationStatus
+  identifier: string;
+  text: string;
+  status: NotificationStatus;
 };
-    

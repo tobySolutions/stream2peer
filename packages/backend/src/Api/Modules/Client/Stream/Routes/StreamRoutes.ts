@@ -24,8 +24,6 @@ import { AccessProjectIdentifierValidator } from '../../Project/Validators/Proje
 
 //middleware to check if user is permitted to make changes in the project page for the streams
 //create,update,terminate and delete stream in a project.
-//generate token is basically for just authenticated users, not necessarily about the stream
-//livepeer will handle authorizationfor users  with the webhook to watch stream when it makes the request to my backend
 //import { isPermitted } from "Api/Modules/Client/Stream/Middlewares/isUserPermitted";
 
 const routes = Router();

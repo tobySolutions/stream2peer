@@ -96,15 +96,6 @@
 					"name": "github",
 					"item": [
 						{
-							"name": "generate github auth url",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": "localhost:8000/Interface/auth/github"
-							},
-							"response": []
-						},
-						{
 							"name": "url callback",
 							"request": {
 								"method": "GET",
@@ -146,11 +137,47 @@
 					"item": [
 						{
 							"name": "Email-Login",
-							"item": []
-						},
-						{
-							"name": "Generate Email Login Link",
-							"item": []
+							"item": [
+								{
+									"name": "Email Token Request",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"dasijr22@gmail.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{base_url}}/auth/email/sign-in"
+									},
+									"response": []
+								},
+								{
+									"name": "Email Verify Token",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"dasijr22@gmail.com\",\r\n    \"token\":\"250EB8\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{base_url}}/auth/email/verify-token"
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				}
@@ -724,6 +751,19 @@
 												}
 											]
 										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Generate Access Token",
+							"item": [
+								{
+									"name": "New Request",
+									"request": {
+										"method": "GET",
+										"header": []
 									},
 									"response": []
 								}
