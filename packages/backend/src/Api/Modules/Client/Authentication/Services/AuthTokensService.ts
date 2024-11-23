@@ -47,7 +47,7 @@ class AuthTokensService {
     const { email, token, queryRunner } = CreateSignInTokenDtoTypeArgs;
     const expiresOn = DateTime.now().plus({
       minute: businessConfig.signInTokenExpiresInMinutes,
-    });
+    }).toJSDate();
     const createUserTokenArgs: CreateAuthTokenDtoType = {
       email,
       token,

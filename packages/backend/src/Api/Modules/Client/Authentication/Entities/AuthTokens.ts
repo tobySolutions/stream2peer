@@ -7,7 +7,7 @@ export class AuthTokens extends BaseEntity {
   @Column({ type:'varchar' })
   email: string;
 
-  @Column({ type: 'number' })
+  @Column({ type: 'text' })
   token: string;
 
   @Column({ type: "timestamp" })

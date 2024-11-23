@@ -5,13 +5,13 @@ import EmailSignInController from 'Api/Modules/Client/Authentication/Controllers
 const routes = Router();
 
 routes.get(
-  '/sign-in',
+  '/email/sign-in',
   validate,
   EmailSignInController.handle,
 );
 
 routes.post(
-  '/verify-token',
+  '/email/verify-token',
   validate,
   EmailSignInController.verifyToken,
 );
