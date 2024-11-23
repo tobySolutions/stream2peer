@@ -25,23 +25,8 @@ import PeerInviteForm from "./components/peerInviteForm";
 import { IoLogoYoutube } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
 import { ImTwitch } from "react-icons/im";
+import { getDataInCookie, storeDataInCookie } from "../../../../utils/utils";
 
-const platforms: {
-  label: string;
-  icon: JSX.Element;
-  value: "Twitch" | "Youtube";
-}[] = [
-  {
-    label: "YouTube",
-    value: "Youtube",
-    icon: <IoLogoYoutube style={{ color: "#FF0000" }} />,
-  },
-  {
-    label: "Twitch",
-    value: "Twitch",
-    icon: <ImTwitch style={{ color: "#9146FF" }} />,
-  },
-];
 const ProjectPage = () => {
   const { id: projectId } = useParams();
   const navigate = useNavigate();
@@ -72,13 +57,38 @@ const ProjectPage = () => {
     "co-Host"
   );
   const [selectedPlatform, setSelectedPlatform] = useState<
-    ("Twitch" | "Youtube")[]>([]);
+    ("Twitch" | "Youtube")[]
+  >([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [loading, setLoading] = useState({
     project: false,
     invite: false,
     createStream: false,
   });
+
+  const platformStyles = {
+    Twitch: {
+      label: "Twitch",
+      icon: <ImTwitch style={{ color: "#9146FF" }} />,
+    },
+    Youtube: {
+      label: "YouTube",
+      icon: <IoLogoYoutube style={{ color: "#FF0000" }} />,
+    },
+  };
+
+  const UserResponseData = JSON.parse(getDataInCookie("userDataResponse"));
+
+  const { setLoading: setSubmitLoader } = useContext(StateContext);
+
+
+  const platforms = UserResponseData?.data?.platforms?.map(
+    (platform: "Twitch" | "Youtube") => ({
+      label: platformStyles[platform]?.label || platform,
+      value: platform,
+      icon: platformStyles[platform]?.icon || null,
+    })
+  ) || [];
 
   // Fetch project details
   const fetchProjectDetails = async () => {
@@ -125,21 +135,29 @@ const ProjectPage = () => {
   // Handle livestream creation
   const handleCreateLiveStream = async () => {
     setLoading((prev) => ({ ...prev, createStream: true }));
+    setSubmitLoader(true);
     try {
       const payload = {
         title: streamDetails.title,
         description: streamDetails.description,
         ...(modalState.type === "schedule" && { date: selectedDate }),
-        platforms: selectedPlatform
+        platforms: selectedPlatform,
+        scheduleDate: selectedDate,
       };
       const response = await createLiveStream(projectId!, payload);
       setCurrentStream(response?.results);
       toast.success("Livestream created successfully");
       setModalState({ isOpen: false, type: "" });
+      setSelectedDate(null);
+      storeDataInCookie("stream_details", JSON.stringify(response?.results), 1);
+      if (streamDetails.type == "instant") {
+        navigate(`/broadcast/${response?.results.streamKey}`);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading((prev) => ({ ...prev, createStream: false }));
+      setSubmitLoader(false);
     }
   };
 
@@ -236,6 +254,7 @@ const ProjectPage = () => {
         title="Create Livestream"
         onClose={() => setModalState({ isOpen: false, type: "" })}
         onSubmit={handleCreateLiveStream}
+        
       >
         <LivestreamForm
           streamDetails={streamDetails}

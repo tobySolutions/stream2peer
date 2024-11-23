@@ -7,8 +7,6 @@ import SignUp from "./signup";
 import ProjectPage from "./dashboard/projects/[id]";
 import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
 import { DemoPlayer } from "./dashboard/livestream";
-import { getSrc } from "@livepeer/react/external";
-import { Livepeer } from "livepeer";
 import { Destination } from "./dashboard/destination";
 import { JoinProject } from "./dashboard/projects/join-project";
 import { Stream } from "./stream/stream";
@@ -101,11 +99,10 @@ export default function Routes() {
         element={
           <PrivateRoute>
             <BroadcastWithControls />
-           /PrivateRoute>
+           </PrivateRoute>
           } 
         />
       <Route
-        element={<LivestreamPage />}
         path="/dashboard/projects/livestream/:id"
         element={
           <PrivateRoute>
