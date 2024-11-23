@@ -79,7 +79,12 @@ export default class Express {
     // https://www.codeconcisely.com/posts/how-to-handle-errors-in-express-with-typescript/
 
     this.app.use(
-      (err: Error, request: Request, response: Response, next: NextFunction) => {
+      (
+        err: Error,
+        request: Request,
+        response: Response,
+        next: NextFunction,
+      ) => {
         console.log(err);
         this.loggingProvider.error(err.message);
         next(err);
@@ -88,7 +93,12 @@ export default class Express {
 
     this.app.use(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (err: Error, request: Request, response: Response, next: NextFunction) => {
+      (
+        err: Error,
+        request: Request,
+        response: Response,
+        next: NextFunction,
+      ) => {
         errorHandler.handleError(err, response);
       },
     );

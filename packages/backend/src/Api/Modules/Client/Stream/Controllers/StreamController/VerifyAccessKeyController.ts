@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
-import { SUCCESS, ERROR, SOMETHING_WENT_WRONG } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import {
+  SUCCESS,
+  ERROR,
+  SOMETHING_WENT_WRONG,
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import ProjectService from 'Api/Modules/Client/Project/Services/ProjectService';
 import AuthAccountService from 'Api/Modules/Client/Authentication/Services/AuthAccountService';
 
@@ -16,12 +20,12 @@ class VerifyAccessTokenController {
       const Project = await ProjectService.getProjectByIdentifier(projectId);
       const User = await AuthAccountService.getAuthAccountByUserId(userId);
 
-      const result = await ProjectService.viewProject(Project,User);
+      const result = await ProjectService.viewProject(Project!, User!);
       if (!result) {
         return response.status(HttpStatusCodeEnum.FORBIDDEN).json({
           status_code: HttpStatusCodeEnum.FORBIDDEN,
           status: ERROR,
-          message: "YOU ARENT AUTHORIZED TO WATCH",
+          message: 'YOU ARENT AUTHORIZED TO WATCH',
         });
       }
 

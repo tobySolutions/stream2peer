@@ -1,4 +1,4 @@
-import { StreamProfile } from "../TypeChecking/StreamData";
+import { StreamProfile } from '../TypeChecking/StreamData';
 
 export const defaultProfiles: StreamProfile[] = [
   {

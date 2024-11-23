@@ -6,8 +6,18 @@ import { authenticateUser } from 'Api/Middleware/isAuthenticated';
 
 const routes = Router();
 
-routes.post('/notifications/all',asyncMiddlewareHandler(authenticateUser), validate, NotificationController.handle);
+routes.post(
+  '/notifications/all',
+  asyncMiddlewareHandler(authenticateUser),
+  validate,
+  NotificationController.handle,
+);
 
-routes.post('/notification/:notificationId',asyncMiddlewareHandler(authenticateUser), validate, NotificationController.fetchByIdentifier);
+routes.post(
+  '/notification/:notificationId',
+  asyncMiddlewareHandler(authenticateUser),
+  validate,
+  NotificationController.fetchByIdentifier,
+);
 
 export default routes;

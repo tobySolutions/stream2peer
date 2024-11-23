@@ -6,32 +6,36 @@ import { DeleteRequestDto } from 'TypeChecking/GeneralPurpose/DeleteRequestDto';
 
 export class HttpClient {
   public static async get(getRequestDto: GetRequestDto) {
-    const { url, headers } = getRequestDto;
+    const { url, headers, params } = getRequestDto;
 
     const axiosInstance = axios.create({ headers });
 
     try {
-      const response = await axiosInstance.get(url);
+      const response = await axiosInstance.get(url, params);
       return response.data;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (axiosGetRequestError:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (axiosGetRequestError: any) {
       console.log(axiosGetRequestError);
-      throw new Error(`axiosGetRequestError -> ${axiosGetRequestError.message}` );
+      throw new Error(
+        `axiosGetRequestError -> ${axiosGetRequestError.message}`,
+      );
     }
   }
 
   public static async post(postRequestDto: PostRequestDto) {
-    const { url, headers, body } = postRequestDto;
+    const { url, headers, params, body } = postRequestDto;
 
     const axiosInstance = axios.create({ headers });
 
     try {
-      const response = await axiosInstance.post(url, body);
+      const response = await axiosInstance.post(url, body, params);
       return response.data;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (axiosPostRequestError:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (axiosPostRequestError: any) {
       console.log(axiosPostRequestError);
-      throw new Error(`axiosPostRequestError -> ${axiosPostRequestError.message}` );
+      throw new Error(
+        `axiosPostRequestError -> ${axiosPostRequestError.message}`,
+      );
     }
   }
 
@@ -43,10 +47,12 @@ export class HttpClient {
     try {
       const response = await axiosInstance.put(url, body);
       return response.data;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (axiosPutRequestError:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (axiosPutRequestError: any) {
       console.log(axiosPutRequestError);
-      throw new Error(`axiosPutRequestError -> ${axiosPutRequestError.message}` );
+      throw new Error(
+        `axiosPutRequestError -> ${axiosPutRequestError.message}`,
+      );
     }
   }
 
@@ -58,10 +64,12 @@ export class HttpClient {
     try {
       const response = await axiosInstance.delete(url);
       return response.data;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (axiosDeleteRequestError:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (axiosDeleteRequestError: any) {
       console.log(axiosDeleteRequestError);
-      throw new Error(`axiosDeleteRequestError -> ${axiosDeleteRequestError.message}` );
+      throw new Error(
+        `axiosDeleteRequestError -> ${axiosDeleteRequestError.message}`,
+      );
     }
   }
 }

@@ -32,7 +32,7 @@ export const validateProjectToken = async (
 
     return next();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (TokenValidationError:any) {
+  } catch (TokenValidationError: any) {
     if (TokenValidationError.name === 'TokenExpiredError') {
       return response.status(HttpStatusCodeEnum.INVITATION_EXPIRED).json({
         status_code: HttpStatusCodeEnum.INVITATION_EXPIRED,

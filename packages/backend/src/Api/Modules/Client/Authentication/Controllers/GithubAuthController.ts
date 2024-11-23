@@ -11,6 +11,7 @@ import { AuthAccountType } from 'Api/Modules/Client/Authentication/TypeChecking/
 import { container } from 'tsyringe';
 import { DbContext } from 'Lib/Infra/Internal/DBContext';
 import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
+import AuthAccountService from '../Services/AuthAccountService';
 
 const dbContext = container.resolve(DbContext);
 
@@ -57,7 +58,7 @@ class GitHubAuthController {
         });
       }
       const userInfo = await GitHubAuthService.getGitHubUserInfo(token);
-      const gitHubAuthAccount = await GitHubAuthService.findOrCreateAuthAccount(
+      const gitHubAuthAccount = await AuthAccountService.findOrCreateAuthAccount(
         {
           userId: userInfo.login,
           auth_provider: AuthAccountType.GITHUB,

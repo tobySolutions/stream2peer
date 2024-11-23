@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
 import { HttpStatusCodeEnum } from 'Utils/HttpStatusCodeEnum';
 import { JwtHelper } from 'Api/Modules/Common/Helpers/JwtHelper';
-import { SUCCESS, ERROR, SOMETHING_WENT_WRONG, TOKEN_GENERATION_SUCCESS } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
+import {
+  SUCCESS,
+  ERROR,
+  SOMETHING_WENT_WRONG,
+  TOKEN_GENERATION_SUCCESS,
+} from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import { AuthRequest } from 'TypeChecking/GeneralPurpose/AuthRequest';
 
 class GenerateAccessTokenController {

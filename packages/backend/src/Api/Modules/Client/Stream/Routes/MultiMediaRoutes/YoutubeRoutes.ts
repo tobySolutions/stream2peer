@@ -4,7 +4,7 @@ import YouTubeAuthController from 'Api/Modules/Client/Stream/Controllers/MultiSt
 
 const routes = Router();
 
-routes.post('/youtube/auth', validate, YouTubeAuthController.handle);
-routes.get('/youtube/callback', validate, YouTubeAuthController.callback);
+routes.post('/auth', validate, YouTubeAuthController.handle);
+routes.get('/callback', validate, YouTubeAuthController.callback);
 
 export default routes;

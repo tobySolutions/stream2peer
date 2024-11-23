@@ -101,11 +101,10 @@ export default function Routes() {
         element={
           <PrivateRoute>
             <BroadcastWithControls />
-           /PrivateRoute>
+           </PrivateRoute>
           } 
         />
       <Route
-        element={<LivestreamPage />}
         path="/dashboard/projects/livestream/:id"
         element={
           <PrivateRoute>
