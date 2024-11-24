@@ -12,18 +12,18 @@ const features: FeatureProps[] = [
     icon: <MedalIcon />,
     title: "Create Account",
     description:
-      "Easily and quickly create an account using your email or OAuth sign in",
+      "Easily and quickly create an account using your email or OAuth sign in.",
   },
   {
     icon: <MapIcon />,
     title: "Platform Integration",
     description:
-      "Connect your favorite platforms that you stream from with your audience",
+      "Connect your favorite platforms that you stream from with your audience.",
   },
   {
     icon: <PlaneIcon />,
     title: "Stream away",
-    description: "Start streaming to all your platforms at once with ease! From anywhere anytime.",
+    description: "Start streaming to all your platforms at once with ease! From anywhere, anytime.",
   },
 ];
 

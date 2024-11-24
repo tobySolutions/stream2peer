@@ -93,7 +93,7 @@ export const Footer = () => {
           <a
             rel="noreferrer noopener"
             target="_blank"
-            href="https://www.linkedin.com/in/leopoldo-miranda/"
+            href="https://github.com/tobySolutions/stream2peer"
             className="text-primary transition-all border-primary hover:border-b-2"
           >
             Stream2Peer

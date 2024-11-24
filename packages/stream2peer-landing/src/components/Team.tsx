@@ -27,7 +27,7 @@ const teamList: TeamProps[] = [
   {
     imageUrl: "https://github.com/chibuike-19.png",
     name: "Emmanuel Obiechina",
-    position: "Software Engineer",
+    position: "Software Engineer and Frontend Lead",
     socialNetworks: [
       {
         name: "Github",
@@ -46,7 +46,7 @@ const teamList: TeamProps[] = [
   {
     imageUrl: "https://github.com/excellencyjumo.png",
     name: "Adedamola Adejumo",
-    position: "Software Engineer",
+    position: "Software Engineer and Backend Lead",
     socialNetworks: [
       {
         name: "Github",
@@ -61,7 +61,7 @@ const teamList: TeamProps[] = [
   {
     imageUrl: "https://github.com/tobySolutions.png",
     name: "Tobiloba Adedeji",
-    position: "Software Engineer",
+    position: "Software Engineer and Operations Lead",
     socialNetworks: [
       {
         name: "Github",
