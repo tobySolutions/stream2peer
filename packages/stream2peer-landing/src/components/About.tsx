@@ -1,6 +1,6 @@
 // import { Statistics } from "./Statistics";
 import pilot from "../assets/pilot.png";
-import { Button, buttonVariants } from "./ui/button";
+import { buttonVariants } from "./ui/button";
 
 export const About = () => {
   return (
