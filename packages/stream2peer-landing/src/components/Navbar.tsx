@@ -46,7 +46,7 @@ export const Navbar = () => {
               href="/"
               className="ml-2 font-bold text-xl flex"
             >
-              <img src={LogoIcon} className="w-45 h-6 md:h-8 object-cover"/>
+              <img src={LogoIcon} className="w-45 h-6 md:h-8 object-cover" />
             </a>
           </NavigationMenuItem>
 
@@ -66,9 +66,10 @@ export const Navbar = () => {
 
               <SheetContent side={"left"}>
                 <SheetHeader>
-                  <SheetTitle className="font-bold text-xl">
-                    Stream2Peer
-                  </SheetTitle>
+                  <img
+                    src={LogoIcon}
+                    className="w-45 h-6 md:h-8 object-contain"
+                  />
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">
                   {routeList.map(({ href, label }: RouteProps) => (
