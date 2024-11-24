@@ -2,9 +2,7 @@ import LogoIcon from "/logo.png"
 
 export const Footer = () => {
   return (
-    <footer
-      id="footer"
-    >
+    <footer id="footer">
       <hr className="w-11/12 mx-auto" />
 
       <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
@@ -14,7 +12,7 @@ export const Footer = () => {
             href="/"
             className="font-bold text-xl flex"
           >
-            <img src={LogoIcon} className="w-32 h-8" />
+            <img src={LogoIcon} className="w-45 h-6 md:h-8 object-cover" />
           </a>
         </div>
 
