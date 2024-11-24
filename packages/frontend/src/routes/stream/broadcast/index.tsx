@@ -48,10 +48,10 @@ export function BroadcastWithControls() {
         //     : null
         // }
 
-        // aspectRatio={20 / 9}
+        aspectRatio={16 / 9}
         ingestUrl={ingestUrl}
       >
-        <Broadcast.Container className="w-[100vw] h-screen overflow-hidden rounded-sm bg-gray-950">
+        <Broadcast.Container className="h-screen overflow-hidden rounded-sm bg-gray-950">
           <Broadcast.Video
             title="Live stream"
             className="justify-start w-full flex text-primary-white"

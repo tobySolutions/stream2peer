@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "/logo.png";
+import { CiLogout } from "react-icons/ci";
 import { navItems } from "../utils/navContent";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,19 +20,34 @@ function Navbar() {
     navigate(route, { replace: true });
   };
 
+  const handleLogout = () => {
+    
+  }
+
   return (
     <nav className="bg-dark-gray sticky bottom-0 top-0 right-0 left-0 z-[100] h-[60px] border-b border-primary-border flex items-center justify-between px-[36px] py-[25px]">
       {/* Logo Container */}
       <div className="flex items-center gap-[10px] cursor-pointer">
         <img src={Logo} alt="Logo" width="200px" height="100px" />
-      
       </div>
 
       {/* Desktop Menu */}
-      <ul className="hidden md:flex gap-[20px] items-center list-none">
-        <li className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white">
+      <ul className="hidden relative md:flex gap-[20px] items-center list-none">
+        <li
+          onClick={() => setSubMenuOpen((prev) => !prev)}
+          className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white flex items-center gap-2"
+        >
+          <IoPersonCircleOutline size={24}/>
           My Account
         </li>
+        {subMenuOpen && (
+          <div onClick={handleLogout} className="absolute bg-dark-gray top-12 left-6 border border-primary-border">
+            <button className="bg-primary-white flex items-center py-2 px-4 gap-2">
+              <CiLogout />
+              <span>Logout</span>
+            </button>
+          </div>
+        )}
       </ul>
 
       {/* Mobile Menu Toggle */}

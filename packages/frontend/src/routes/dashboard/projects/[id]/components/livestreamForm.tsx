@@ -31,9 +31,11 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
   selectedDate,
   setSelectedDate,
   platforms,
-  handleChange
+  handleChange,
 }) => {
   const { Option } = Select;
+
+  console.log(platforms)
 
   return (
     <div>
@@ -106,14 +108,18 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
         style={{ width: 200 }}
         onChange={handleChange} // Handle change event
       >
-        {platforms.map((platform) => (
-          <Option key={platform.value} value={platform.value}>
-            <div className="flex items-center gap-1">
-              {platform.icon}
-              <span style={{ marginLeft: 8 }}>{platform.label}</span>
-            </div>
-          </Option>
-        ))}
+        {platforms?.length === 0 ? (
+          <div>Connect your account to stream to other platforms</div>
+        ) : (
+          platforms?.map((platform) => (
+            <Option key={platform.value} value={platform.value}>
+              <div className="flex items-center gap-1">
+                {platform.icon}
+                <span style={{ marginLeft: 8 }}>{platform.label}</span>
+              </div>
+            </Option>
+          ))
+        )}
       </Select>
     </div>
   );

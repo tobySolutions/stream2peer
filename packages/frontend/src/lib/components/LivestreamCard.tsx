@@ -37,7 +37,9 @@ const LivestreamCard = ({ livestream, type }: any) => {
             className="cursor-pointer"
           >
             {isCopied ? (
-              <span className="text-green-500 text-[12px]">Copied to clipboard!</span>
+              <span className="text-green-500 text-[12px]">
+                Copied to clipboard!
+              </span>
             ) : (
               <FaRegCopy />
             )}
@@ -48,13 +50,17 @@ const LivestreamCard = ({ livestream, type }: any) => {
           Status: {livestream?.status}
         </p>
       </div>
-     
       <button
-        className="bg-dark-gray border border-primary-border text-white px-4 py-2 rounded hover:bg-white hover:text-gray-800"
         onClick={viewDetails}
+        className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-white hover:text-black bg-transparent border border-primary-border rounded-md"
       >
-        Start stream
+        <span className="relative z-[10]">Start stream</span>
+        <div className="absolute inset-0 w-full h-full bg-[#FFFFFF] transition-transform duration-500 transform translate-y-full group-hover:translate-y-0"></div>
       </button>
+
+      {/* <button className="bg-dark-gray border border-primary-border text-white px-4 py-2 rounded hover:bg-white hover:text-gray-800">
+        Start stream
+      </button> */}
     </div>
   );
 };
