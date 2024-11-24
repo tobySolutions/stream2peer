@@ -1,8 +1,10 @@
-import { LogoIcon } from "./Icons";
+import LogoIcon from "/logo.png"
 
 export const Footer = () => {
   return (
-    <footer id="footer">
+    <footer
+      id="footer"
+    >
       <hr className="w-11/12 mx-auto" />
 
       <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
@@ -12,12 +14,16 @@ export const Footer = () => {
             href="/"
             className="font-bold text-xl flex"
           >
-            <LogoIcon />
-            Stream2Peer
+            <img src={LogoIcon} className="w-32 h-8" />
           </a>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div
+          data-aos="fade-up"
+          data-aos-anchor-placement="bottom-bottom"
+          data-aos-delay="50"
+          className="flex flex-col gap-2"
+        >
           <h3 className="font-bold text-lg">Follow US</h3>
           <div>
             <a
@@ -40,7 +46,12 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div
+          data-aos="fade-up"
+          data-aos-anchor-placement="bottom-bottom"
+          data-aos-delay="50"
+          className="flex flex-col gap-2"
+        >
           <h3 className="font-bold text-lg">About</h3>
           <div>
             <a
@@ -63,7 +74,12 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div
+          data-aos="fade-up"
+          data-aos-anchor-placement="bottom-bottom"
+          data-aos-delay="50"
+          className="flex flex-col gap-2"
+        >
           <h3 className="font-bold text-lg">Community</h3>
           <div>
             <a
@@ -87,13 +103,19 @@ export const Footer = () => {
         </div>
       </section>
 
-      <section className="container pb-14 text-center">
+      <section
+        data-aos="fade-zoom-in"
+        data-aos-easing="ease-in-back"
+        data-aos-delay="600"
+        data-aos-offset="0"
+        className="container pb-14 text-center"
+      >
         <h3>
           &copy; 2024 Landing page made by{" "}
           <a
             rel="noreferrer noopener"
             target="_blank"
-            href="https://www.linkedin.com/in/leopoldo-miranda/"
+            href="https://github.com/tobySolutions/stream2peer"
             className="text-primary transition-all border-primary hover:border-b-2"
           >
             Stream2Peer

@@ -12,18 +12,18 @@ const features: FeatureProps[] = [
     icon: <MedalIcon />,
     title: "Create Account",
     description:
-      "Easily and quickly create an account using your email or OAuth sign in",
+      "Easily and quickly create an account using your email or OAuth sign in.",
   },
   {
     icon: <MapIcon />,
     title: "Platform Integration",
     description:
-      "Connect your favorite platforms that you stream from with your audience",
+      "Connect your favorite platforms that you stream from with your audience.",
   },
   {
     icon: <PlaneIcon />,
     title: "Stream away",
-    description: "Start streaming to all your platforms at once with ease! From anywhere anytime.",
+    description: "Start streaming to all your platforms at once with ease! From anywhere, anytime.",
   },
 ];
 
@@ -38,12 +38,18 @@ export const HowItWorks = () => {
         Step-by-Step Guide
       </h2>
       <p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
-        You can stream with your audience anytime, anywhere with no hassle. Just follow these simple steps.
+        You can stream with your audience anytime, anywhere with no hassle. Just
+        follow these simple steps.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map(({ icon, title, description }: FeatureProps) => (
-          <Card key={title} className="bg-muted/50">
+          <Card
+            key={title}
+            className="bg-muted/50"
+            data-aos="fade-up"
+            data-aos-anchor-placement="center-bottom"
+          >
             <CardHeader>
               <CardTitle className="grid gap-4 place-items-center">
                 {icon}

@@ -80,7 +80,7 @@ class StreamService {
           platforms,
           streamTokens,
           title,
-          scheduleDate?.toISOString().slice(0,16),
+          scheduleDate?.toString().slice(0,16),
         );
       }
       await LivepeerService.createStream(

@@ -27,7 +27,7 @@ const teamList: TeamProps[] = [
   {
     imageUrl: "https://github.com/chibuike-19.png",
     name: "Emmanuel Obiechina",
-    position: "Software Engineer",
+    position: "Software Engineer and Frontend Lead",
     socialNetworks: [
       {
         name: "Github",
@@ -46,7 +46,7 @@ const teamList: TeamProps[] = [
   {
     imageUrl: "https://github.com/excellencyjumo.png",
     name: "Adedamola Adejumo",
-    position: "Software Engineer",
+    position: "Software Engineer and Backend Lead",
     socialNetworks: [
       {
         name: "Github",
@@ -61,7 +61,7 @@ const teamList: TeamProps[] = [
   {
     imageUrl: "https://github.com/tobySolutions.png",
     name: "Tobiloba Adedeji",
-    position: "Software Engineer",
+    position: "Software Engineer and Operations Lead",
     socialNetworks: [
       {
         name: "Github",
@@ -110,6 +110,8 @@ export const Team = () => {
             <Card
               key={name}
               className="bg-muted/50 relative mt-8 flex flex-col justify-center items-center"
+              data-aos="fade-up"
+              data-aos-anchor-placement="center-bottom"
             >
               <CardHeader className="mt-8 flex justify-center items-center pb-2">
                 <img

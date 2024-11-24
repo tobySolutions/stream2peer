@@ -14,7 +14,12 @@ const sponsors: SponsorProps[] = [
 
 export const Sponsors = () => {
   return (
-    <section id="sponsors" className="container pt-24 sm:py-32">
+    <section
+      id="sponsors"
+      className="container pt-24 sm:py-32"
+      data-aos="fade-up"
+      data-aos-anchor-placement="center-bottom"
+    >
       <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
         Supported and used by
       </h2>

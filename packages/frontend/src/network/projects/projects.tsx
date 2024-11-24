@@ -33,3 +33,10 @@ export const sendPeerInvite = async (id: string, payload: InvitePeerProps) => {
   const { data } = await instance.post(`/project/invite/${id}`, payload);
   return data;
 };
+
+export const getAccessToken = async (projectId: string) => {
+  const { data } = await instance.get(
+    `/Stream/${projectId}/fetch/access-token`
+  );
+  return data;
+};

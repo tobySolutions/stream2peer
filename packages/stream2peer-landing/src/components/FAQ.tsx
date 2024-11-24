@@ -13,40 +13,35 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "Is this template free?",
-    answer: "Yes. It is a free ChadcnUI template.",
+    question: "Do I have to pay to stream videos on Stream2Peer?",
+    answer: "No, not at all. Stream2Peer is completely free to use.",
     value: "item-1",
   },
   {
-    question: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
+    question: "Can I record videos and store them on Stream2Peer?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
+      "Yes, videos and live streams can be recorded and stored on Stream2Peer.",
     value: "item-2",
   },
   {
     question:
-      "Lorem ipsum dolor sit amet  Consectetur natus dolores minus quibusdam?",
+      "Can I open issues on GitHub if I encounter any bugs or issues?",
     answer:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore qui nostrum reiciendis veritatis necessitatibus maxime quis ipsa vitae cumque quo?",
+      "Totally! We encourage you to open issues on our GitHub repository if you encounter any bugs or issues.",
     value: "item-3",
   },
   {
-    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit?",
-    answer: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    question: "Is Stream2Peer actively being maintained and updated?",
+    answer: "Yes, the Stream2Peer project is actively being maintained and updated by the amazing team of individuals behind it.",
     value: "item-4",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur natus?",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
-    value: "item-5",
   },
 ];
 
 export const FAQ = () => {
   return (
     <section
+      data-aos="fade-up"
+      data-aos-anchor-placement="center-bottom"
       id="faq"
       className="container py-24 sm:py-32"
     >
@@ -57,16 +52,9 @@ export const FAQ = () => {
         </span>
       </h2>
 
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full AccordionRoot"
-      >
+      <Accordion type="single" collapsible className="w-full AccordionRoot">
         {FAQList.map(({ question, answer, value }: FAQProps) => (
-          <AccordionItem
-            key={value}
-            value={value}
-          >
+          <AccordionItem key={value} value={value}>
             <AccordionTrigger className="text-left">
               {question}
             </AccordionTrigger>
@@ -76,7 +64,7 @@ export const FAQ = () => {
         ))}
       </Accordion>
 
-      <h3 className="font-medium mt-4">
+      {/* <h3 className="font-medium mt-4">
         Still have questions?{" "}
         <a
           rel="noreferrer noopener"
@@ -85,7 +73,7 @@ export const FAQ = () => {
         >
           Contact us
         </a>
-      </h3>
+      </h3> */}
     </section>
   );
 };

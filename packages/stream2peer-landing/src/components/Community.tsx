@@ -2,7 +2,11 @@ import { buttonVariants } from "./ui/button";
 
 export const Community = () => {
   return (
-    <section id="newsletter">
+    <section
+      id="newsletter"
+      data-aos="fade-up"
+      data-aos-anchor-placement="center-bottom"
+    >
       <hr className="w-11/12 mx-auto" />
 
       <div className="container py-24 sm:py-32">

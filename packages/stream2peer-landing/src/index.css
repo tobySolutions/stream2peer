@@ -2,6 +2,23 @@ html {
   scroll-behavior: smooth;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
 /* HeroCards background shadow */
 .shadow {
   position: absolute;
@@ -63,4 +80,46 @@ html {
       right: 100px;
     }
   }
+}
+
+
+
+.tt-scrolling-text {
+  display: flex;
+  position: relative;
+  pointer-events: none;
+}
+
+.tt-scrolling-text-inner {
+  padding-left: 2vw;
+  font-size: calc(16px + 6vw);
+  line-height: 1;
+  font-weight: bold;
+  font-weight: 600;
+  color: #CCC;
+  white-space: nowrap;
+  animation-name: tt_scrolling_text;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+
+}
+
+.tt-scrolling-text-inner:after {
+  content: attr(data-text);
+}
+
+@keyframes tt_scrolling_text {
+  0% {
+    transform: translateX(0)
+  }
+
+  100% {
+    transform: translateX(-50%)
+  }
+}
+
+/* Animation direction reverse. */
+.tt-scrolling-text.scr-text-reverse .tt-scrolling-text-inner {
+  animation-direction: reverse;
 }

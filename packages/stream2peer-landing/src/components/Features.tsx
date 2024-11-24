@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import image from "../assets/growth.png";
-import image3 from "../assets/reflecting.png";
-import image4 from "../assets/looking-ahead.png";
+import image from "../assets/decentralized.png";
+import image3 from "../assets/open-source.png";
+import image4 from "../assets/community-centric.png";
 
 interface FeatureProps {
   title: string;
@@ -18,21 +18,21 @@ interface FeatureProps {
 
 const features: FeatureProps[] = [
   {
-    title: "Responsive Design",
+    title: "Community-centric",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Stream2Peer is a community-centric platform that is meant for developers built by developers.",
     image: image4,
   },
   {
-    title: "Intuitive user interface",
+    title: "Open source",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "All of our code is open-source and available on GitHub for anyone to contribute to.",
     image: image3,
   },
   {
-    title: "AI-Powered insights",
+    title: "Decentralized",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Stream2Peer leverages the power of the Livepeer network to provide a decentralized video streaming platform.",
     image: image,
   },
 ];
@@ -41,6 +41,8 @@ const featureList: string[] = [
   "Community-centric",
   "Open-source",
   "Decentralized",
+  "Secure",
+  "Optimized compute",
 ];
 
 export const Features = () => {
@@ -65,7 +67,11 @@ export const Features = () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map(({ title, description, image }: FeatureProps) => (
-          <Card key={title}>
+          <Card
+            key={title}
+            data-aos="fade-up"
+            data-aos-anchor-placement="center-bottom"
+          >
             <CardHeader>
               <CardTitle>{title}</CardTitle>
             </CardHeader>
@@ -76,7 +82,7 @@ export const Features = () => {
               <img
                 src={image}
                 alt="About feature"
-                className="w-[200px] lg:w-[300px] mx-auto"
+                className="w-[250px] lg:w-[350px] mx-auto"
               />
             </CardFooter>
           </Card>

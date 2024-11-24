@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Layout from "../layout";
 import { MdOutlineLinkOff } from "react-icons/md";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoLogoYoutube } from "react-icons/io";
 import SocialMediaCards from "../../../lib/components/socialCards";
 import { validateTwitch } from "../../../network/streams/streams-api";
 import { useLocation, useParams } from "react-router-dom";
+import { getDataInCookie } from "../../../utils/utils";
+import { ImTwitch } from "react-icons/im";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
@@ -26,7 +28,12 @@ export const Destination = () => {
     if (queryParams.get("code")) {
       handleTwitchValidation();
     }
+    const userData = JSON.parse(getDataInCookie("userDataResponse"));
+    if (userData?.data?.platforms) {
+      setDestinationData(userData?.data?.platforms);
+    }
   }, []);
+
   return (
     <Layout>
       <div className="text-primary-white">
@@ -52,8 +59,8 @@ export const Destination = () => {
         )}
         {viewDestinations ? (
           <div className="mt-6">
-            <h2>Destinations</h2>
-            {destinationData.length === 0 ? (
+            <h2>Destinations connected</h2>
+            {destinationData?.length === 0 ? (
               <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36 my-6">
                 <MdOutlineLinkOff size={40} />
                 <div className="">
@@ -61,8 +68,27 @@ export const Destination = () => {
                 </div>
               </div>
             ) : (
-              <div>
-                <ul></ul>
+              <div className="mt-4">
+                <ul>
+                  {destinationData?.map((platform, indx) => (
+                    <div key={indx}>
+                      {platform == "Twitch" ? (
+                        <div className="bg-[#9147ff] w-48 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-[#9147ffbe] transition">
+                          <ImTwitch />
+                          <span>Twitch</span>
+                        </div>
+                      ) : platform == "Youtube" ? (
+                        <div className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition">
+                          <IoLogoYoutube />
+                          <span>YouTube Channel</span>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    
+                    </div>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
