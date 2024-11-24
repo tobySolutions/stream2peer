@@ -9,8 +9,13 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { VscMute as MuteIcon } from "react-icons/vsc";
 import { GoUnmute as UnmuteIcon } from "react-icons/go";
-import { RateSelectItem, Seek, VideoQualitySelectItem } from "@livepeer/react/player";
+import {
+  RateSelectItem,
+  Seek,
+  VideoQualitySelectItem,
+} from "@livepeer/react/player";
 import { IoMdSettings as Settings } from "react-icons/io";
+import { getDataInCookie } from "../../utils/utils";
 
 export const Stream = () => {
   const { id: playbackId } = useParams();
@@ -27,7 +32,8 @@ export const Stream = () => {
     | undefined
   >(undefined);
 
-  const { currentStream } = useContext(StateContext);
+  const accessKey = JSON.parse(getDataInCookie("stream-access-token"));
+  // console.log(accessKey)
 
   const livepeer = new Livepeer({
     apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
@@ -71,7 +77,7 @@ export const Stream = () => {
         ) : (
           <Player.Root
             src={streamSource}
-            accessKey={"iwrgweir"}
+            accessKey={accessKey}
             autoPlay={true}
             videoQuality="1080p"
             onError={(error) => {
@@ -244,8 +250,6 @@ export const Stream = () => {
     </div>
   );
 };
-
-
 
 // const Settings = React.forwardRef(
 //   (

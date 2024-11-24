@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import { StateContext } from "../context";
 
@@ -18,9 +18,14 @@ const Modal = ({
   if (!isOpen) return null; // If modal is not open, don't render anything
 
   const { loading } = useContext(StateContext);
+  const dropdownRef = useRef(null);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={(e) => e.stopPropagation()}>
+    <div
+      // ref={dropdownRef}
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="bg-white max-h-[550px] overflow-y-auto px-6 pb-6 md:max-w-[550px] rounded-lg shadow-lg max-w-sm w-full relative">
         {/* Modal Close Button */}
         <button
