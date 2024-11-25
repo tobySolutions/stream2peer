@@ -18,7 +18,7 @@
 								"auth": {
 									"type": "bearer",
 									"bearer": {
-										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzI0ODIxMDgsImV4cCI6MTczMjY1NDkwOH0.igKmUykDRETXiFD-RTMdx0iCTyiwzhUGBJ6-MTqzFZs"
 									}
 								},
 								"method": "GET",
@@ -148,7 +148,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\":\"dasijr22@gmail.com\"\r\n}",
+											"raw": "{\r\n    \"email\":\"adedejitobiloba7@gmail.com\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -521,7 +521,55 @@
 					"item": [
 						{
 							"name": "YOUTUBE",
-							"item": []
+							"item": [
+								{
+									"name": "generate youtube auth url",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{base_url}}/MultiStream/youtube/auth"
+									},
+									"response": []
+								},
+								{
+									"name": "Youtube Callback",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTczMjU1NTE1MywiZXhwIjoxNzMyNzI3OTUzfQ.tqO-r61p7XUMCFb-kw3x_msn-xcGktrGCrbZTmKsb5E"
+											}
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/interface/multistream/youtube/callback?code=4/0AeanS0b-6roRy52ydN0KmhBsissG6WoOD2lnAZ2fgxQS-xOq8ZTH3tY5uPY-_XXbdcPWRQ&scope=https://www.googleapis.com/auth/youtube",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"interface",
+												"multistream",
+												"youtube",
+												"callback"
+											],
+											"query": [
+												{
+													"key": "code",
+													"value": "4/0AeanS0b-6roRy52ydN0KmhBsissG6WoOD2lnAZ2fgxQS-xOq8ZTH3tY5uPY-_XXbdcPWRQ"
+												},
+												{
+													"key": "scope",
+													"value": "https://www.googleapis.com/auth/youtube"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						},
 						{
 							"name": "TWITCH",
@@ -536,7 +584,7 @@
 									"response": []
 								},
 								{
-									"name": "TWITCH CALLBACK",
+									"name": "Twitch Callback",
 									"request": {
 										"auth": {
 											"type": "bearer",
@@ -692,7 +740,7 @@
 										"auth": {
 											"type": "bearer",
 											"bearer": {
-												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIzOTE2NTUsImV4cCI6MTczMjU2NDQ1NX0.JNoulpPJtKTgaoY4QFBiEh-2vkWshzv2gB2Jva8Pkys"
 											}
 										},
 										"method": "GET",

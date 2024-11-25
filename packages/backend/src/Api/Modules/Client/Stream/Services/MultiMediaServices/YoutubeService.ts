@@ -67,7 +67,7 @@ class YouTubeAuthService {
   
       return streamDetails.items[0].cdn.ingestionInfo.streamName;
     } catch (getStreamKeyError:any) {
-      console.log('Error in getOrCreateStreamKey, refreshing token...', getStreamKeyError);
+      console.log('Error in getOrCreateStreamKey, refreshing token...', getStreamKeyError.response?.data?.error?.errors);
       return this.getStreamKey(refreshToken, title, scheduleDate, authCalls + 1);
     }
   }
@@ -75,6 +75,7 @@ class YouTubeAuthService {
 
   public async createBroadcast(accessToken: string, title:string, scheduleDate:string) {
     try {
+      console.log(accessToken);
       const newBroadcast = await HttpClient.post({
         url: 'https://www.googleapis.com/youtube/v3/liveBroadcasts?part=snippet,status',
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -88,7 +89,7 @@ class YouTubeAuthService {
       });
       return newBroadcast.id;
     } catch (createBroadcastError:any) {
-      console.log('Error creating broadcast:', createBroadcastError);
+      console.log('Error creating broadcast:', createBroadcastError.response?.data?.error?.errors);
       throw new Error('Error creating broadcast');
     }
   }
@@ -113,7 +114,7 @@ class YouTubeAuthService {
       });
       return newStream.id;
     } catch (CreateStreamError:any) {
-      console.log('Error creating stream:', CreateStreamError.response.data.error.errors);
+      console.log('Error creating stream:', CreateStreamError.response?.data?.error?.errors);
       throw new Error('Error creating stream');
     }
   }
@@ -127,7 +128,7 @@ class YouTubeAuthService {
       });
       console.log(`Successfully bound broadcastId ${broadcastId} to streamId ${streamId}`);
     } catch (bindBroadcastToStreamError:any) {
-      console.log('Error binding broadcast to stream:', bindBroadcastToStreamError.response.data.error.errors);
+      console.log('Error binding broadcast to stream:', bindBroadcastToStreamError.response?.data?.error?.errors);
       throw new Error('Error binding broadcast to stream');
     }
   }

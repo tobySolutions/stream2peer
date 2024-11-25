@@ -16,7 +16,7 @@ export class HttpClient {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosGetRequestError: any) {
       console.log(`axiosGetRequestError -> ${axiosGetRequestError.message}`);
-      throw new Error(axiosGetRequestError);
+      throw axiosGetRequestError;
     }
   }
 
@@ -31,7 +31,7 @@ export class HttpClient {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosPostRequestError: any) {
       console.log(`axiosPostRequestError -> ${axiosPostRequestError.message}`);
-      throw new Error(axiosPostRequestError);
+      throw axiosPostRequestError;
     }
   }
 
@@ -46,7 +46,7 @@ export class HttpClient {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosPutRequestError: any) {
       console.log(`axiosPutRequestError -> ${axiosPutRequestError.message}`);
-      throw new Error(axiosPutRequestError);
+      throw axiosPutRequestError;
     }
   }
 
@@ -61,7 +61,7 @@ export class HttpClient {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (axiosDeleteRequestError: any) {
       console.log(`axiosDeleteRequestError -> ${axiosDeleteRequestError.message}`);
-      throw new Error(axiosDeleteRequestError);
+      throw axiosDeleteRequestError;
     }
   }
 }
