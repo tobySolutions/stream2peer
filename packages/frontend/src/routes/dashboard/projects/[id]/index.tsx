@@ -1,20 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Layout from "../../layout";
 import { IoIosArrowBack } from "react-icons/io";
 import Modal from "../../../../lib/modal";
-import DateTimePicker from "react-datetime-picker";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
-import { streamDestinations } from "../../../../utils/streamDestinations";
 import LivestreamCard from "../../../../lib/components/LivestreamCard";
 import {
   FetchProjectById,
+  getAccessToken,
   sendPeerInvite,
 } from "../../../../network/projects/projects";
-import { StateContext } from "../../../../context";
+import { useAppStore } from "../../../../state";
 import { CiCalendar } from "react-icons/ci";
 import {
   createLiveStream,
@@ -23,29 +22,14 @@ import {
 import LivestreamForm from "./components/livestreamForm";
 import PeerInviteForm from "./components/peerInviteForm";
 import { IoLogoYoutube } from "react-icons/io5";
-import { FaXTwitter } from "react-icons/fa6";
 import { ImTwitch } from "react-icons/im";
+import { getDataInCookie, storeDataInCookie } from "../../../../utils/utils";
 
-const platforms: {
-  label: string;
-  icon: JSX.Element;
-  value: "Twitch" | "Youtube";
-}[] = [
-  {
-    label: "YouTube",
-    value: "Youtube",
-    icon: <IoLogoYoutube style={{ color: "#FF0000" }} />,
-  },
-  {
-    label: "Twitch",
-    value: "Twitch",
-    icon: <ImTwitch style={{ color: "#9146FF" }} />,
-  },
-];
 const ProjectPage = () => {
   const { id: projectId } = useParams();
   const navigate = useNavigate();
-  const { setCurrentStream } = useContext(StateContext);
+  const setCurrentStream = useAppStore((state) => state.setCurrentStream);
+  const setSubmitLoader = useAppStore((state) => state.setLoading);
 
   const [activeTab, setActiveTab] = useState("upcoming");
   const [projectData, setProjectData] = useState<any>(null);
@@ -72,13 +56,38 @@ const ProjectPage = () => {
     "co-Host"
   );
   const [selectedPlatform, setSelectedPlatform] = useState<
-    ("Twitch" | "Youtube")[]>([]);
+    ("Twitch" | "Youtube")[]
+  >([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [loading, setLoading] = useState({
     project: false,
     invite: false,
     createStream: false,
   });
+
+  const dropdownRef = useRef(null);
+
+  const platformStyles = {
+    Twitch: {
+      label: "Twitch",
+      icon: <ImTwitch style={{ color: "#9146FF" }} />,
+    },
+    Youtube: {
+      label: "YouTube",
+      icon: <IoLogoYoutube style={{ color: "#FF0000" }} />,
+    },
+  };
+
+  const UserResponseData = JSON.parse(getDataInCookie("userDataResponse"));
+
+  const platforms =
+    UserResponseData?.data?.platforms?.map(
+      (platform: "Twitch" | "Youtube") => ({
+        label: platformStyles[platform]?.label || platform,
+        value: platform,
+        icon: platformStyles[platform]?.icon || null,
+      })
+    ) || [];
 
   // Fetch project details
   const fetchProjectDetails = async () => {
@@ -90,6 +99,40 @@ const ProjectPage = () => {
       console.error(err);
     } finally {
       setLoading((prev) => ({ ...prev, project: false }));
+    }
+  };
+
+  const OutsideClickListener = (ref: any, callback: () => void) => {
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          callback();
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref, callback]);
+  };
+
+  // OutsideClickListener(dropdownRef, () => {
+  //   setModalState({ type: "", isOpen: false });
+  // });
+
+  // Fetch accessTokens
+  const fetchAccessTokens = async () => {
+    try {
+      const res = await getAccessToken(projectId!);
+      console.log(res);
+      storeDataInCookie(
+        "stream-access-token",
+        JSON.stringify(res?.access_token),
+        1
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -125,27 +168,36 @@ const ProjectPage = () => {
   // Handle livestream creation
   const handleCreateLiveStream = async () => {
     setLoading((prev) => ({ ...prev, createStream: true }));
+    setSubmitLoader(true);
     try {
       const payload = {
         title: streamDetails.title,
         description: streamDetails.description,
         ...(modalState.type === "schedule" && { date: selectedDate }),
-        platforms: selectedPlatform
+        platforms: selectedPlatform,
+        scheduleDate: selectedDate,
       };
       const response = await createLiveStream(projectId!, payload);
       setCurrentStream(response?.results);
       toast.success("Livestream created successfully");
       setModalState({ isOpen: false, type: "" });
+      setSelectedDate(null);
+      storeDataInCookie("stream_details", JSON.stringify(response?.results), 1);
+      if (streamDetails.type == "instant") {
+        navigate(`/broadcast/${response?.results.streamKey}`);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading((prev) => ({ ...prev, createStream: false }));
+      setSubmitLoader(false);
     }
   };
 
   useEffect(() => {
     fetchProjectDetails();
     fetchStreams();
+    fetchAccessTokens();
   }, []);
 
   // Helpers
@@ -217,6 +269,7 @@ const ProjectPage = () => {
             <button
               className="bg-dark-gray text-white px-4 py-2 rounded"
               onClick={() => setModalState({ isOpen: true, type: "instant" })}
+              ref={dropdownRef}
             >
               Create New Livestream
             </button>

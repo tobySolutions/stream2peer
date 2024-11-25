@@ -3,7 +3,7 @@ import { IoAddSharp } from "react-icons/io5";
 import Layout from "../layout";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Modal from "../../../lib/modal";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AddProject,
   FetchAllProjects,
@@ -11,7 +11,7 @@ import {
 import { ImFilesEmpty } from "react-icons/im";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StateContext } from "../../../context";
+import { useAppStore } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
 
@@ -21,9 +21,10 @@ function Projects() {
   const [emails, setEmails] = useState<string[]>([]);
   const [inputEmail, setInputEmail] = useState("");
   const [projectingLoading, setProjectLoading] = useState(false);
-
-  const { setProjectData, ProjectsData, setLoading, loading } =
-    useContext(StateContext);
+  const setProjectData = useAppStore((state) => state.setProjectData);
+  const ProjectsData = useAppStore((state) => state.projectsData);
+  const setLoading = useAppStore((state) => state.setLoading);
+  const loading = useAppStore((state) => state.loading);
 
   let navigate = useNavigate();
 

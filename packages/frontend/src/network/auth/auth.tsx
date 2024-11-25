@@ -1,6 +1,6 @@
 import { storeDataInCookie } from "../../utils/utils";
 import instance from "../axios";
-import { GoogleAuthUrlResponse } from "./types";
+import { GoogleAuthUrlResponse, User } from "./types";
 
 const errorCodes = [400, 401, 403, 404, 500];
 
@@ -27,7 +27,7 @@ export const generateAuthWithGithubUrl =
 //   };
 
 export const getUserDetails = async (code: string, provider: string) => {
-  const { data } = await instance.post(`/auth/${provider}/callback`, {
+  const { data } = await instance.post<User>(`/auth/${provider}/callback`, {
     code,
   });
 
@@ -61,4 +61,22 @@ export const handleGitHubSignIn = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const sendUserAuthOtpMail = async (email: string) => {
+  console.log(email, "request");
+  const { data } = await instance.get(`/auth/email/sign-in?email=${email}`);
+  console.log(data, "response");
+  return data;
+};
+
+export const verifyUserOtp = async (email: string, otp: string) => {
+  const { data } = await instance.post(`/auth/email/verify-token`, {
+    email,
+    token: otp,
+  });
+  return {
+    data,
+    statusCode: data["status_code"],
+  };
 };

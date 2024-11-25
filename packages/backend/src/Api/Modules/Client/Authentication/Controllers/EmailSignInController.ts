@@ -27,8 +27,9 @@ class EmailSignInController {
 
     await queryRunner.startTransaction();
     try {
-      const { email } = request.body;
-
+      let { email } = request.query;
+      email = email!.toString();
+      console.log('EmailSignInController.handle ->', email);
       const existingToken = await AuthTokensService.getUserTokenByEmail(email);
       if (existingToken) {
           await AuthTokensService.deleteUserToken(existingToken.token);

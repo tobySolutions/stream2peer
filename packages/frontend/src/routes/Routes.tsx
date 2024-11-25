@@ -1,5 +1,4 @@
 import { Route, Routes as BaseRoutes } from "react-router-dom";
-import Home from "./home";
 import Login from "./login";
 import DashboardHome from "./dashboard/home";
 import Projects from "./dashboard/projects";
@@ -7,26 +6,23 @@ import SignUp from "./signup";
 import ProjectPage from "./dashboard/projects/[id]";
 import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
 import { DemoPlayer } from "./dashboard/livestream";
-import { getSrc } from "@livepeer/react/external";
-import { Livepeer } from "livepeer";
 import { Destination } from "./dashboard/destination";
 import { JoinProject } from "./dashboard/projects/join-project";
 import { Stream } from "./stream/stream";
 import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
-
+import Otp from "./otp";
 
 export default function Routes() {
-
   return (
     <BaseRoutes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login/" element={<Login />} />
+      <Route path="/signup/" element={<SignUp />} />
+      <Route path="/otp/" element={<Otp />} />
 
       {/* Protected Routes */}
       <Route
-        path="/dashboard"
+        path="/dashboard/"
         element={
           <PrivateRoute>
             <DashboardHome />
@@ -34,7 +30,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/dashboard/projects"
+        path="/dashboard/projects/"
         element={
           <PrivateRoute>
             <Projects />
@@ -42,7 +38,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/dashboard/destination"
+        path="/dashboard/destination/"
         element={
           <PrivateRoute>
             <Destination />
@@ -50,7 +46,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/livestream"
+        path="/livestream/"
         element={
           <PrivateRoute>
             <DemoPlayer />
@@ -65,12 +61,13 @@ export default function Routes() {
           </PrivateRoute>
         }
       />
-       <Route path="destination" 
+      <Route
+        path="destination/"
         element={
-        <PrivateRoute>
-         <Destination />
-        </PrivateRoute>
-        } 
+          <PrivateRoute>
+            <Destination />
+          </PrivateRoute>
+        }
       />
       <Route
         path="/projects/join/:id"
@@ -81,29 +78,29 @@ export default function Routes() {
         }
       />
       <Route
-        path="/stream"
+        path="/stream/"
         element={
           <PrivateRoute>
             <Stream />
           </PrivateRoute>
         }
       />
-      <Route 
-        path="/stream/:id" 
+      <Route
+        path="/stream/:id"
         element={
-         <PrivateRoute>
-           <Stream />
-         </PrivateRoute>
-          } 
-        />
-      <Route 
-        path="/broadcast/:id" 
+          <PrivateRoute>
+            <Stream />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/broadcast/:id"
         element={
           <PrivateRoute>
             <BroadcastWithControls />
-           </PrivateRoute>
-          } 
-        />
+          </PrivateRoute>
+        }
+      />
       <Route
         path="/dashboard/projects/livestream/:id"
         element={

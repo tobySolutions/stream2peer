@@ -10,23 +10,24 @@ export function storeDataInCookie(
     let date = new Date();
     date.setTime(date.getTime() + expDays * 24 * 60 * 60 * 1000);
     const expires = "expires=" + date.toUTCString();
-    window.document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+    const encodedValue = encodeURIComponent(cValue); // Ensuring the value is encoded
+
+    // Optional: Add `Secure` flag if using HTTPS and `SameSite` for security
+    window.document.cookie = `${cName}=${encodedValue}; ${expires}; path=/; Secure; SameSite=Lax`;
   }
 }
 
 export function getDataInCookie(cName: string): any {
   if (typeof window !== "undefined") {
     const name = cName + "=";
-    const cDecoded = decodeURIComponent(window.document.cookie); //to be careful
+    const cDecoded = decodeURIComponent(window.document.cookie); // Decode the cookie value
     const cArr = cDecoded.split("; ");
-    let res;
-    cArr.forEach((val) => {
-      if (val.indexOf(name) === 0) {
-        res = val.substring(name.length);
-      }
-    });
-    return res;
+
+    const cookie = cArr.find((val) => val.indexOf(name) === 0);
+
+    return cookie ? cookie.substring(name.length) : null;
   }
+  return null;
 }
 
 export function deleteDataInCookie(cName: string) {
