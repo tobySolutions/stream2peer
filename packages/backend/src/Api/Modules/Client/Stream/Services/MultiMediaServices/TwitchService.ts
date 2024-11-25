@@ -108,7 +108,7 @@ class TwitchAuthService {
         'Error in getStreamKey, refreshing token...',
         getStreamKeyError,
       );
-      return this.getStreamKey(refreshToken, authCalls + 1);
+      return this.getStreamKey(refreshToken, title, scheduleDate, authCalls + 1);
     }
   }
 
