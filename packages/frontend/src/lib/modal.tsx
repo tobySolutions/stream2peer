@@ -1,6 +1,6 @@
-import { ReactNode, useContext, useRef } from "react";
+import { ReactNode } from "react";
 import { GrClose } from "react-icons/gr";
-import { StateContext } from "../context";
+import { useAppStore } from "../state";
 
 const Modal = ({
   isOpen,
@@ -17,8 +17,7 @@ const Modal = ({
 }) => {
   if (!isOpen) return null; // If modal is not open, don't render anything
 
-  const { loading } = useContext(StateContext);
-  const dropdownRef = useRef(null);
+  const loading = useAppStore((state) => state.loading);
 
   return (
     <div

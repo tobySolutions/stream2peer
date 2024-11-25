@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { ProjectDetails } from "../../context/types";
+import React, { useState } from "react";
+import { ProjectDetails } from "../../state/types";
 import {
   deleteProject,
   FetchProjectById,
@@ -8,7 +8,7 @@ import {
 import { FaRegTrashAlt } from "react-icons/fa";
 import Modal from "../modal";
 import { toast } from "react-toastify";
-import { StateContext } from "../../context";
+import { useAppStore } from "../../state";
 
 const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -19,7 +19,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
     desc: string;
   }>({ title: project?.title, desc: project?.description });
 
-  const { setLoading } = useContext(StateContext);
+  const setLoading = useAppStore((state) => state.setLoading);
 
   const handleDeleteProject = async (id: string) => {
     setDeleteLoading(true);

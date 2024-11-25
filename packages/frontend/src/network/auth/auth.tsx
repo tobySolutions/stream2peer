@@ -1,6 +1,6 @@
 import { storeDataInCookie } from "../../utils/utils";
 import instance from "../axios";
-import { GoogleAuthUrlResponse } from "./types";
+import { GoogleAuthUrlResponse, User } from "./types";
 
 const errorCodes = [400, 401, 403, 404, 500];
 
@@ -27,7 +27,7 @@ export const generateAuthWithGithubUrl =
 //   };
 
 export const getUserDetails = async (code: string, provider: string) => {
-  const { data } = await instance.post(`/auth/${provider}/callback`, {
+  const { data } = await instance.post<User>(`/auth/${provider}/callback`, {
     code,
   });
 

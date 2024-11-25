@@ -122,7 +122,7 @@ export const Navbar = () => {
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
               <GitHubLogoIcon className="mr-2 w-5 h-5" />
-              Github
+              Star on Github
             </a>
 
             <ModeToggle />
