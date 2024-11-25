@@ -1,5 +1,4 @@
 import { Route, Routes as BaseRoutes } from "react-router-dom";
-import Home from "./home";
 import Login from "./login";
 import DashboardHome from "./dashboard/home";
 import Projects from "./dashboard/projects";
@@ -17,14 +16,13 @@ import Otp from "./otp";
 export default function Routes() {
   return (
     <BaseRoutes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/otp" element={<Otp />} />
+      <Route path="/login/" element={<Login />} />
+      <Route path="/signup/" element={<SignUp />} />
+      <Route path="/otp/" element={<Otp />} />
 
       {/* Protected Routes */}
       <Route
-        path="/dashboard"
+        path="/dashboard/"
         element={
           <PrivateRoute>
             <DashboardHome />
@@ -32,7 +30,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/dashboard/projects"
+        path="/dashboard/projects/"
         element={
           <PrivateRoute>
             <Projects />
@@ -40,7 +38,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/dashboard/destination"
+        path="/dashboard/destination/"
         element={
           <PrivateRoute>
             <Destination />
@@ -48,7 +46,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/livestream"
+        path="/livestream/"
         element={
           <PrivateRoute>
             <DemoPlayer />
@@ -64,7 +62,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="destination"
+        path="destination/"
         element={
           <PrivateRoute>
             <Destination />
@@ -80,7 +78,7 @@ export default function Routes() {
         }
       />
       <Route
-        path="/stream"
+        path="/stream/"
         element={
           <PrivateRoute>
             <Stream />

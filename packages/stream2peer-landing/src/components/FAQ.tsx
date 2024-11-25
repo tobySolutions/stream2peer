@@ -24,15 +24,15 @@ const FAQList: FAQProps[] = [
     value: "item-2",
   },
   {
-    question:
-      "Can I open issues on GitHub if I encounter any bugs or issues?",
+    question: "Can I open issues on GitHub if I encounter any bugs or issues?",
     answer:
       "Totally! We encourage you to open issues on our GitHub repository if you encounter any bugs or issues.",
     value: "item-3",
   },
   {
     question: "Is Stream2Peer actively being maintained and updated?",
-    answer: "Yes, the Stream2Peer project is actively being maintained and updated by the amazing team of individuals behind it.",
+    answer:
+      "Yes, the Stream2Peer project is actively being maintained and updated by the amazing team of individuals behind it.",
     value: "item-4",
   },
 ];
@@ -46,9 +46,9 @@ export const FAQ = () => {
       className="container py-24 sm:py-32"
     >
       <h2 className="text-3xl md:text-4xl font-bold mb-4">
-        Frequently Asked{" "}
+        Frequently asked{" "}
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          Questions
+          questions
         </span>
       </h2>
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Layout from "../../layout";
@@ -13,7 +13,7 @@ import {
   getAccessToken,
   sendPeerInvite,
 } from "../../../../network/projects/projects";
-import { StateContext } from "../../../../context";
+import { useAppStore } from "../../../../state";
 import { CiCalendar } from "react-icons/ci";
 import {
   createLiveStream,
@@ -28,7 +28,8 @@ import { getDataInCookie, storeDataInCookie } from "../../../../utils/utils";
 const ProjectPage = () => {
   const { id: projectId } = useParams();
   const navigate = useNavigate();
-  const { setCurrentStream } = useContext(StateContext);
+  const setCurrentStream = useAppStore((state) => state.setCurrentStream);
+  const setSubmitLoader = useAppStore((state) => state.setLoading);
 
   const [activeTab, setActiveTab] = useState("upcoming");
   const [projectData, setProjectData] = useState<any>(null);
@@ -78,8 +79,6 @@ const ProjectPage = () => {
   };
 
   const UserResponseData = JSON.parse(getDataInCookie("userDataResponse"));
-
-  const { setLoading: setSubmitLoader } = useContext(StateContext);
 
   const platforms =
     UserResponseData?.data?.platforms?.map(

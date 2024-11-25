@@ -1,10 +1,9 @@
 import * as Player from "@livepeer/react/player";
 import { OfflineErrorIcon, PauseIcon, PlayIcon } from "@livepeer/react/assets";
 import { Src } from "@livepeer/react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getSrc } from "@livepeer/react/external";
 import { Livepeer } from "livepeer";
-import { StateContext } from "../../context";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { VscMute as MuteIcon } from "react-icons/vsc";
