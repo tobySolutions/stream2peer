@@ -57,12 +57,12 @@ class StreamService {
     const stream = new Stream();
     let playBackPolicy: PlaybackPolicy;
     if(title){
+      playBackPolicy = defaultPublicPlaybackPolicy;
+    }else{
       playBackPolicy = {
         ...defaultPlaybackPolicy,
         webhookContext: { projectId },
       };
-    }else{
-      playBackPolicy = defaultPublicPlaybackPolicy;
     }
 
 
