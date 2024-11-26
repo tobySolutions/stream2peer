@@ -12,6 +12,7 @@ import { Stream } from "./stream/stream";
 import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
 import Otp from "./otp";
+import NotFound from "./NotFound";
 
 export default function Routes() {
   return (
@@ -109,6 +110,8 @@ export default function Routes() {
           </PrivateRoute>
         }
       />
+
+      <Route path="*" element={<NotFound />} />
     </BaseRoutes>
   );
 }

@@ -18,6 +18,10 @@ export const colors = {
   "dark-gray": "#1e1e1e",
   "primary-white": "#fff6ff",
   "primary-border": "hsl(155,6%,42.5%)",
+  primary: {
+    DEFAULT: "hsl(var(--primary))",
+    foreground: "hsl(var(--primary-foreground))",
+  },
 };
 
 export default {
@@ -25,7 +29,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        montserrat: ["montserrat", "sans-serif"]
+        montserrat: ["montserrat", "sans-serif"],
       },
       keyframes: {
         slideUp: {

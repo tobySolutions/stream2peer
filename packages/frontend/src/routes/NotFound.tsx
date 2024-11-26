@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+import AppIcon from "../lib/icons/AppIcon";
 
 export default function NotFound() {
   return (
     <div className="bg-black">
       <div className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <AppIcon />
+        </div>
         <div className="max-w-md w-full space-y-8 text-center">
           <div className="space-y-4">
             <h1 className="text-9xl font-extrabold text-primary-white">404</h1>
