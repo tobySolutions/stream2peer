@@ -1,6 +1,9 @@
-import LogoIcon from "/logo.png"
+import { LogoIcon } from "./Icons";
+import { useTheme } from "./theme-provider";
 
 export const Footer = () => {
+  const { theme } = useTheme();
+
   return (
     <footer id="footer">
       <hr className="w-11/12 mx-auto" />
@@ -12,7 +15,7 @@ export const Footer = () => {
             href="/"
             className="font-bold text-xl flex"
           >
-            <img src={LogoIcon} className="w-45 h-6 md:h-8 object-cover" />
+            <LogoIcon theme={theme} />
           </a>
         </div>
 

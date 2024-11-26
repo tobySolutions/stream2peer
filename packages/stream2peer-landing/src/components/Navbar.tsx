@@ -15,7 +15,8 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import LogoIcon from "/logo.png";
+import { useTheme } from "./theme-provider";
+import { LogoIcon } from "./Icons";
 
 interface RouteProps {
   href: string;
@@ -35,6 +36,8 @@ const routeList: RouteProps[] = [
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { theme } = useTheme();
   return (
     <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
       <NavigationMenu className="mx-auto">
@@ -45,7 +48,7 @@ export const Navbar = () => {
               href="/"
               className="ml-2 font-bold text-xl flex"
             >
-              <img src={LogoIcon} className="w-45 h-6 md:h-8 object-cover" />
+              <LogoIcon theme={theme} />
             </a>
           </NavigationMenuItem>
 
@@ -65,10 +68,7 @@ export const Navbar = () => {
 
               <SheetContent side={"left"}>
                 <SheetHeader>
-                  <img
-                    src={LogoIcon}
-                    className="w-45 h-6 md:h-8 object-contain"
-                  />
+                  <LogoIcon theme={theme} />
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">
                   {routeList.map(({ href, label }: RouteProps) => (
