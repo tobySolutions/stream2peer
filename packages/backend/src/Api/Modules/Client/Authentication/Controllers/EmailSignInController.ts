@@ -107,6 +107,9 @@ class EmailSignInController {
         auth_provider: AuthAccountType.EMAIL,
       });
 
+      
+      await queryRunner.commitTransaction();
+
       return response
         .setHeader("Authorization", `Bearer ${jwtToken}`)
         .status(HttpStatusCodeEnum.OK)
