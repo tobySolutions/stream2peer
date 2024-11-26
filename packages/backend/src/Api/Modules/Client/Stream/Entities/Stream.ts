@@ -43,7 +43,7 @@ export class Stream extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   endedAt: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'  })
   lastSeen: Date;
 
   @Column({ type: 'varchar', nullable: true, unique: true })
