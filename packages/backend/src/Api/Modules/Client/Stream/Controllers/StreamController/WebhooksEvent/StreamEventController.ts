@@ -22,7 +22,6 @@ class StreamEventController {
     try {
       const streamData = request.body;
       let streamEvent;
-      console.log(streamData.event);
       switch (streamData.event) {
         case 'stream.started':
           streamEvent = await StreamService.updateStreamStatus(

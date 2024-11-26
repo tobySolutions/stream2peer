@@ -10,6 +10,7 @@ import {
 } from '../TypeChecking/createStreamDto';
 import {
   defaultPlaybackPolicy,
+  defaultPublicPlaybackPolicy,
   PlaybackPolicy,
 } from '../TypeChecking/StreamData';
 import { defaultProfiles } from '../Config/LivePeerProfiles';
@@ -54,10 +55,16 @@ class StreamService {
     if (!project) return NULL_OBJECT;
 
     const stream = new Stream();
-    const playBackPolicy: PlaybackPolicy = {
-      ...defaultPlaybackPolicy,
-      webhookContext: { projectId },
-    };
+    let playBackPolicy: PlaybackPolicy;
+    if(title){
+      playBackPolicy = {
+        ...defaultPlaybackPolicy,
+        webhookContext: { projectId },
+      };
+    }else{
+      playBackPolicy = defaultPublicPlaybackPolicy;
+    }
+
 
     const streamProfiles = profiles || defaultProfiles;
 
@@ -69,7 +76,7 @@ class StreamService {
       playBackPolicy: JSON.stringify(playBackPolicy),
       schedule: scheduleDate,
       status: scheduleDate ? StreamStatus.SCHEDULED : StreamStatus.IDLE,
-      destinations: platforms,
+      destinations: platforms || null,
     });
 
     try {
