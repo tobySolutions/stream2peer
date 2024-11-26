@@ -48,7 +48,7 @@ class YouTubeAuthService {
     scheduleDate: string,
     authCalls: number = 0
   ): Promise<string | null> {
-    const MAX_AUTH_CALLS = 1;
+    const MAX_AUTH_CALLS = 2;
     try {
       if (authCalls >= MAX_AUTH_CALLS) {
         console.log('Maximum auth attempts reached. Returning NULL_OBJECT.');
@@ -62,7 +62,7 @@ class YouTubeAuthService {
       const streamDetails = await HttpClient.get({
         url: 'https://www.googleapis.com/youtube/v3/liveStreams',
         headers: { Authorization: `Bearer ${newAccessToken}` },
-        params: { part: 'cdn', id: streamId },
+        params: { part: 'cdn,snippet,status', id: streamId },
       });
   
       return streamDetails.items[0].cdn.ingestionInfo.streamName;
@@ -75,9 +75,8 @@ class YouTubeAuthService {
 
   public async createBroadcast(accessToken: string, title:string, scheduleDate:string) {
     try {
-      console.log(accessToken);
       const newBroadcast = await HttpClient.post({
-        url: 'https://www.googleapis.com/youtube/v3/liveBroadcasts?part=snippet,status',
+        url: 'https://www.googleapis.com/youtube/v3/liveBroadcasts',
         headers: { Authorization: `Bearer ${accessToken}` },
         body: {
           snippet: {
@@ -86,6 +85,7 @@ class YouTubeAuthService {
           },
           status: { privacyStatus: 'public' },
         },
+        params: { part: 'snippet,status' }
       });
       return newBroadcast.id;
     } catch (createBroadcastError:any) {
@@ -122,7 +122,7 @@ class YouTubeAuthService {
   public async bindBroadcastToStream(accessToken: string, broadcastId: string, streamId: string) {
     try {  
       await HttpClient.post({
-        url: `https://www.googleapis.com/youtube/v3/liveBroadcasts/bind?id=${broadcastId}&part=id,contentDetails`,
+        url: `https://www.googleapis.com/youtube/v3/liveBroadcasts/bind`,
         headers: { Authorization: `Bearer ${accessToken}` },
         params: { id: broadcastId, streamId, part: 'id,contentDetails', },
       });
