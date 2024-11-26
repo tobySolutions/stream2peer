@@ -42,7 +42,7 @@ function Navbar() {
         </li>
         {subMenuOpen && (
           <div onClick={handleLogout} className="absolute bg-dark-gray top-12 left-6 border border-primary-border">
-            <button className="bg-primary-white flex items-center py-2 px-4 gap-2">
+            <button className="bg-primary hover:bg-primary/90 flex items-center text-primary-foreground py-2 px-4 gap-2">
               <CiLogout />
               <span>Logout</span>
             </button>

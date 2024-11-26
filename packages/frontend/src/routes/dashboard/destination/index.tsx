@@ -3,7 +3,7 @@ import Layout from "../layout";
 import { MdOutlineLinkOff } from "react-icons/md";
 import { IoIosArrowBack, IoLogoYoutube } from "react-icons/io";
 import SocialMediaCards from "../../../lib/components/socialCards";
-import { validateTwitch } from "../../../network/streams/streams-api";
+import { validateTwitch, validateYouTube } from "../../../network/streams/streams-api";
 import { useLocation, useParams } from "react-router-dom";
 import { getDataInCookie } from "../../../utils/utils";
 import { ImTwitch } from "react-icons/im";
@@ -24,10 +24,29 @@ export const Destination = () => {
     }
   };
 
+  const handleYouTubeValidation = async () => {
+    try {
+      const response = await validateYouTube(queryParams.get("code")!);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    if (queryParams.get("code")) {
+    if (
+      queryParams.get("code") &&
+      queryParams.get("scope") !== "https://www.googleapis.com/auth/youtube"
+    ) {
       handleTwitchValidation();
     }
+    if (
+      queryParams.get("code") &&
+      queryParams.get("scope") == "https://www.googleapis.com/auth/youtube"
+    ) {
+      handleYouTubeValidation();
+    }
+
     const userData = JSON.parse(getDataInCookie("userDataResponse"));
     if (userData?.data?.platforms) {
       setDestinationData(userData?.data?.platforms);
@@ -69,9 +88,9 @@ export const Destination = () => {
               </div>
             ) : (
               <div className="mt-4">
-                <ul>
+                <ul className="flex gap-3 flex-wrap">
                   {destinationData?.map((platform, indx) => (
-                    <div key={indx}>
+                    <div key={indx} className="">
                       {platform == "Twitch" ? (
                         <div className="bg-[#9147ff] w-48 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-[#9147ffbe] transition">
                           <ImTwitch />

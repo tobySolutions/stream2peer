@@ -46,7 +46,7 @@ export const handleGoogleSignIn = async () => {
   console.log("Google sign-in clicked");
   try {
     const { data } = await generateAuthWithGoogleUrl();
-    window.location.href = data.authUrl;
+    window.location.href = data?.authUrl;
   } catch (error) {
     console.error(error);
   }

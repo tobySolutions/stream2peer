@@ -103,7 +103,9 @@ function Projects() {
         children={
           <div>
             <div className="mb-4">
-              <label htmlFor="title">Project Title</label>
+              <label htmlFor="title" className="text-dark-gray">
+                Project Title
+              </label>
               <input
                 type="text"
                 className="w-full h-12 focus:outline-none focus:border-gray-800 rounded-md p-4 mt-2 border border-gray-600 "
@@ -117,7 +119,9 @@ function Projects() {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="title">Project Description</label>
+              <label htmlFor="title" className="text-dark-gray">
+                Project Description
+              </label>
               <textarea
                 rows={4}
                 className="w-full focus:outline-none focus:border-gray-800  rounded-md p-4 mt-2 border border-gray-600 "
@@ -131,7 +135,10 @@ function Projects() {
               />
             </div>
             <form onSubmit={handleAddEmail} className="relative">
-              <label htmlFor="email-input" className="block mb-2">
+              <label
+                htmlFor="email-input"
+                className="block mb-2 text-dark-gray"
+              >
                 Invite users via email
               </label>
               <div className="flex">
@@ -146,7 +153,7 @@ function Projects() {
                 />
                 <button
                   type="submit"
-                  className="bg-orange-500 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
+                  className="bg-primary hover:bg-primary/90 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
                   disabled={
                     emails.length >= 3 ||
                     !inputEmail ||
@@ -182,7 +189,7 @@ function Projects() {
                   <span className="text-[14px]">{email}</span>
                   <button
                     onClick={() => handleDeleteEmail(email)}
-                    className="text-orange-500 hover:text-orange-700 font-bold"
+                    className="text-destructive hover:text-destructive/90 font-bold"
                   >
                     <FaRegTrashCan />
                   </button>

@@ -23,6 +23,6 @@ export type PlaybackPolicy = {
 
 export const defaultPlaybackPolicy: Omit<PlaybackPolicy, 'webhookContext'> = {
   type: Type.Webhook,
-  webhookId: 'bf5e608c-750d-4926-bdb0-db840d6f0316',
+  webhookId: 'a48ab65f-35ea-499f-a2c0-0899e86d4629',
   refreshInterval: 600,
 };

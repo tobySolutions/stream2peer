@@ -36,7 +36,7 @@ export const JoinProject = () => {
         Do you accept to join {ProjectData?.title}?
         <div className="flex gap-6 items-center">
           <button
-            className="py-2 px-4 rounded-md bg-[#FF4C4C] text-primary-white"
+            className="py-2 px-4 rounded-md bg-destructive text-primary-white"
             onClick={() => handleJoinProject()}
           >
             {joiningProject ? (
