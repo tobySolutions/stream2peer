@@ -14,15 +14,20 @@ export enum Type {
 
 export type PlaybackPolicy = {
   type: Type;
-  webhookId: string;
-  webhookContext: {
+  webhookId?: string;
+  webhookContext?: {
     projectId: string;
   };
   refreshInterval: number;
 };
 
-export const defaultPlaybackPolicy: Omit<PlaybackPolicy, 'webhookContext'> = {
+export const defaultPlaybackPolicy: PlaybackPolicy = {
   type: Type.Webhook,
   webhookId: 'a48ab65f-35ea-499f-a2c0-0899e86d4629',
+  refreshInterval: 600,
+};
+
+export const defaultPublicPlaybackPolicy: PlaybackPolicy = {
+  type: Type.Public,
   refreshInterval: 600,
 };
