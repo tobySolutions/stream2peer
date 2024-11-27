@@ -1,5 +1,5 @@
-import { getDataInCookie, storeDataInCookie } from "../utils/utils";
-import axios, { AxiosError, AxiosInstance } from "axios";
+import { getDataInCookie } from "../utils/utils";
+import axios, { AxiosInstance } from "axios";
 
 let tokens: { accessToken: string; refreshToken: string } | null = null;
 
@@ -29,11 +29,11 @@ export const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     // if (tokens?.accessToken) {
-      config.headers["Authorization"] = `Bearer ${
-        tokens?.accessToken
-          ? tokens?.accessToken
-          : import.meta.env.VITE_TEMP_AUTH_TOKEN
-      }`;
+    config.headers["Authorization"] = `Bearer ${
+      tokens?.accessToken
+        ? tokens?.accessToken
+        : import.meta.env.VITE_TEMP_AUTH_TOKEN
+    }`;
     // }
     return config;
   },

@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "../../lib/navbar";
 import Sidebar from "../../lib/sidebar";
-import { IoIosArrowBack } from "react-icons/io";
 import { ToastContainer } from "react-toastify";
 
 type LayoutProps = {

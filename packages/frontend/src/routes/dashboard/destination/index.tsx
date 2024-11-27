@@ -4,7 +4,7 @@ import { MdOutlineLinkOff } from "react-icons/md";
 import { IoIosArrowBack, IoLogoYoutube } from "react-icons/io";
 import SocialMediaCards from "../../../lib/components/socialCards";
 import { validateTwitch } from "../../../network/streams/streams-api";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getDataInCookie } from "../../../utils/utils";
 import { ImTwitch } from "react-icons/im";
 
@@ -85,7 +85,6 @@ export const Destination = () => {
                       ) : (
                         ""
                       )}
-                    
                     </div>
                   ))}
                 </ul>

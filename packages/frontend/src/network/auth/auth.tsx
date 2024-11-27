@@ -2,7 +2,7 @@ import { storeDataInCookie } from "../../utils/utils";
 import instance from "../axios";
 import { GoogleAuthUrlResponse, User } from "./types";
 
-const errorCodes = [400, 401, 403, 404, 500];
+
 
 // export const login = async (payload: AddProjectProps) => {
 //   const { data } = await instance.post(`/project/create`, payload);
