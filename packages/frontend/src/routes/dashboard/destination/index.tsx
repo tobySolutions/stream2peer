@@ -3,35 +3,84 @@ import Layout from "../layout";
 import { MdOutlineLinkOff } from "react-icons/md";
 import { IoIosArrowBack, IoLogoYoutube } from "react-icons/io";
 import SocialMediaCards from "../../../lib/components/socialCards";
-import { validateTwitch } from "../../../network/streams/streams-api";
-import { useLocation } from "react-router-dom";
+import {
+  validateTwitch,
+  validateYouTube,
+} from "../../../network/streams/streams-api";
+import { useLocation, useParams } from "react-router-dom";
 import { getDataInCookie } from "../../../utils/utils";
 import { ImTwitch } from "react-icons/im";
+import { toast } from "react-toastify";
+import { FetchProjectById } from "../../../network/projects/projects";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
   const [destinationData, setDestinationData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const location = useLocation(); // Access the location object
   const queryParams = new URLSearchParams(location.search);
 
   const handleTwitchValidation = async () => {
     try {
-      const response = await validateTwitch(queryParams.get("code")!);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+      await validateTwitch(queryParams.get("code")!);
+      toast.success("Twitch Validation Successfully");
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
+    }
+  };
+  const fetchProjectDetails = async (projectId: string | undefined) => {
+    setLoading(true);
+    try {
+      const response = await FetchProjectById(projectId!);
+      setDestinationData(response?.results?.platforms);
+    } catch (err: any) {
+      if (err?.response?.data?.message) {
+        toast.error(err?.response?.data?.message);
+      } else {
+        toast.error(err?.message);
+      }
+    }
+    setLoading(false);
+  };
+
+  const handleYouTubeValidation = async () => {
+    try {
+      await validateYouTube(queryParams.get("code")!);
+      toast.success("Twitch Validation Successfully");
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
   };
 
   useEffect(() => {
-    if (queryParams.get("code")) {
+    const project = JSON.parse(getDataInCookie("projectData"));
+    fetchProjectDetails(project?.identifier);
+    if (
+      queryParams.get("code") &&
+      queryParams.get("scope") !== "https://www.googleapis.com/auth/youtube"
+    ) {
       handleTwitchValidation();
     }
-    const userData = JSON.parse(getDataInCookie("userDataResponse"));
-    if (userData?.data?.platforms) {
-      setDestinationData(userData?.data?.platforms);
+    if (
+      queryParams.get("code") &&
+      queryParams.get("scope") == "https://www.googleapis.com/auth/youtube"
+    ) {
+      handleYouTubeValidation();
     }
+
+    // const userData = JSON.parse(getDataInCookie("userDataResponse"));
+    // if (userData?.data?.platforms) {
+    //   setDestinationData(userData?.data?.platforms);
+    // }
   }, []);
 
   return (
@@ -60,7 +109,11 @@ export const Destination = () => {
         {viewDestinations ? (
           <div className="mt-6">
             <h2>Destinations connected</h2>
-            {destinationData?.length === 0 ? (
+            {loading ? (
+              <div className="grid place-content-center h-[calc(100vh-400px)]">
+                <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+              </div>
+            ) : destinationData?.length === 0 ? (
               <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36 my-6">
                 <MdOutlineLinkOff size={40} />
                 <div className="">
@@ -69,9 +122,9 @@ export const Destination = () => {
               </div>
             ) : (
               <div className="mt-4">
-                <ul>
+                <ul className="flex gap-3 flex-wrap">
                   {destinationData?.map((platform, indx) => (
-                    <div key={indx}>
+                    <div key={indx} className="">
                       {platform == "Twitch" ? (
                         <div className="bg-[#9147ff] w-48 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-[#9147ffbe] transition">
                           <ImTwitch />

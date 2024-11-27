@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAppStore } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
+import { storeDataInCookie } from "../../../utils/utils";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,6 +22,7 @@ function Projects() {
   const [emails, setEmails] = useState<string[]>([]);
   const [inputEmail, setInputEmail] = useState("");
   const [projectingLoading, setProjectLoading] = useState(false);
+  const [InputError, setInputError] = useState({ title: "", desc: "" });
   const setProjectData = useAppStore((state) => state.setProjectData);
   const ProjectsData = useAppStore((state) => state.projectsData);
   const setLoading = useAppStore((state) => state.setLoading);
@@ -31,10 +33,15 @@ function Projects() {
     setProjectLoading(true);
     try {
       const res = await FetchAllProjects();
-      console.log(res);
       setProjectData(res?.results?.data);
-    } catch (error) {
+      storeDataInCookie("projectData", JSON.stringify(res?.results?.data[0]), 1);
+    } catch (error: any) {
       console.error(error);
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
     setProjectLoading(false);
   };
@@ -42,26 +49,43 @@ function Projects() {
   const addNewProject = async () => {
     setLoading(true);
     try {
+      if (projectDetails.title.length < 5 || projectDetails.title.length > 10) {
+        setInputError({
+          ...InputError,
+          title: "Title must me greater than 4 characters and less than 10",
+        });
+        return;
+      }
+      if (projectDetails.desc.length > 1000) {
+        setInputError({
+          ...InputError,
+          title: "Description must not be greater than 1000 characters",
+        });
+        return;
+      }
       if (emails.length > 0) {
         const res = await AddProject({
           title: projectDetails.title,
           description: projectDetails.desc,
           inviteeId: emails.toString(),
         });
-        console.log(res);
+
         toast.success("Project added successfully");
       } else {
         const res = await AddProject({
           title: projectDetails.title,
           description: projectDetails.desc,
         });
-        console.log(res);
+
         toast.success("Project added successfully");
       }
       // setProjectData(res?.results?.data);
     } catch (error: any) {
-      console.error(error);
-      toast.error(error?.message);
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
     setLoading(false);
     setModalOpen(false);
@@ -102,35 +126,50 @@ function Projects() {
         children={
           <div>
             <div className="mb-4">
-              <label htmlFor="title">Project Title</label>
+              <label htmlFor="title" className="text-dark-gray">
+                Project Title
+              </label>
               <input
                 type="text"
                 className="w-full h-12 focus:outline-none focus:border-gray-800 rounded-md p-4 mt-2 border border-gray-600 "
-                onChange={(e) =>
+                onChange={(e) => {
                   setProjectDetails({
                     ...projectDetails,
                     title: e.target.value,
-                  })
-                }
+                  });
+                  setInputError({ desc: "", title: "" });
+                }}
                 value={projectDetails.title}
               />
+              {InputError.title && (
+                <span className="text-destructive">{InputError.title}</span>
+              )}
             </div>
             <div className="mb-4">
-              <label htmlFor="title">Project Description</label>
+              <label htmlFor="title" className="text-dark-gray">
+                Project Description
+              </label>
               <textarea
                 rows={4}
                 className="w-full focus:outline-none focus:border-gray-800  rounded-md p-4 mt-2 border border-gray-600 "
-                onChange={(e) =>
+                onChange={(e) => {
                   setProjectDetails({
                     ...projectDetails,
                     desc: e.target.value,
-                  })
-                }
+                  });
+                  setInputError({ desc: "", title: "" });
+                }}
                 value={projectDetails.desc}
               />
+              {InputError.desc && (
+                <span className="text-destructive">{InputError.title}</span>
+              )}
             </div>
             <form onSubmit={handleAddEmail} className="relative">
-              <label htmlFor="email-input" className="block mb-2">
+              <label
+                htmlFor="email-input"
+                className="block mb-2 text-dark-gray"
+              >
                 Invite users via email
               </label>
               <div className="flex">
@@ -145,7 +184,7 @@ function Projects() {
                 />
                 <button
                   type="submit"
-                  className="bg-orange-500 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
+                  className="bg-primary hover:bg-primary/90 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
                   disabled={
                     emails.length >= 3 ||
                     !inputEmail ||
@@ -154,7 +193,7 @@ function Projects() {
                 >
                   Add
                 </button>
-                <div className="absolute right-[74px] top-19 h-[41px] w-36">
+                <div className="absolute right-[68px] top-19 h-[41px] w-36">
                   <Select
                     options={[
                       { label: "Co-host", value: "co-host" },
@@ -181,7 +220,7 @@ function Projects() {
                   <span className="text-[14px]">{email}</span>
                   <button
                     onClick={() => handleDeleteEmail(email)}
-                    className="text-orange-500 hover:text-orange-700 font-bold"
+                    className="text-destructive hover:text-destructive/90 font-bold"
                   >
                     <FaRegTrashCan />
                   </button>

@@ -15,10 +15,10 @@ import {
 } from "@livepeer/react/player";
 import { IoMdSettings as Settings } from "react-icons/io";
 import { getDataInCookie } from "../../utils/utils";
+import { toast } from "react-toastify";
 
 export const Stream = () => {
   const { id: playbackId } = useParams();
-  console.log(playbackId);
   let navigate = useNavigate();
   const [streamSource, setStreamSource] = useState<Src[] | null>(null);
   const [toggleError, setToggelError] = useState(false);
@@ -31,8 +31,7 @@ export const Stream = () => {
     | undefined
   >(undefined);
 
-  const accessKey = JSON.parse(getDataInCookie("stream-access-token"));
-  // console.log(accessKey)
+
 
   const livepeer = new Livepeer({
     apiKey: import.meta.env.VITE_LIVEPEER_API_KEY,
@@ -41,13 +40,15 @@ export const Stream = () => {
   const getPlaybackSource = async () => {
     try {
       const playbackInfo = await livepeer.playback?.get(playbackId!);
-      console.log(playbackInfo);
       const src = getSrc(playbackInfo.playbackInfo);
-      console.log(src);
       setStreamSource(src);
       return src;
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
   };
 
@@ -55,7 +56,6 @@ export const Stream = () => {
     getPlaybackSource();
   }, []);
 
-  console.log(streamSource);
 
   return (
     <div className="p-4">
@@ -76,11 +76,9 @@ export const Stream = () => {
         ) : (
           <Player.Root
             src={streamSource}
-            accessKey={accessKey}
             autoPlay={true}
             videoQuality="1080p"
             onError={(error) => {
-              console.log(error);
               setErrorType(error?.type);
               setToggelError(true);
             }}

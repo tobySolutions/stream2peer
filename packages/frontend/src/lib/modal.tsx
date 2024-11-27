@@ -39,18 +39,18 @@ const Modal = ({
 
         {/* Modal Title */}
         {title && (
-          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white ">
+          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white text-dark-gray">
             {title}
           </h2>
         )}
 
         {/* Modal Content */}
-        <div className="mb-4">{children}</div>
+        <div className="mb-4 text-dark-gray">{children}</div>
 
         {/* Close Modal Button */}
         {onSubmit && (
           <button
-            className="bg-orange-500 text-primary-white px-4 py-2 rounded"
+            className="bg-primary hover:bg-primary/90 text-primary-white px-4 py-2 rounded"
             onClick={onSubmit}
           >
             {loading ? (

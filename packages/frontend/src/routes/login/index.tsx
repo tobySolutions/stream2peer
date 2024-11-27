@@ -18,6 +18,7 @@ import {
   sendUserAuthOtpMail,
 } from "../../network/auth/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export type FormValuesType = {
   email: string;
@@ -49,7 +50,7 @@ function Login() {
 
     if (userCodeFromCookie !== "") {
       async function getUserData() {
-        console.log("hey");
+        
         try {
           const userDataResponse = await getUserDetails(
             userCodeFromCookie,
@@ -58,7 +59,7 @@ function Login() {
 
           if (userDataResponse?.statusCode === 200) {
             const token = userDataResponse.data.token.split(" ")[1];
-            console.log("success");
+          
             storeDataInCookie(
               "userDataResponse",
               JSON.stringify(userDataResponse.data),
@@ -68,12 +69,13 @@ function Login() {
             navigate("/dashboard");
           }
 
-          console.log(
-            JSON.parse(getDataInCookie("userDataResponse")),
-            "I don enter jor"
-          );
-        } catch (error) {
-          console.error(error);
+          
+        } catch (error: any) {
+          if (error?.response?.data?.message) {
+            toast.error(error?.response?.data?.message);
+          } else {
+            toast.error(error?.message);
+          }
         }
       }
       getUserData();
@@ -86,7 +88,6 @@ function Login() {
     event.preventDefault();
 
     const { email } = formValues;
-    console.log(email);
     storeDataInCookie("emailAddress", email, 1);
     sendUserAuthOtpMail(email);
     navigate(`/otp`);
@@ -110,7 +111,7 @@ function Login() {
   return (
     <div>
       <Navbar />
-      <div className=" bg-black justify-center items-center flex min-h-screen">
+      <div className=" bg-black justify-center items-center flex min-h-[calc(100dvh-150px)]">
         <form
           onSubmit={handleFormSubmit}
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"

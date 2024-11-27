@@ -4,21 +4,44 @@ import { IoLogoYoutube } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
 import { ImTwitch } from "react-icons/im";
 import { FaLinkedin } from "react-icons/fa6";
-import { connectToTwitch } from "../../network/streams/streams-api";
+import {
+  connectToTwitch,
+  connectToYouTube,
+} from "../../network/streams/streams-api";
+import { toast } from "react-toastify";
 
 const SocialMediaCards: React.FC = () => {
   const handleTwitchConnect = async () => {
     try {
       const { data } = await connectToTwitch();
       window.location.href = data.authUrl;
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
+    }
+  };
+  const handleYouTubeConnect = async () => {
+    try {
+      const { data } = await connectToYouTube();
+      window.location.href = data.authUrl;
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
   };
 
   return (
     <div className="flex flex-wrap gap-4">
-      <div className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition">
+      <div
+        onClick={handleYouTubeConnect}
+        className="bg-red-600 text-white px-4 py-3  rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-red-700 transition"
+      >
         <IoLogoYoutube />
         <span>YouTube Channel</span>
       </div>
