@@ -103,3 +103,10 @@
   box-shadow: none !important;
   color: #555 !important;
 }
+
+@layer base {
+  :root {
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+  }
+}

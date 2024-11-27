@@ -1,8 +1,7 @@
-import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import LivestreamDetails from '../../../../../../lib/components/LivestreamDetails';
-import Layout from '../../../../layout';
-import { IoIosArrowBack } from 'react-icons/io';
+import { useNavigate, useParams } from "react-router-dom";
+import LivestreamDetails from "../../../../../../lib/components/LivestreamDetails";
+import Layout from "../../../../layout";
+import { IoIosArrowBack } from "react-icons/io";
 
 const LivestreamPage = () => {
   const { livestreamId } = useParams(); // Extract livestreamId from the route parameters

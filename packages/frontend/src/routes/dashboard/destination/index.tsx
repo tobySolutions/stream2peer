@@ -104,7 +104,6 @@ export const Destination = () => {
                       ) : (
                         ""
                       )}
-                    
                     </div>
                   ))}
                 </ul>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ProjectDetails } from "../../state/types";
 import { deleteProject, updateProject } from "../../network/projects/projects";
 import { FaRegTrashAlt } from "react-icons/fa";

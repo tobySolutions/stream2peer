@@ -29,7 +29,7 @@ const Modal = ({
         {/* Modal Close Button */}
         <button
           className="absolute z-20 top-3 right-4 text-gray-500 hover:text-gray-800"
-          onClick={(e) => {
+          onClick={() => {
             onClose();
             // e.stopPropagation();
           }}

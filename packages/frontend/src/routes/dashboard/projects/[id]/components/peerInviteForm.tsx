@@ -1,5 +1,4 @@
 import React from "react";
-import { IoAddSharp } from "react-icons/io5";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Select } from "antd";
 
@@ -20,7 +19,6 @@ interface PeerInviteFormProps {
 
 const PeerInviteForm: React.FC<PeerInviteFormProps> = ({
   userData,
-  setUserData,
   inputEmail,
   setInputEmail,
   selectedRole,

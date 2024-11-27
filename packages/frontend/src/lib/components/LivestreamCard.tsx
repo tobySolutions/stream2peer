@@ -1,30 +1,29 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegCopy } from "react-icons/fa";
 
-const LivestreamCard = ({ livestream, type }: any) => {
+const LivestreamCard = ({ livestream }: any) => {
+  let navigate = useNavigate();
+  const [isCopied, setIsCopied] = useState(false);
+  const url = `http://localhost:5173/stream/${livestream?.playbackId}`;
 
-    let navigate = useNavigate();
-     const [isCopied, setIsCopied] = useState(false);
-     const url = `http://localhost:5173/stream/${livestream?.playbackId}`;
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setIsCopied(true);
 
-     const handleCopy = async () => {
-       try {
-         await navigator.clipboard.writeText(url);
-         setIsCopied(true);
-
-         // Reset the copied state after 2 seconds
-         setTimeout(() => setIsCopied(false), 2000);
-       } catch (err) {
-         console.error("Failed to copy text: ", err);
-       }
-     };
+      // Reset the copied state after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
   const viewDetails = () => {
     // Calls the onView function passed from parent with the livestream id
-    navigate(`/broadcast/${livestream?.streamKey}`)
+    navigate(`/broadcast/${livestream?.streamKey}`);
   };
 
-  console.log(livestream)
+  console.log(livestream);
 
   return (
     <div className="bg-dark-gray border border-primary-border w-[100%] mb-4 py-2 px-5 rounded-lg shadow-md flex justify-between items-center">

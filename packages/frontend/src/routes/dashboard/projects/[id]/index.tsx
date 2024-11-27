@@ -102,20 +102,20 @@ const ProjectPage = () => {
     }
   };
 
-  const OutsideClickListener = (ref: any, callback: () => void) => {
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (ref.current && !ref.current.contains(event.target)) {
-          callback();
-        }
-      };
+  // const OutsideClickListener = (ref: any, callback: () => void) => {
+  //   useEffect(() => {
+  //     const handleClickOutside = (event: MouseEvent) => {
+  //       if (ref.current && !ref.current.contains(event.target)) {
+  //         callback();
+  //       }
+  //     };
 
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref, callback]);
-  };
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //     return () => {
+  //       document.removeEventListener("mousedown", handleClickOutside);
+  //     };
+  //   }, [ref, callback]);
+  // };
 
   // OutsideClickListener(dropdownRef, () => {
   //   setModalState({ type: "", isOpen: false });

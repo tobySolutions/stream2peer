@@ -24,7 +24,6 @@ function Projects() {
   const setProjectData = useAppStore((state) => state.setProjectData);
   const ProjectsData = useAppStore((state) => state.projectsData);
   const setLoading = useAppStore((state) => state.setLoading);
-  const loading = useAppStore((state) => state.loading);
 
   let navigate = useNavigate();
 

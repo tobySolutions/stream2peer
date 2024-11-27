@@ -1,5 +1,4 @@
 import instance from "../axios";
-import { AddProjectProps } from "../projects/types";
 import { ICreateStream } from "./types";
 
 export const createLiveStream = async (

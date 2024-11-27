@@ -1,4 +1,4 @@
-import { Route, Routes as BaseRoutes } from "react-router-dom";
+import { Route, Routes as BaseRoutes, Navigate } from "react-router-dom";
 import Login from "./login";
 import DashboardHome from "./dashboard/home";
 import Projects from "./dashboard/projects";
@@ -12,10 +12,13 @@ import { Stream } from "./stream/stream";
 import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
 import Otp from "./otp";
+import NotFound from "./NotFound";
 
 export default function Routes() {
   return (
     <BaseRoutes>
+      <Route path="/" element={<Navigate to="/login/" replace />} />
+
       <Route path="/login/" element={<Login />} />
       <Route path="/signup/" element={<SignUp />} />
       <Route path="/otp/" element={<Otp />} />
@@ -109,6 +112,8 @@ export default function Routes() {
           </PrivateRoute>
         }
       />
+
+      <Route path="*" element={<NotFound />} />
     </BaseRoutes>
   );
 }
