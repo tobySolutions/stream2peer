@@ -4,7 +4,7 @@ export const CreateStreamValidator = [
   body('title', 'Stream title is required and should be a string')
     .isString()
     .isLength({ min: 4, max: 30 })
-    .withMessage('Stream title must be between 3 and 100 characters')
+    .withMessage('Stream title must be between 4 and 30 characters')
     .trim()
     .escape(),
   body('description', 'Stream description should be a string')
@@ -21,7 +21,7 @@ export const UpdateStreamValidator = [
     .optional()
     .isString()
     .isLength({ min: 4, max: 30 })
-    .withMessage('Stream title must be between 3 and 100 characters')
+    .withMessage('Stream title must be between 3 and 30 characters')
     .trim()
     .escape(),
   body('description', 'Stream description should be a string')
