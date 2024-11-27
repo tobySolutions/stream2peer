@@ -76,7 +76,6 @@ export const Stream = () => {
         ) : (
           <Player.Root
             src={streamSource}
-            accessKey={accessKey}
             autoPlay={true}
             videoQuality="1080p"
             onError={(error) => {

@@ -52,7 +52,7 @@ const LivestreamCard = ({ livestream, type }: any) => {
       </div>
       <button
         onClick={viewDetails}
-        className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-primary-foreground hover:text-black bg-transparent border border-primary-border rounded-md"
+        className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-primary-white hover:text-black bg-transparent border border-primary-border rounded-md"
       >
         <span className="relative z-[10]">Start stream</span>
         <div className="absolute inset-0 w-full h-full bg-primary transition-transform duration-500 transform translate-y-full group-hover:translate-y-0"></div>
