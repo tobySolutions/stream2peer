@@ -33,7 +33,7 @@ export const About = () => {
             {/* <Statistics /> */}
             <a
               rel="noreferrer noopener"
-              href="https://github.com/tobySolutions/stream2peer"
+              href="https://stream2peer-app.on-fleek.app/"
               target="_blank"
               className={`w-full md:w-1/3 ${buttonVariants({
                 variant: "default",
