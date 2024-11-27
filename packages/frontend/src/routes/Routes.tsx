@@ -1,4 +1,4 @@
-import { Route, Routes as BaseRoutes } from "react-router-dom";
+import { Route, Routes as BaseRoutes, Navigate } from "react-router-dom";
 import Login from "./login";
 import DashboardHome from "./dashboard/home";
 import Projects from "./dashboard/projects";
@@ -17,6 +17,8 @@ import NotFound from "./NotFound";
 export default function Routes() {
   return (
     <BaseRoutes>
+      <Route path="/" element={<Navigate to="/login/" replace />} />
+
       <Route path="/login/" element={<Login />} />
       <Route path="/signup/" element={<SignUp />} />
       <Route path="/otp/" element={<Otp />} />
