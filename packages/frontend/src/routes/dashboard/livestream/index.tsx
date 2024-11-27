@@ -1,8 +1,6 @@
 import * as Player from "@livepeer/react/player";
-import { Src } from "@livepeer/react";
 import { PauseIcon, PlayIcon } from "@livepeer/react/assets";
 import Layout from "../layout";
-
 
 export const DemoPlayer = () => {
   return (
