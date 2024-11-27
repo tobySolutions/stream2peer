@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAppStore } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
-import { storeDataInCookie } from "../../../utils/utils";
+
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,7 +34,6 @@ function Projects() {
     try {
       const res = await FetchAllProjects();
       setProjectData(res?.results?.data);
-      storeDataInCookie("projectData", JSON.stringify(res?.results?.data[0]), 1);
     } catch (error: any) {
       console.error(error);
       if (error?.response?.data?.message) {
