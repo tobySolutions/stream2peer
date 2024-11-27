@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Logo from "/logo.png";
 import { CiLogout } from "react-icons/ci";
 import { navItems } from "../utils/navContent";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { LogoIcon } from "../assets/svg-exports";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,7 +28,7 @@ function Navbar() {
     <nav className="bg-dark-gray sticky bottom-0 top-0 right-0 left-0 z-[100] h-[60px] border-b border-primary-border flex items-center justify-between px-[36px] py-[25px]">
       {/* Logo Container */}
       <div className="flex items-center gap-[10px] cursor-pointer">
-        <img src={Logo} alt="Logo" width="200px" height="100px" />
+        <LogoIcon theme="dark"/>
       </div>
 
       {/* Desktop Menu */}

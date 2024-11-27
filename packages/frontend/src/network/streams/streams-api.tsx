@@ -25,7 +25,6 @@ export const validateYouTube = async (code: string) => {
   );
 
   if (data["status_code"] === 200) {
-    console.log(data, "200");
     return {
       data,
       statusCode: data["status_code"],
@@ -44,7 +43,6 @@ export const validateTwitch = async (code: string) => {
   );
 
   if (data["status_code"] === 200) {
-    console.log(data, "200");
     return {
       data,
       statusCode: data["status_code"],

@@ -36,7 +36,6 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
 }) => {
   const { Option } = Select;
 
-  console.log(platforms)
 
   return (
     <div>

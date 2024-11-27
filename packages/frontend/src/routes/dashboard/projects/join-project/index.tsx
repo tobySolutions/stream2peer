@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FetchProjectById } from "../../../../network/projects/projects";
+import { toast } from "react-toastify";
 
 export const JoinProject = () => {
   const { id: projectId } = useParams();
@@ -17,10 +18,14 @@ export const JoinProject = () => {
     setProjectLoading(true);
     try {
       const res = await FetchProjectById(projectId!);
-      console.log(res);
+
       setProjectData(res.results);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+       if (err?.response?.data?.message) {
+         toast.error(err?.response?.data?.message);
+       } else {
+         toast.error(err?.message);
+       }
     }
     setProjectLoading(false);
   };

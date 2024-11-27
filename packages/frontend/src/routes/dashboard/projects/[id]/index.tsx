@@ -95,54 +95,33 @@ const ProjectPage = () => {
     try {
       const response = await FetchProjectById(projectId!);
       setProjectData(response?.results);
-    } catch (err) {
-      console.error(err);
+      
+    } catch (err: any) {
+      if(err?.response?.data?.message){
+        toast.error(err?.response?.data?.message);
+      }else {
+        toast.error(err?.message);
+      }
     } finally {
       setLoading((prev) => ({ ...prev, project: false }));
     }
   };
 
-  // const OutsideClickListener = (ref: any, callback: () => void) => {
-  //   useEffect(() => {
-  //     const handleClickOutside = (event: MouseEvent) => {
-  //       if (ref.current && !ref.current.contains(event.target)) {
-  //         callback();
-  //       }
-  //     };
 
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //       document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  //   }, [ref, callback]);
-  // };
 
-  // OutsideClickListener(dropdownRef, () => {
-  //   setModalState({ type: "", isOpen: false });
-  // });
-
-  // Fetch accessTokens
-  const fetchAccessTokens = async () => {
-    try {
-      const res = await getAccessToken(projectId!);
-      console.log(res);
-      storeDataInCookie(
-        "stream-access-token",
-        JSON.stringify(res?.access_token),
-        1
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Fetch all streams
   const fetchStreams = async () => {
     try {
       const response = await fetchAllStreams(projectId!);
       setLivestreamData(response?.results || []);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+       if (err?.response?.data?.message) {
+         toast.error(err?.response?.data?.message);
+       } else {
+         toast.error(err?.message);
+       }
+     
     }
   };
 
@@ -154,15 +133,19 @@ const ProjectPage = () => {
       toast.success("Peer invited successfully");
       setInviteModalOpen(false);
       setUserData([]);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+       if (err?.response?.data?.message) {
+         toast.error(err?.response?.data?.message);
+       } else {
+         toast.error(err?.message);
+       }
     } finally {
       setLoading((prev) => ({ ...prev, invite: false }));
     }
   };
 
   useEffect(() => {
-    console.log("Livestream Data Updated:", livestreamData);
+    
   }, [livestreamData]);
 
   // Handle livestream creation
@@ -186,8 +169,12 @@ const ProjectPage = () => {
       if (streamDetails.type == "instant") {
         navigate(`/broadcast/${response?.results.streamKey}`);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     } finally {
       setLoading((prev) => ({ ...prev, createStream: false }));
       setSubmitLoader(false);
@@ -197,7 +184,6 @@ const ProjectPage = () => {
   useEffect(() => {
     fetchProjectDetails();
     fetchStreams();
-    fetchAccessTokens();
   }, []);
 
   // Helpers
@@ -220,7 +206,6 @@ const ProjectPage = () => {
   };
 
   const handleChange = (value: "Twitch" | "Youtube") => {
-    console.log("Selected Platform:", value);
     setSelectedPlatform([...selectedPlatform, value]); // Update state or perform other actions
   };
 

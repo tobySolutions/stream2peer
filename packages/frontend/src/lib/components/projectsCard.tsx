@@ -23,11 +23,15 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
       await deleteProject(id);
       setDeleteLoading(false);
       setDeleteModalOpen(false);
-      window.location.reload();
       toast.success("Project deleted successfully");
-    } catch (error) {
-      console.error(error);
+      window.location.reload();
+    } catch (error: any) {
       setDeleteLoading(false);
+      if(error?.response) {
+        toast.error(error?.response?.data?.message)
+      }else {
+        toast.error(error?.message);
+      }
     }
   };
 
@@ -39,10 +43,14 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
         description: projectDetails.desc,
       });
       setEditModalOpen(false);
-      window.location.reload();
       toast.success("Project updated successfully");
-    } catch (error) {
-      console.error(error);
+      window.location.reload();
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     } finally {
       setLoading(false);
     }

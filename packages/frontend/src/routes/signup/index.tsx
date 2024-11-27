@@ -16,6 +16,7 @@ import {
   sendUserAuthOtpMail,
 } from "../../network/auth/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export type FormValuesType = {
   email: string;
@@ -43,7 +44,6 @@ function SignUp() {
 
     if (userCodeFromCookie !== "") {
       async function getUserData() {
-        console.log("hey");
         try {
           const userDataResponse = await getUserDetails(
             userCodeFromCookie,
@@ -52,7 +52,7 @@ function SignUp() {
 
           if (userDataResponse?.statusCode === 200) {
             const token = userDataResponse.data.token.split(" ")[1];
-            console.log("success");
+  
             storeDataInCookie(
               "userDataResponse",
               JSON.stringify(userDataResponse.data),
@@ -62,12 +62,13 @@ function SignUp() {
             navigate("/dashboard");
           }
 
-          console.log(
-            JSON.parse(getDataInCookie("userDataResponse")),
-            "I don enter jor"
-          );
-        } catch (error) {
-          console.error(error);
+         
+        } catch (error: any) {
+          if (error?.response?.data?.message) {
+            toast.error(error?.response?.data?.message);
+          } else {
+            toast.error(error?.message);
+          }
         }
       }
       getUserData();
@@ -100,15 +101,11 @@ function SignUp() {
     }
   };
 
-  // const handleMetaMaskSignIn = () => {
-  //   // Implement MetaMask sign-in logic here
-  //   console.log("MetaMask sign-in clicked");
-  // };
 
   return (
     <div>
       <Navbar />
-      <div className=" bg-black justify-center items-center flex min-h-screen">
+      <div className=" bg-black justify-center items-center flex min-h-[calc(100dvh-150px)]">
         <form
           onSubmit={handleFormSubmit}
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"

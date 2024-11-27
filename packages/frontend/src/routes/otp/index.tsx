@@ -5,6 +5,7 @@ import Navbar from "../../lib/navbar";
 import Button from "../../lib/Button";
 import { getDataInCookie, storeDataInCookie } from "../../utils/utils";
 import { verifyUserOtp } from "../../network/auth/auth";
+import { toast } from "react-toastify";
 
 function Otp() {
   const [otp, setOtp] = useState("");
@@ -20,7 +21,7 @@ function Otp() {
       email,
       token: otp,
     };
-    console.log(payload);
+
 
     try {
       const userDataResponse = await verifyUserOtp(
@@ -37,12 +38,15 @@ function Otp() {
         storeDataInCookie("userToken", token, 2);
         navigate("/dashboard");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
   };
-
-
 
   return (
     <div>
