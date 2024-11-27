@@ -1,8 +1,7 @@
 import { Route, Routes as BaseRoutes, Navigate } from "react-router-dom";
-import Login from "./login";
+import SignIn from "./signIn";
 import DashboardHome from "./dashboard/home";
 import Projects from "./dashboard/projects";
-import SignUp from "./signup";
 import ProjectPage from "./dashboard/projects/[id]";
 import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
 import { DemoPlayer } from "./dashboard/livestream";
@@ -17,10 +16,9 @@ import NotFound from "./NotFound";
 export default function Routes() {
   return (
     <BaseRoutes>
-      <Route path="/" element={<Navigate to="/login/" replace />} />
+      <Route path="/" element={<Navigate to="/signIn/" replace />} />
 
-      <Route path="/login/" element={<Login />} />
-      <Route path="/signup/" element={<SignUp />} />
+      <Route path="/signIn/" element={<SignIn />} />
       <Route path="/otp/" element={<Otp />} />
 
       {/* Protected Routes */}

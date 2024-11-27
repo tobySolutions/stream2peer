@@ -8,7 +8,9 @@ import {
 } from "../../utils/utils";
 import Button from "../../lib/Button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
+
+// import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
+
 import {
   getUserDetails,
   handleGitHubSignIn,
@@ -25,15 +27,19 @@ const defaultFormValues = {
   email: "",
 };
 
-function SignUp() {
+function SignIn() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState<FormValuesType>({
     ...defaultFormValues,
   });
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+
   const userCode = params.get("code") ?? "";
 
-  const navigate = useNavigate();
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  storeDataInCookie("userCode", userCode, 1);
 
   useEffect(() => {
     const userCodeFromCookie = getDataInCookie("userCode");
@@ -52,7 +58,7 @@ function SignUp() {
 
           if (userDataResponse?.statusCode === 200) {
             const token = userDataResponse.data.token.split(" ")[1];
-  
+
             storeDataInCookie(
               "userDataResponse",
               JSON.stringify(userDataResponse.data),
@@ -61,8 +67,6 @@ function SignUp() {
             storeDataInCookie("userToken", token, 2);
             navigate("/dashboard");
           }
-
-         
         } catch (error: any) {
           if (error?.response?.data?.message) {
             toast.error(error?.response?.data?.message);
@@ -101,7 +105,6 @@ function SignUp() {
     }
   };
 
-
   return (
     <div>
       <Navbar />
@@ -111,38 +114,7 @@ function SignUp() {
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
         >
           <div className="rounded-[8px] border border-[#313538] px-[2.5rem] py-[3rem] md:px-[4rem]">
-            <div className="flex flex-col space-y-4">
-              <button
-                type="button"
-                onClick={handleGoogleSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-              >
-                <FaGoogle className="mr-2" />
-                Sign up with Google
-              </button>
-              <button
-                type="button"
-                onClick={handleGitHubSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-              >
-                <FaGithub className="mr-2" />
-                Sign up with GitHub
-              </button>
-              {/* <button
-                type="button"
-                onClick={handleMetaMaskSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-              >
-                <MetaMaskIcon className="mr-2" />
-                Sign up with MetaMask
-              </button> */}
-            </div>
-
-            <div className="text-center text-white my-5">
-              <span>or</span>
-            </div>
-
-            <div className="my-[.6rem] text-white text-[15px]">
+            <div className="my-[.6rem] lg:mt-[1.3rem]  text-white text-[15px]">
               <Input
                 type="email"
                 name="email"
@@ -154,15 +126,37 @@ function SignUp() {
               />
             </div>
 
-            <Button className="w-full text-[1rem] my-[.8rem]" text="Sign up" />
+            <Button className="w-full text-[1rem] my-[.8rem]" text="Login" />
 
-            <div className="my-[.8rem] text-white text-[15px] text-center">
-              <span>
-                Already have an account?{" "}
-                <a href="/login/" className="text-yellow-dark-9">
-                  Log In
-                </a>
-              </span>
+            <div className="text-center text-white my-5">
+              <span>or</span>
+            </div>
+
+            <div className="flex flex-col space-y-4">
+              <button
+                type="button"
+                onClick={handleGoogleSignIn}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                <FaGoogle className="mr-2" />
+                Sign in with Google
+              </button>
+              <button
+                type="button"
+                onClick={handleGitHubSignIn}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                <FaGithub className="mr-2" />
+                Sign in with GitHub
+              </button>
+              {/* <button
+                type="button"
+                onClick={handleMetaMaskSignIn}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+              >
+                <MetaMaskIcon className="mr-2" />
+                Sign in with MetaMask
+              </button> */}
             </div>
           </div>
         </form>
@@ -171,4 +165,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignIn;

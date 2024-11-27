@@ -9,12 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { VscMute as MuteIcon } from "react-icons/vsc";
 import { GoUnmute as UnmuteIcon } from "react-icons/go";
 import {
-  RateSelectItem,
   Seek,
-  VideoQualitySelectItem,
 } from "@livepeer/react/player";
 import { IoMdSettings as Settings } from "react-icons/io";
-import { getDataInCookie } from "../../utils/utils";
 import { toast } from "react-toastify";
 
 export const Stream = () => {

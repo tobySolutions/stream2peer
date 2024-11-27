@@ -57,7 +57,7 @@ const SocialMediaCards: React.FC = () => {
         <FaFacebook />
         <span>Facebook Page</span>
         {/* Overlay for "Coming Soon" */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg  md:hover:flex md:opacity-0 md:hover:opacity-100">
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg  md:hover:flex md:hover:opacity-100">
           Coming Soon
         </div>
         {/* Show "Coming Soon" on mobile */}
@@ -70,7 +70,7 @@ const SocialMediaCards: React.FC = () => {
       <div className="bg-blue-800 relative w-48 text-white px-4 py-3 rounded-lg flex items-center space-x-2 cursor-pointer hover:bg-blue-900 transition">
         <FaLinkedin />
         <span>LinkedIn Page</span>
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg  md:hover:flex md:opacity-0 md:hover:opacity-100">
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg  md:hover:flex md:hover:opacity-100">
           Coming Soon
         </div>
         {/* Show "Coming Soon" on mobile */}
@@ -86,7 +86,7 @@ const SocialMediaCards: React.FC = () => {
         <FaXTwitter />
         <span>X (Twitter)</span>
         {/* Overlay for "Coming Soon" */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg md:hover:flex md:opacity-0 md:hover:opacity-100">
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg md:hover:flex md:hover:opacity-100">
           Coming Soon
         </div>
         {/* Show "Coming Soon" on mobile */}

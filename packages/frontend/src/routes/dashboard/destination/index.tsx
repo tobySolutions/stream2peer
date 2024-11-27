@@ -11,7 +11,9 @@ import { useLocation, useParams } from "react-router-dom";
 import { getDataInCookie } from "../../../utils/utils";
 import { ImTwitch } from "react-icons/im";
 import { toast } from "react-toastify";
-import { FetchProjectById } from "../../../network/projects/projects";
+import {
+  fetchPlatforms
+} from "../../../network/projects/projects";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
@@ -33,11 +35,13 @@ export const Destination = () => {
       }
     }
   };
-  const fetchProjectDetails = async (projectId: string | undefined) => {
+  const fetchPlatformsData = async () => {
     setLoading(true);
     try {
-      const response = await FetchProjectById(projectId!);
-      setDestinationData(response?.results?.platforms);
+      const response = await fetchPlatforms();
+      response?.data?.platforms
+        ? setDestinationData(response?.data?.platforms)
+        : setDestinationData([]);
     } catch (err: any) {
       if (err?.response?.data?.message) {
         toast.error(err?.response?.data?.message);
@@ -62,17 +66,8 @@ export const Destination = () => {
   };
 
   useEffect(() => {
-    const project = JSON.parse(getDataInCookie("projectData"));
-     
-  if (!project) {
-       const userData = JSON.parse(getDataInCookie("userDataResponse"));
-        if (userData?.data?.platforms) {
-        setDestinationData(userData?.data?.platforms);
-    }
-  } else {
-     fetchProjectDetails(project?.identifier);
-    }
-    
+    fetchPlatformsData();
+
     if (
       queryParams.get("code") &&
       queryParams.get("scope") !== "https://www.googleapis.com/auth/youtube"
