@@ -63,7 +63,16 @@ export const Destination = () => {
 
   useEffect(() => {
     const project = JSON.parse(getDataInCookie("projectData"));
-    fetchProjectDetails(project?.identifier);
+     
+  if (!project) {
+       const userData = JSON.parse(getDataInCookie("userDataResponse"));
+        if (userData?.data?.platforms) {
+        setDestinationData(userData?.data?.platforms);
+    }
+  } else {
+     fetchProjectDetails(project?.identifier);
+    }
+    
     if (
       queryParams.get("code") &&
       queryParams.get("scope") !== "https://www.googleapis.com/auth/youtube"
@@ -76,11 +85,6 @@ export const Destination = () => {
     ) {
       handleYouTubeValidation();
     }
-
-    // const userData = JSON.parse(getDataInCookie("userDataResponse"));
-    // if (userData?.data?.platforms) {
-    //   setDestinationData(userData?.data?.platforms);
-    // }
   }, []);
 
   return (
