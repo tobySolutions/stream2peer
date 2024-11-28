@@ -8,9 +8,6 @@ import {
 } from "../../utils/utils";
 import Button from "../../lib/Button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-
-// import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
-
 import {
   getUserDetails,
   handleGitHubSignIn,
@@ -19,10 +16,12 @@ import {
 } from "../../network/auth/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LoadingIcon } from "@livepeer/react/assets";
 
 export type FormValuesType = {
   email: string;
 };
+
 const defaultFormValues = {
   email: "",
 };
@@ -38,17 +37,18 @@ function SignIn() {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   const userCode = params.get("code") ?? "";
-
   storeDataInCookie("userCode", userCode, 1);
 
   useEffect(() => {
     const userCodeFromCookie = getDataInCookie("userCode");
-
     const isGoogleInUrl = window.location.href.includes("google")
       ? "google"
       : "github";
 
+    console.log(userCodeFromCookie);
     if (userCodeFromCookie !== "") {
+      storeDataInCookie("loading", "true", 1);
+      storeDataInCookie("oauth", isGoogleInUrl, 1);
       async function getUserData() {
         try {
           const userDataResponse = await getUserDetails(
@@ -65,20 +65,19 @@ function SignIn() {
               1
             );
             storeDataInCookie("userToken", token, 2);
+
+            storeDataInCookie("loading", "", -1);
+            storeDataInCookie("oauth", "", -1);
+            storeDataInCookie("userCode", "", -1);
+
             navigate("/dashboard");
           }
         } catch (error: any) {
-          if (error?.response?.data?.message) {
-            toast.error(error?.response?.data?.message);
-          } else {
-            toast.error(error?.message);
-          }
+          toast.error(error?.response?.data?.message || error?.message);
         }
       }
       getUserData();
     }
-
-    return () => {};
   }, [userCode]);
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -98,17 +97,28 @@ function SignIn() {
 
     if (name === "comment") {
       const shouldBeDisabled = value.trim().length < 30;
-
       if (shouldBeDisabled !== isButtonDisabled) {
         setIsButtonDisabled(shouldBeDisabled);
       }
     }
   };
 
+  const getLoadingFromCookie = () => {
+    const loading = getDataInCookie("loading");
+    return loading === "true";
+  };
+
+  const getOauthFromCookie = () => {
+    return getDataInCookie("oauth");
+  };
+
+  const loading = getLoadingFromCookie();
+  const oauthMethod = getOauthFromCookie();
+
   return (
     <div>
       <Navbar />
-      <div className=" bg-black justify-center items-center flex min-h-[calc(100dvh-150px)]">
+      <div className="justify-center items-center flex min-h-screen">
         <form
           onSubmit={handleFormSubmit}
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
@@ -136,27 +146,29 @@ function SignIn() {
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                disabled={loading}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
               >
-                <FaGoogle className="mr-2" />
+                {oauthMethod === "google" && loading ? (
+                  <LoadingIcon className="w-8 h-8 animate-spin text-primary-white" />
+                ) : (
+                  <FaGoogle className="mr-2" />
+                )}
                 Sign in with Google
               </button>
               <button
                 type="button"
                 onClick={handleGitHubSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                disabled={loading}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50"
               >
-                <FaGithub className="mr-2" />
+                {oauthMethod === "github" && loading ? (
+                  <LoadingIcon className="w-8 h-8 animate-spin text-primary-white" />
+                ) : (
+                  <FaGithub className="mr-2" />
+                )}
                 Sign in with GitHub
               </button>
-              {/* <button
-                type="button"
-                onClick={handleMetaMaskSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-              >
-                <MetaMaskIcon className="mr-2" />
-                Sign in with MetaMask
-              </button> */}
             </div>
           </div>
         </form>

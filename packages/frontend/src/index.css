@@ -54,7 +54,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground bg-black;
   }
 }
 
@@ -73,7 +73,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background:  hsl(var(--primary));
+  background: hsl(var(--primary));
   border-radius: 2px;
 }
 

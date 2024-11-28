@@ -15,7 +15,6 @@ import { useAppStore } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
 
-
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
   const [projectDetails, setProjectDetails] = useState({ title: "", desc: "" });
@@ -48,7 +47,7 @@ function Projects() {
   const addNewProject = async () => {
     setLoading(true);
     try {
-      if (projectDetails.title.length < 5 || projectDetails.title.length > 10) {
+      if (projectDetails.title.length < 5 || projectDetails.title.length > 30) {
         setInputError({
           ...InputError,
           title: "Title must me greater than 4 characters and less than 10",
