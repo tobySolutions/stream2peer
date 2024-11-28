@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { navItems } from "../utils/navContent";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -36,18 +36,29 @@ function Navbar() {
     <nav className="bg-dark-gray sticky bottom-0 top-0 right-0 left-0 z-[100] h-[60px] border-b border-primary-border flex items-center justify-between px-[20px] md:px-[36px] py-[25px]">
       {/* Logo Container */}
       <div className="flex items-center gap-[10px] cursor-pointer">
-        <LogoIcon theme="dark" />
+        <Link
+          to={
+            location.pathname.includes("dashboard")
+              ? "/dashboard"
+              : "https://stream2peer.on-fleek.app/"
+          }
+        >
+          <LogoIcon theme="dark" />
+        </Link>
       </div>
 
       {/* Desktop Menu */}
       <ul className="hidden relative md:flex gap-[20px] items-center list-none">
-        <li
-          onClick={() => setSubMenuOpen((prev) => !prev)}
-          className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white flex items-center gap-2"
-        >
-          <IoPersonCircleOutline size={24} />
-          My Account
-        </li>
+        {/* Conditionally render "My Account" menu */}
+        {!location.pathname.includes("signIn") && (
+          <li
+            onClick={() => setSubMenuOpen((prev) => !prev)}
+            className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white flex items-center gap-2"
+          >
+            <IoPersonCircleOutline size={24} />
+            My Account
+          </li>
+        )}
         {subMenuOpen && (
           <div className="absolute bg-dark-gray top-12 right-2 border border-primary-border rounded-sm">
             <p className="py-2 px-3 text-primary-white/60">

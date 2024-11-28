@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import Navbar from "../../lib/navbar";
 import Input from "../../lib/Input";
 import {
@@ -8,21 +8,20 @@ import {
 } from "../../utils/utils";
 import Button from "../../lib/Button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-
-// import MetaMaskIcon from "../../lib/icons/MetamaskIcon";
-
 import {
+  generateAuthWithGithubUrl,
+  generateAuthWithGoogleUrl,
   getUserDetails,
-  handleGitHubSignIn,
-  handleGoogleSignIn,
   sendUserAuthOtpMail,
 } from "../../network/auth/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LoadingIcon } from "@livepeer/react/assets";
 
 export type FormValuesType = {
   email: string;
 };
+
 const defaultFormValues = {
   email: "",
 };
@@ -35,20 +34,21 @@ function SignIn() {
     ...defaultFormValues,
   });
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const [loading, setLoading] = useState(false);
+  const [callbackloading, setCallbackLoading] = useState(false);
+  const [oauthMethod, setOauthMethod] = useState<string | null>(null);
 
   const userCode = params.get("code") ?? "";
-
   storeDataInCookie("userCode", userCode, 1);
 
   useEffect(() => {
     const userCodeFromCookie = getDataInCookie("userCode");
-
     const isGoogleInUrl = window.location.href.includes("google")
       ? "google"
       : "github";
 
-    if (userCodeFromCookie !== "") {
+    if (userCodeFromCookie) {
+      setLoading(true);
       async function getUserData() {
         try {
           const userDataResponse = await getUserDetails(
@@ -58,7 +58,6 @@ function SignIn() {
 
           if (userDataResponse?.statusCode === 200) {
             const token = userDataResponse.data.token.split(" ")[1];
-
             storeDataInCookie(
               "userDataResponse",
               JSON.stringify(userDataResponse.data),
@@ -68,17 +67,14 @@ function SignIn() {
             navigate("/dashboard");
           }
         } catch (error: any) {
-          if (error?.response?.data?.message) {
-            toast.error(error?.response?.data?.message);
-          } else {
-            toast.error(error?.message);
-          }
+          toast.error(error?.response?.data?.message || error?.message);
+          setLoading(false);
+        } finally {
+          setLoading(false);
         }
       }
       getUserData();
     }
-
-    return () => {};
   }, [userCode]);
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -86,8 +82,12 @@ function SignIn() {
 
     const { email } = formValues;
     storeDataInCookie("emailAddress", email, 1);
-    sendUserAuthOtpMail(email);
-    navigate(`/otp`);
+    try {
+      await sendUserAuthOtpMail(email);
+      navigate(`/otp`);
+    } catch (error: any) {
+      toast.error("Error sending OTP email.");
+    }
   };
 
   const handleInputChange = (name: string, value: string) => {
@@ -95,20 +95,43 @@ function SignIn() {
       ...prevValues,
       [name]: value,
     }));
+  };
 
-    if (name === "comment") {
-      const shouldBeDisabled = value.trim().length < 30;
-
-      if (shouldBeDisabled !== isButtonDisabled) {
-        setIsButtonDisabled(shouldBeDisabled);
+  const handleGoogleSignIn = useCallback(async () => {
+    setLoading(true);
+    setOauthMethod("google");
+    try {
+      const { data } = await generateAuthWithGoogleUrl();
+      window.location.href = data?.authUrl;
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
       }
     }
-  };
+  }, [oauthMethod]);
+
+  const handleGitHubSignIn = useCallback(async () => {
+    setLoading(true);
+    setOauthMethod("github");
+    try {
+      const { data } = await generateAuthWithGithubUrl();
+      window.location.href = data.authUrl;
+    } catch (error: any) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
+    }
+  }, [oauthMethod]);
 
   return (
     <div>
       <Navbar />
-      <div className=" bg-black justify-center items-center flex min-h-[calc(100dvh-150px)]">
+
+      <div className="justify-center items-center flex min-h-screen">
         <form
           onSubmit={handleFormSubmit}
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
@@ -126,7 +149,11 @@ function SignIn() {
               />
             </div>
 
-            <Button className="w-full text-[1rem] my-[.8rem]" text="Login" />
+            <Button
+              className="w-full text-[1rem] my-[.8rem]"
+              text="Login"
+              isDisabled={loading} // Disable button during loading
+            />
 
             <div className="text-center text-white my-5">
               <span>or</span>
@@ -136,27 +163,33 @@ function SignIn() {
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                disabled={loading}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
               >
-                <FaGoogle className="mr-2" />
+                {oauthMethod === "google" && loading ? (
+                  <div className="grid place-content-center mx-2">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+                  </div>
+                ) : (
+                  <FaGoogle className="mr-2" />
+                )}
                 Sign in with Google
               </button>
               <button
                 type="button"
                 onClick={handleGitHubSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                disabled={loading}
+                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50"
               >
-                <FaGithub className="mr-2" />
+                {oauthMethod === "github" && loading ? (
+                  <div className="grid place-content-center mx-2">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+                  </div>
+                ) : (
+                  <FaGithub className="mr-2" />
+                )}
                 Sign in with GitHub
               </button>
-              {/* <button
-                type="button"
-                onClick={handleMetaMaskSignIn}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-              >
-                <MetaMaskIcon className="mr-2" />
-                Sign in with MetaMask
-              </button> */}
             </div>
           </div>
         </form>

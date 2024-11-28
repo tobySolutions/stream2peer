@@ -1,10 +1,15 @@
+
+![stream2peer banner](https://res.cloudinary.com/duarnvq7d/image/upload/v1732483044/stream2peer3_pppvnt.png)
+
 # Stream2Peer
 
 Stream2Peer is a decentralized video stream management platform built on top of [Livepeer](https://livepeer.org/). Inspired by [StreamYard](https://streamyard.com/), this project replicates the core functionalities of StreamYard with added advantages of decentralization, scalability, and enhanced user control. Stream2Peer allows users to broadcast, record, and manage live streams seamlessly using the power of Web3 and Livepeer's open-source technology.
 
+You can join our Discord [here](https://discord.gg/kcqsbukZ).
+
 ## Code of Conduct
 
-We are committed to fostering an open and welcoming environment. Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) to understand the behavior we expect from our contributors and maintainers.
+We are committed to fostering an open and welcoming environment. Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) to understand the behavior we expect from our contributors and maintainers
 
 ## Features
 
@@ -58,12 +63,24 @@ Before you begin, ensure you have met the following requirements:
    pnpm install
    ```
 
-3. Run the development server:
+4. Setup environment variables: Environment variables must be set up for both the `frontend` and `backend`. The environment variables are in a `env.example`.
+
+6. Run the development server:
+
+ - For backend: 
 
    ```bash
-   cd packages
-   pnpm run dev
+   pnpm dev:backend
    ```
+- For frontend:
+  ```bash
+   pnpmm dev:frontend
+  ```
+
+- For Landing page:
+  ```bash
+  pnpm dev:landing
+  ```
 
 ### Project Structure
 
@@ -72,7 +89,7 @@ stream2peer/
 │
 ├── packages/
 │   ├── frontend/       # React with Vite (Client-side code)
-│   └── backend/        # AdonisJS (Server-side code)
+│   └── backend/        # ExpressJS (Server-side code)
 │
 ├── pnpm-workspace.yaml # pnpm workspace setup for monorepo
 ├── package.json        # Root package file
@@ -85,11 +102,11 @@ The backend is powered by ExpressJs, and it handles stream creation, user manage
 
 ### Frontend
 
-The frontend is built using React and Vite, offering a fast and optimized development environment. It allows users to interact with the Livepeer API, set up streams, invite guests, and more.
+The frontend uses React and Vite, offering a fast and optimized development environment. 
 
 ## Contributing
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Check out the [Contributing guide](https://github.com/tobySolutions/stream2peer/blob/main/CONTRIBUTING.md) to see how to set things up on your machine.
+Contributions make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Check out the [Contributing guide](https://github.com/tobySolutions/stream2peer/blob/main/CONTRIBUTING.md) to see how to set things up on your machine.
 
 1. Fork the Project.
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
@@ -97,9 +114,21 @@ Contributions are what make the open-source community such an amazing place to l
 4. Push to the Branch (`git push origin feature/AmazingFeature`).
 5. Open a Pull Request.
 
+If you have any questions or need help with setup, you can join our Discord [here](https://discord.gg/kcqsbukZ).
+
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/tobySolutions/stream2peer/blob/main/LICENSE) for more information.
+Distributed under the GPL 3.0 License. See [LICENSE](https://github.com/tobySolutions/stream2peer/blob/main/LICENSE) for more information.
+
+
+## Roadmap
+
+- Code refactoring for more optimizations
+- UI migration to be heavy on Shadcn
+- Single frontend deployment on Fleek
+- Husky tests and CI workflows
+- Creator program launch (Integrations with Livepeer tokens)
+
 
 ## Acknowledgements
 
@@ -108,3 +137,4 @@ Distributed under the MIT License. See [LICENSE](https://github.com/tobySolution
 - [pnpm](https://pnpm.io/)
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
+- [shadcn-landing-page](https://github.com/leoMirandaa/shadcn-landing-page)

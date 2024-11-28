@@ -42,31 +42,7 @@ export const getUserDetails = async (code: string, provider: string) => {
   }
 };
 
-export const handleGoogleSignIn = async () => {
-  try {
-    const { data } = await generateAuthWithGoogleUrl();
-    window.location.href = data?.authUrl;
-  } catch (error: any) {
-    if (error?.response) {
-      toast.error(error?.response?.data?.message);
-    } else {
-      toast.error(error?.message);
-    }
-  }
-};
 
-export const handleGitHubSignIn = async () => {
-  try {
-    const { data } = await generateAuthWithGithubUrl();
-    window.location.href = data.authUrl;
-  } catch (error: any) {
-    if (error?.response) {
-      toast.error(error?.response?.data?.message);
-    } else {
-      toast.error(error?.message);
-    }
-  }
-};
 
 export const sendUserAuthOtpMail = async (email: string) => {
   const { data } = await instance.get(`/auth/email/sign-in?email=${email}`);

@@ -48,7 +48,7 @@ function Projects() {
   const addNewProject = async () => {
     setLoading(true);
     try {
-      if (projectDetails.title.length < 5 || projectDetails.title.length > 10) {
+      if (projectDetails.title.length < 5 || projectDetails.title.length > 30) {
         setInputError({
           ...InputError,
           title: "Title must me greater than 4 characters and less than 10",
@@ -64,7 +64,7 @@ function Projects() {
         return;
       }
       if (emails.length > 0) {
-        const res = await AddProject({
+        await AddProject({
           title: projectDetails.title,
           description: projectDetails.desc,
           inviteeId: emails.toString(),

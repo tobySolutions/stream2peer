@@ -24,7 +24,7 @@ export const Destination = () => {
   const handleTwitchValidation = async () => {
     try {
       await validateTwitch(queryParams.get("code")!);
-      toast.success("Twitch Validation Successfully");
+      toast.success("Twitch validation successful");
     } catch (error: any) {
       if (error?.response) {
         toast.error(error?.response?.data?.message);
@@ -53,7 +53,7 @@ export const Destination = () => {
   const handleYouTubeValidation = async () => {
     try {
       await validateYouTube(queryParams.get("code")!);
-      toast.success("Twitch Validation Successfully");
+      toast.success("YouTube validation successfull");
     } catch (error: any) {
       if (error?.response) {
         toast.error(error?.response?.data?.message);
