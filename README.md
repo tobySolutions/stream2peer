@@ -72,7 +72,7 @@ stream2peer/
 │
 ├── packages/
 │   ├── frontend/       # React with Vite (Client-side code)
-│   └── backend/        # AdonisJS (Server-side code)
+│   └── backend/        # ExpressJS (Server-side code)
 │
 ├── pnpm-workspace.yaml # pnpm workspace setup for monorepo
 ├── package.json        # Root package file
