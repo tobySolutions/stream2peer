@@ -44,6 +44,17 @@ export const Community = () => {
             Join us on Discord
           </a>
         </div>
+
+        {/* <div className="flex items-center justify-center">
+          <iframe
+            src="https://discord.com/widget?id=1311548268647551007&theme=dark"
+            width="350"
+            height="500"
+            allowTransparency={true}
+            frameBorder="0"
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+          ></iframe>
+        </div> */}
       </div>
 
       <hr className="w-11/12 mx-auto" />
