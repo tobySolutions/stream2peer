@@ -61,7 +61,7 @@ export class Stream extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   profiles: StreamProfile[];
 
-  @Column({ type: 'enum', enum: Platform, nullable: true })
+  @Column({ type: 'simple-array', nullable: true })
   destinations: Platform[];
 
   @Column({ type: 'text', nullable: true })
