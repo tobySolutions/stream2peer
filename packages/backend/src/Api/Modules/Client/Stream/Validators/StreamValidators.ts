@@ -1,4 +1,5 @@
 import { body, param } from 'express-validator';
+import { Platform } from '../TypeChecking/MultiStreamUserDestination';
 
 export const CreateStreamValidator = [
   body('title', 'Stream title is required and should be a string')
@@ -12,6 +13,11 @@ export const CreateStreamValidator = [
     .isLength({ max: 1000 })
     .withMessage('Stream description must be less than 1000 characters')
     .optional()
+    .trim()
+    .escape(),
+  body('platforms.*', 'Each platform must be one of the valid enum values')
+    .isIn(Object.values(Platform))
+    .withMessage('Invalid platform. Platform must be one of ' + Object.values(Platform).join(', '))
     .trim()
     .escape(),
 ];
