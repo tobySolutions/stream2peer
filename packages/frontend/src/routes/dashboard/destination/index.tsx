@@ -11,9 +11,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { getDataInCookie } from "../../../utils/utils";
 import { ImTwitch } from "react-icons/im";
 import { toast } from "react-toastify";
-import {
-  fetchPlatforms
-} from "../../../network/projects/projects";
+import { fetchPlatforms } from "../../../network/projects/projects";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
@@ -26,7 +24,7 @@ export const Destination = () => {
   const handleTwitchValidation = async () => {
     try {
       await validateTwitch(queryParams.get("code")!);
-      toast.success("Twitch Validation Successfully");
+      toast.success("Twitch validation successful");
     } catch (error: any) {
       if (error?.response) {
         toast.error(error?.response?.data?.message);
@@ -55,7 +53,7 @@ export const Destination = () => {
   const handleYouTubeValidation = async () => {
     try {
       await validateYouTube(queryParams.get("code")!);
-      toast.success("Twitch Validation Successfully");
+      toast.success("YouTube validation successfull");
     } catch (error: any) {
       if (error?.response) {
         toast.error(error?.response?.data?.message);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { navItems } from "../utils/navContent";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -20,28 +20,40 @@ function Navbar() {
     navigate(route, { replace: true });
   };
 
-  const handleLogout = () => {
-    
-  }
+  const handleLogout = () => {};
 
   return (
     <nav className="bg-dark-gray sticky bottom-0 top-0 right-0 left-0 z-[100] h-[60px] border-b border-primary-border flex items-center justify-between px-[36px] py-[25px]">
       {/* Logo Container */}
       <div className="flex items-center gap-[10px] cursor-pointer">
-        <LogoIcon theme="dark"/>
+        <Link
+          to={
+            location.pathname.includes("dashboard")
+              ? "/dashboard"
+              : "https://stream2peer.on-fleek.app/"
+          }
+        >
+          <LogoIcon theme="dark" />
+        </Link>
       </div>
 
       {/* Desktop Menu */}
       <ul className="hidden relative md:flex gap-[20px] items-center list-none">
-        <li
-          onClick={() => setSubMenuOpen((prev) => !prev)}
-          className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white flex items-center gap-2"
-        >
-          <IoPersonCircleOutline size={24}/>
-          My Account
-        </li>
+        {/* Conditionally render "My Account" menu */}
+        {!location.pathname.includes("signIn") && (
+          <li
+            onClick={() => setSubMenuOpen((prev) => !prev)}
+            className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white flex items-center gap-2"
+          >
+            <IoPersonCircleOutline size={24} />
+            My Account
+          </li>
+        )}
         {subMenuOpen && (
-          <div onClick={handleLogout} className="absolute bg-dark-gray top-12 left-6 border border-primary-border">
+          <div
+            onClick={handleLogout}
+            className="absolute bg-dark-gray top-12 left-6 border border-primary-border"
+          >
             <button className="bg-primary hover:bg-primary/90 flex items-center text-primary-foreground py-2 px-4 gap-2">
               <CiLogout />
               <span>Logout</span>
@@ -66,9 +78,12 @@ function Navbar() {
           ></div>
         </div>
       </div>
+
       {/* Mobile Menu */}
       <div
-        className={`${menuOpen ? "flex" : "hidden"} fixed top-0 left-0 w-full h-screen z-[1000] bg-dark-gray`}
+        className={`${
+          menuOpen ? "flex" : "hidden"
+        } fixed top-0 left-0 w-full h-screen z-[1000] bg-dark-gray`}
       >
         <div className="flex justify-end p-[40px]">
           {/* Close icon (uses the same lines as the hamburger) */}
@@ -80,7 +95,9 @@ function Navbar() {
             {navItems.map((item) => (
               <li
                 key={item.value}
-                className={`${location.pathname === item.route ? "bg-white" : ""} p-[10px] rounded-[8px]`}
+                className={`${
+                  location.pathname === item.route ? "bg-white" : ""
+                } p-[10px] rounded-[8px]`}
               >
                 <button
                   onClick={() => handleNavigation(item.route)}

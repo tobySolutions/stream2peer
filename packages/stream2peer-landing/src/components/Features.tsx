@@ -20,7 +20,7 @@ const features: FeatureProps[] = [
   {
     title: "Community-centric",
     description:
-      "Stream2Peer is a community-centric platform that is meant for developers built by developers.",
+      "Stream2Peer is a community-centric platform that is built by streamers for streamers.",
     image: image4,
   },
   {
