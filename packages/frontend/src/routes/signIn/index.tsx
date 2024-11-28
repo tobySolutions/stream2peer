@@ -1,45 +1,47 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
-import Navbar from "../../lib/navbar";
-import Input from "../../lib/Input";
-import {
-  emailRegex,
-  getDataInCookie,
-  storeDataInCookie,
-} from "../../utils/utils";
-import Button from "../../lib/Button";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { useCallback, useEffect, useState } from "react";
+import { getDataInCookie, storeDataInCookie } from "../../utils/utils";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa6";
 import {
   generateAuthWithGithubUrl,
   generateAuthWithGoogleUrl,
   getUserDetails,
   sendUserAuthOtpMail,
 } from "../../network/auth/auth";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { LoadingIcon } from "@livepeer/react/assets";
+import { useForm } from "@tanstack/react-form";
+import AccountInOutHeader from "../../lib/components/AccountInOutHeader";
+import FormInput from "../../lib/components/FormInput";
+import { cn } from "../../utils/cn";
+import SubmitButton from "../../lib/components/SubmitButton";
+import viewSP from "../../assets/view-sp.png";
 
 export type FormValuesType = {
   email: string;
 };
 
-const defaultFormValues = {
-  email: "",
-};
-
 function SignIn() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-
-  const [formValues, setFormValues] = useState<FormValuesType>({
-    ...defaultFormValues,
-  });
-
   const [loading, setLoading] = useState(false);
-  const [callbackloading, setCallbackLoading] = useState(false);
   const [oauthMethod, setOauthMethod] = useState<string | null>(null);
-
   const userCode = params.get("code") ?? "";
   storeDataInCookie("userCode", userCode, 1);
+
+  // Initiate the form
+  const form = useForm({
+    onSubmit: async ({ value }) => {
+      storeDataInCookie("emailAddress", value.email, 1);
+      try {
+        await sendUserAuthOtpMail(value.email);
+        navigate(`/otp`);
+      } catch (error: any) {
+        toast.error("Error sending OTP email.");
+      }
+    },
+    defaultValues: { email: "" },
+  });
 
   useEffect(() => {
     const userCodeFromCookie = getDataInCookie("userCode");
@@ -77,32 +79,13 @@ function SignIn() {
     }
   }, [userCode]);
 
-  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const { email } = formValues;
-    storeDataInCookie("emailAddress", email, 1);
-    try {
-      await sendUserAuthOtpMail(email);
-      navigate(`/otp`);
-    } catch (error: any) {
-      toast.error("Error sending OTP email.");
-    }
-  };
-
-  const handleInputChange = (name: string, value: string) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
   const handleGoogleSignIn = useCallback(async () => {
     setLoading(true);
     setOauthMethod("google");
     try {
       const { data } = await generateAuthWithGoogleUrl();
       window.location.href = data?.authUrl;
+      console.log(data);
     } catch (error: any) {
       if (error?.response) {
         toast.error(error?.response?.data?.message);
@@ -127,75 +110,136 @@ function SignIn() {
     }
   }, [oauthMethod]);
 
+  const email = form.useStore((state) => state.values.email);
   return (
-    <div>
-      <Navbar />
+    <section className="h-full md:grid grid-cols-2">
+      {/*****************************
+       *      SIGN UP FORM           *
+       *****************************/}
+      <div className="sm:w-80 md:w-96 m-auto p-6">
+        <AccountInOutHeader
+          title="Sign In"
+          description="Sign In to Stream2Peer to continue to Stream2Peer."
+        />
 
-      <div className="justify-center items-center flex min-h-screen">
         <form
-          onSubmit={handleFormSubmit}
-          className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+          className="py-4"
         >
-          <div className="rounded-[8px] border border-[#313538] px-[2.5rem] py-[3rem] md:px-[4rem]">
-            <div className="my-[.6rem] lg:mt-[1.3rem]  text-white text-[15px]">
-              <Input
-                type="email"
-                name="email"
-                value={formValues.email}
-                isRequired
-                pattern={`${emailRegex}`}
-                onChange={(value) => handleInputChange("email", value)}
-                label="Email address"
-              />
-            </div>
-
-            <Button
-              className="w-full text-[1rem] my-[.8rem]"
-              text="Login"
-              isDisabled={loading} // Disable button during loading
+          <div>
+            <form.Field
+              name="email"
+              validators={{
+                onChange: ({ value }) =>
+                  !value
+                    ? "Email is required"
+                    : value.length < 3
+                      ? "Email must be at least 3 characters"
+                      : undefined,
+                onChangeAsync: async ({ value }) => {
+                  await new Promise((resolve) => setTimeout(resolve, 1000));
+                },
+              }}
+              children={(field) => {
+                return (
+                  <>
+                    <FormInput
+                      fieldInfo={{
+                        name: "email",
+                        placeholder: "Email Address",
+                      }}
+                      field={field}
+                      label="Enter Address"
+                    />
+                  </>
+                );
+              }}
             />
-
-            <div className="text-center text-white my-5">
-              <span>or</span>
-            </div>
-
-            <div className="flex flex-col space-y-4">
-              <button
-                type="button"
-                onClick={handleGoogleSignIn}
-                disabled={loading}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
-              >
-                {oauthMethod === "google" && loading ? (
-                  <div className="grid place-content-center mx-2">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
-                  </div>
-                ) : (
-                  <FaGoogle className="mr-2" />
-                )}
-                Sign in with Google
-              </button>
-              <button
-                type="button"
-                onClick={handleGitHubSignIn}
-                disabled={loading}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50"
-              >
-                {oauthMethod === "github" && loading ? (
-                  <div className="grid place-content-center mx-2">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
-                  </div>
-                ) : (
-                  <FaGithub className="mr-2" />
-                )}
-                Sign in with GitHub
-              </button>
-            </div>
           </div>
+          <SubmitButton formSubscribe={form} value="Continue" />
         </form>
+
+        <p className="text-sm text-muted-foreground">
+          Quickly create an account?{" "}
+          <Link
+            className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text font-bold "
+            to="/signup"
+          >
+            Sign Up
+          </Link>
+        </p>
+
+        <div className="my-8">
+          <span
+            className={cn(
+              "block bg-muted-foreground w-full h-[0.5px] relative",
+              "text-center"
+            )}
+          >
+            <span className="text-sm absolute -top-2.5 bg-black translate-[50px] text-muted-foreground">
+              OR
+            </span>
+          </span>
+        </div>
+
+        <AuthButton
+          value="Continue with Google"
+          icon={FcGoogle}
+          handle0Auth={handleGoogleSignIn}
+        />
+
+        <AuthButton
+          value="Continue with GitHub"
+          icon={FaGithub}
+          handle0Auth={handleGitHubSignIn}
+        />
       </div>
-    </div>
+
+      {/*****************************
+       *    RIGHTSIDER BANNER       *
+       *****************************/}
+      <div className="hidden md:block relative p-10 overflow-hidden">
+        <div className="space-y-2 mb-10 p-10 text-center">
+          <h1 className="text-4xl font-bold text-white">
+            Open-source streaming provider on Livepeer
+          </h1>
+          <p className="text-gray-500">
+            Stream2Peer was built with you in mind. Stream from all your
+            favorite platforms.
+          </p>
+        </div>
+
+        <img
+          src={viewSP}
+          alt="View Stream2Peer"
+          className="rounded-2xl ring-8 ring-primary/20 bg-gradient-to-b from-primary/60 to-primary absolute"
+        />
+      </div>
+    </section>
   );
 }
 
+function AuthButton({ value, icon: Icon, handle0Auth }) {
+  return (
+    <div>
+      <button
+        onClick={handle0Auth}
+        className={cn(
+          "text-sm text-muted-foreground",
+          "border w-full my-4 p-4",
+          "flex justify-center items-center rounded-md space-x-4",
+          "hover:border-gray-200"
+        )}
+        type="button"
+      >
+        <Icon />
+        <span>{value}</span>
+      </button>
+    </div>
+  );
+}
 export default SignIn;
