@@ -3,8 +3,6 @@ import { storeDataInCookie } from "../../utils/utils";
 import instance from "../axios";
 import { GoogleAuthUrlResponse, User } from "./types";
 
-
-
 // export const login = async (payload: AddProjectProps) => {
 //   const { data } = await instance.post(`/project/create`, payload);
 //   return data;
@@ -41,8 +39,6 @@ export const getUserDetails = async (code: string, provider: string) => {
     };
   }
 };
-
-
 
 export const sendUserAuthOtpMail = async (email: string) => {
   const { data } = await instance.get(`/auth/email/sign-in?email=${email}`);
