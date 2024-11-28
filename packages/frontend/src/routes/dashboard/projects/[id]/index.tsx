@@ -9,6 +9,7 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import LivestreamCard from "../../../../lib/components/LivestreamCard";
 import {
+  fetchPlatforms,
   FetchProjectById,
   getAccessToken,
   sendPeerInvite,
@@ -59,6 +60,7 @@ const ProjectPage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<
     ("Twitch" | "Youtube")[]
   >([]);
+  const [platforms, setPlatforms] = useState([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [loading, setLoading] = useState({
     project: false,
@@ -79,16 +81,20 @@ const ProjectPage = () => {
     },
   };
 
-  const UserResponseData = JSON.parse(getDataInCookie("userDataResponse"));
-
-  const platforms =
-    UserResponseData?.data?.platforms?.map(
-      (platform: "Twitch" | "Youtube") => ({
-        label: platformStyles[platform]?.label || platform,
-        value: platform,
-        icon: platformStyles[platform]?.icon || null,
-      })
-    ) || [];
+  const fetchPlatformsData = async () => {
+    try {
+      const response = await fetchPlatforms();
+      response?.data?.platforms
+        ? setPlatforms(response?.data?.platforms)
+        : setPlatforms([]);
+    } catch (err: any) {
+      if (err?.response?.data?.message) {
+        toast.error(err?.response?.data?.message);
+      } else {
+        toast.error(err?.message);
+      }
+    }
+  };
 
   // Fetch project details
   const fetchProjectDetails = async () => {
@@ -140,8 +146,6 @@ const ProjectPage = () => {
     }
   };
 
-  useEffect(() => {}, [livestreamData]);
-
   // Handle livestream creation
   const handleCreateLiveStream = async () => {
     setLoading((prev) => ({ ...prev, createStream: true }));
@@ -178,6 +182,7 @@ const ProjectPage = () => {
   useEffect(() => {
     fetchProjectDetails();
     fetchStreams();
+    fetchPlatformsData();
   }, []);
 
   // Helpers
