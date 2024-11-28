@@ -8,10 +8,10 @@ import {
   validateYouTube,
 } from "../../../network/streams/streams-api";
 import { useLocation, useParams } from "react-router-dom";
-import { getDataInCookie } from "../../../utils/utils";
 import { ImTwitch } from "react-icons/im";
 import { toast } from "react-toastify";
 import { fetchPlatforms } from "../../../network/projects/projects";
+import { EmptyCard } from "../../../lib/components/emptyCard";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
@@ -93,11 +93,11 @@ export const Destination = () => {
           </div>
         )}
         {viewDestinations && (
-          <div className="flex w-full justify-between items-center">
-            <h1>Connect seemlessly to other social platforms </h1>
+          <div className="flex gap-4 w-full justify-between items-center flex-wrap">
+            <h1 className="md:text-[16px] text-[16px]">Connect seemlessly to other social platforms </h1>
             <button
               onClick={() => setViewDestinations(false)}
-              className="bg-dark-gray text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[14px] transition"
+              className="bg-dark-gray text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[13px] md:text-[14px] transition"
             >
               Add destination
             </button>
@@ -111,11 +111,11 @@ export const Destination = () => {
                 <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
               </div>
             ) : destinationData?.length === 0 ? (
-              <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36 my-6">
-                <MdOutlineLinkOff size={40} />
-                <div className="">
-                  <p>No destination added yet.</p>
-                </div>
+              <div className="w-full flex justify-center">
+                <EmptyCard
+                  icon={<MdOutlineLinkOff size={40} />}
+                  text="No destination added yet."
+                />
               </div>
             ) : (
               <div className="mt-4">

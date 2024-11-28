@@ -25,7 +25,7 @@ function Layout({ children }: LayoutProps) {
       <Navbar />
       <div className="flex h-full items-start relative bg-black">
         <Sidebar />
-        <main className="p-6 w-full ml-0 md:ml-[20%] min-h-[calc(100vh-60px)] animate-slideUp">
+        <main className="md:px-[36px] px-[20px] py-[25px] w-full ml-0 md:ml-[20%] min-h-[calc(100vh-60px)] animate-slideUp">
           <div>{children}</div>
         </main>
       </div>

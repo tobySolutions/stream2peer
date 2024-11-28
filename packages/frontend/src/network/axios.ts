@@ -1,14 +1,7 @@
 import { getDataInCookie } from "../utils/utils";
 import axios, { AxiosInstance } from "axios";
 
-let tokens: { accessToken: string; refreshToken: string } | null = null;
 
-if (typeof window !== "undefined") {
-  tokens = {
-    accessToken: getDataInCookie("accessToken"),
-    refreshToken: getDataInCookie("refresh_token"),
-  };
-}
 
 export const publicInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -28,13 +21,9 @@ export const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    // if (tokens?.accessToken) {
     config.headers["Authorization"] = `Bearer ${
-      tokens?.accessToken
-        ? tokens?.accessToken
-        : import.meta.env.VITE_TEMP_AUTH_TOKEN
+      getDataInCookie("userToken") ? getDataInCookie("userToken") : ""
     }`;
-    // }
     return config;
   },
   (error) => {
