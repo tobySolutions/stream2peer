@@ -24,6 +24,7 @@ import PeerInviteForm from "./components/peerInviteForm";
 import { IoLogoYoutube } from "react-icons/io5";
 import { ImTwitch } from "react-icons/im";
 import { getDataInCookie, storeDataInCookie } from "../../../../utils/utils";
+import { EmptyCard } from "../../../../lib/components/emptyCard";
 
 const ProjectPage = () => {
   const { id: projectId } = useParams();
@@ -95,11 +96,10 @@ const ProjectPage = () => {
     try {
       const response = await FetchProjectById(projectId!);
       setProjectData(response?.results);
-      
     } catch (err: any) {
-      if(err?.response?.data?.message){
+      if (err?.response?.data?.message) {
         toast.error(err?.response?.data?.message);
-      }else {
+      } else {
         toast.error(err?.message);
       }
     } finally {
@@ -107,21 +107,17 @@ const ProjectPage = () => {
     }
   };
 
-
-
-
   // Fetch all streams
   const fetchStreams = async () => {
     try {
       const response = await fetchAllStreams(projectId!);
       setLivestreamData(response?.results || []);
     } catch (err: any) {
-       if (err?.response?.data?.message) {
-         toast.error(err?.response?.data?.message);
-       } else {
-         toast.error(err?.message);
-       }
-     
+      if (err?.response?.data?.message) {
+        toast.error(err?.response?.data?.message);
+      } else {
+        toast.error(err?.message);
+      }
     }
   };
 
@@ -134,19 +130,17 @@ const ProjectPage = () => {
       setInviteModalOpen(false);
       setUserData([]);
     } catch (err: any) {
-       if (err?.response?.data?.message) {
-         toast.error(err?.response?.data?.message);
-       } else {
-         toast.error(err?.message);
-       }
+      if (err?.response?.data?.message) {
+        toast.error(err?.response?.data?.message);
+      } else {
+        toast.error(err?.message);
+      }
     } finally {
       setLoading((prev) => ({ ...prev, invite: false }));
     }
   };
 
-  useEffect(() => {
-    
-  }, [livestreamData]);
+  useEffect(() => {}, [livestreamData]);
 
   // Handle livestream creation
   const handleCreateLiveStream = async () => {
@@ -205,8 +199,8 @@ const ProjectPage = () => {
     setUserData((prev) => prev.filter((user) => user.userId !== email));
   };
 
-  const handleChange = (value: "Twitch" | "Youtube") => {
-    setSelectedPlatform([...selectedPlatform, value]); // Update state or perform other actions
+  const handleChange = (value: ("Twitch" | "Youtube")[]) => {
+    setSelectedPlatform(value); // Update state or perform other actions
   };
 
   // Render
@@ -214,7 +208,7 @@ const ProjectPage = () => {
     <Layout>
       <div
         onClick={() => navigate(-1)}
-        className="flex gap-2 px-4 py-2 cursor-pointer items-center text-white"
+        className="flex gap-2 px-0 md:px-4 py-2 cursor-pointer items-center text-white"
       >
         <IoIosArrowBack />
         Back
@@ -225,7 +219,7 @@ const ProjectPage = () => {
           <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-white"></div>
         </div>
       ) : (
-        <div className="container p-4">
+        <div className="container p-0 md:p-4">
           <h1 className="text-2xl text-white font-bold mb-1">
             {projectData?.title}
           </h1>
@@ -315,15 +309,15 @@ const renderStreams = (tab: string, livestreamData: any[]) => {
 
   if (filteredStreams?.length === 0) {
     return (
-      <div className="text-primary-white grid place-content-center w-full h-[calc(100vh-400px)]">
-        <div className="border border-primary-border rounded-lg py-16 flex items-center flex-col px-36 border-dashed">
-          <CiCalendar size={40} />
-          <p>
-            {tab === "upcoming"
+      <div className="w-full flex justify-center">
+        <EmptyCard
+          icon={<CiCalendar size={40} />}
+          text={
+            tab === "upcoming"
               ? "Scheduled streams will appear here."
-              : "Completed streams will appear here."}
-          </p>
-        </div>
+              : "Completed streams will appear here."
+          }
+        />
       </div>
     );
   }

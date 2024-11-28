@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAppStore } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
-
+import { EmptyCard } from "../../../lib/components/emptyCard";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,6 +53,7 @@ function Projects() {
           ...InputError,
           title: "Title must me greater than 4 characters and less than 10",
         });
+        setLoading(false);
         return;
       }
       if (projectDetails.desc.length > 1000) {
@@ -230,12 +231,12 @@ function Projects() {
         }
         title="Add new Project"
       />
-      <div className="container p-4">
+      <div className="container p-0 md:p-4">
         <div className="flex w-full items-center justify-between flex-wrap gap-2">
           <p className="text-primary-white text-[32px]">Projects</p>
           <button
             onClick={() => setModalOpen(true)}
-            className="bg-dark-gray flex items-center gap-1 text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[14px] transition"
+            className="bg-dark-gray flex items-center gap-1 text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[13px] md:text-[14px] transition"
           >
             <IoAddSharp size={18} /> Add New Project
           </button>
@@ -245,12 +246,11 @@ function Projects() {
             <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
           </div>
         ) : ProjectsData?.length === 0 ? (
-          <div className="text-primary-white grid place-content-center w-full h-[calc(100vh-200px)] gap-4">
-            <div className="border border-primary-border w-ful flex justify-center flex-col items-center gap-4 rounded-lg py-16 border-dashed px-36">
-              <div className=""></div>
-              <ImFilesEmpty size={40} />
-              <p>No projects added yet.</p>
-            </div>
+          <div className="w-full flex justify-center">
+            <EmptyCard
+              icon={<ImFilesEmpty size={40} />}
+              text="No projects added yet."
+            />
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-6 mt-4">

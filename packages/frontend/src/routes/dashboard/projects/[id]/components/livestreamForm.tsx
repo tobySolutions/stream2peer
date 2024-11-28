@@ -105,12 +105,17 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
       )}
       {platforms?.length === 0 ? (
         <div className="flex items-center gap-2">
-          <AiOutlineWarning className="text-yellow-dark-7"/>
-          <span className="text-[12px]"> Connect your account to stream to other platforms</span>
+          <AiOutlineWarning className="text-yellow-dark-7" />
+          <span className="text-[12px]">
+            {" "}
+            Connect your account to stream to other platforms
+          </span>
         </div>
       ) : (
         <Select
           placeholder="Select a platform"
+          mode="multiple"
+          allowClear
           style={{ width: 200 }}
           onChange={handleChange} // Handle change event
         >
