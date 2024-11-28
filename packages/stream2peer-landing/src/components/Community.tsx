@@ -35,7 +35,7 @@ export const Community = () => {
         <div className="flex w-full justify-center">
           <a
             rel="noreferrer noopener"
-            href="https://github.com/tobySolutions/stream2peer"
+            href="https://discord.gg/kcqsbukZ"
             target="_blank"
             className={`w-full md:w-1/3 ${buttonVariants({
               variant: "outline",
