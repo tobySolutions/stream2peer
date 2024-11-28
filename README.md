@@ -138,3 +138,8 @@ Distributed under the GPL 3.0 License. See [LICENSE](https://github.com/tobySolu
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
 - [shadcn-landing-page](https://github.com/leoMirandaa/shadcn-landing-page)
+
+
+## Team Photo!!
+
+![Emmanuel, Jumo and Tobiloba](https://pbs.twimg.com/media/GdeAtGTXYAENKsy?format=jpg&name=4096x4096)
