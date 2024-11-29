@@ -12,11 +12,12 @@ import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
 import Otp from "./otp";
 import NotFound from "./NotFound";
+import Home from "./Home";
 
 export default function Routes() {
   return (
     <BaseRoutes>
-      <Route path="/" element={<Navigate to="/signIn/" replace />} />
+      <Route path="/" element={<Home />} />
 
       <Route path="/signIn/" element={<SignIn />} />
       <Route path="/otp/" element={<Otp />} />
