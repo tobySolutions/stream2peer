@@ -15,6 +15,7 @@ import { useAppStore } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
 import { EmptyCard } from "../../../lib/components/emptyCard";
+import { getDataInCookie } from "../../../utils/utils";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +23,11 @@ function Projects() {
   const [emails, setEmails] = useState<string[]>([]);
   const [inputEmail, setInputEmail] = useState("");
   const [projectingLoading, setProjectLoading] = useState(false);
-  const [InputError, setInputError] = useState({ title: "", desc: "" });
+  const [InputError, setInputError] = useState({
+    title: "",
+    desc: "",
+    email: "",
+  });
   const setProjectData = useAppStore((state) => state.setProjectData);
   const ProjectsData = useAppStore((state) => state.projectsData);
   const setLoading = useAppStore((state) => state.setLoading);
@@ -51,7 +56,7 @@ function Projects() {
       if (projectDetails.title.length < 5 || projectDetails.title.length > 30) {
         setInputError({
           ...InputError,
-          title: "Title must me greater than 4 characters and less than 10",
+          title: "Title must me greater than 4 characters and less than 30",
         });
         setLoading(false);
         return;
@@ -108,9 +113,16 @@ function Projects() {
     setEmails(emails.filter((email) => email !== emailToDelete));
   };
 
+  const userData = getDataInCookie("userDataResponse")
+    ? JSON.parse(getDataInCookie("userDataResponse"))
+    : "";
+
   const validateEmail = (email: string) => {
     // Simple email validation using regex
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return (
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
+      userData?.data?.userId !== email
+    );
   };
 
   const closeModal = () => {
@@ -137,7 +149,7 @@ function Projects() {
                     ...projectDetails,
                     title: e.target.value,
                   });
-                  setInputError({ desc: "", title: "" });
+                  setInputError({ desc: "", title: "", email: "" });
                 }}
                 value={projectDetails.title}
               />
@@ -157,7 +169,7 @@ function Projects() {
                     ...projectDetails,
                     desc: e.target.value,
                   });
-                  setInputError({ desc: "", title: "" });
+                  setInputError({ desc: "", title: "", email: "" });
                 }}
                 value={projectDetails.desc}
               />
@@ -172,16 +184,36 @@ function Projects() {
               >
                 Invite users via email
               </label>
-              <div className="flex">
+              <div className="flex flex-wrap gap-4">
                 <input
                   type="text"
                   id="email-input"
                   value={inputEmail}
-                  onChange={(e) => setInputEmail(e.target.value)}
-                  className="flex-grow border border-gray-600 rounded-md py-2 pl-3 pr-[150px] mr-2 focus:outline-none focus:border-gray-800"
+                  onChange={(e) => {
+                    setInputEmail(e.target.value);
+                    setInputError({ email: "", title: "", desc: "" });
+                    if (e.target.value === userData?.data?.userId) {
+                      setInputError({
+                        ...InputError,
+                        email: "Try a different eamil address.",
+                      });
+                    }
+                  }}
+                  className="flex-grow border border-gray-600 rounded-md py-2 pl-3 pr-3 md:pr-[150px] mr-2 focus:outline-none focus:border-gray-800 "
                   placeholder="Enter email"
                   disabled={emails.length >= 3}
                 />
+
+                <div className="md:absolute right-[84px]  top-19 h-[41px] w-36">
+                  <Select
+                    options={[
+                      { label: "Co-host", value: "co-host" },
+                      { label: "subscriber", value: "subscriber" },
+                    ]}
+                    placeholder="Select user role"
+                    className="h-full border-gray-600 rounded-md hover:border-gray-800 focus:outline-none focus:border-gray-800 w-full"
+                  />
+                </div>
                 <button
                   type="submit"
                   className="bg-primary hover:bg-primary/90 text-primary-white py-2 px-4 rounded-md disabled:bg-gray-400"
@@ -193,17 +225,10 @@ function Projects() {
                 >
                   Add
                 </button>
-                <div className="absolute right-[68px] top-19 h-[41px] w-36">
-                  <Select
-                    options={[
-                      { label: "Co-host", value: "co-host" },
-                      { label: "subscriber", value: "subscriber" },
-                    ]}
-                    placeholder="Select user role"
-                    className="h-full border-gray-600 rounded-md hover:border-gray-800 focus:outline-none focus:border-gray-800 w-full"
-                  />
-                </div>
               </div>
+              <span className="text-destructive text-[13px]">
+                {InputError.email}
+              </span>
               {emails.length >= 3 && (
                 <p className="text-red-500 text-sm mt-1">
                   You can only add up to 3 emails.

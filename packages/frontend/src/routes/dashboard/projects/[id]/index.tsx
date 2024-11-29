@@ -81,6 +81,13 @@ const ProjectPage = () => {
     },
   };
 
+  const platformsData =
+    platforms?.map((platform: "Twitch" | "Youtube") => ({
+      label: platformStyles[platform]?.label || platform,
+      value: platform,
+      icon: platformStyles[platform]?.icon || null,
+    })) || [];
+
   const fetchPlatformsData = async () => {
     try {
       const response = await fetchPlatforms();
@@ -232,8 +239,8 @@ const ProjectPage = () => {
             {projectData?.description}
           </p>
 
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex">
+          <div className="flex flex-wrap gap-4 justify-between items-center mb-6 ">
+            <div className="flex whitespace-nowrap overflow-x-scroll">
               {["upcoming", "past"].map((tab) => (
                 <button
                   key={tab}
@@ -276,7 +283,7 @@ const ProjectPage = () => {
       >
         <LivestreamForm
           streamDetails={streamDetails}
-          platforms={platforms}
+          platforms={platformsData}
           handleChange={handleChange}
           setStreamDetails={setStreamDetails}
           selectedDate={selectedDate}
