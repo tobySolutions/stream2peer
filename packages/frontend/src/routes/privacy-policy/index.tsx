@@ -1,6 +1,3 @@
-import { Navbar } from "../../lib/components/Navbar";
-import { Footer } from "../../lib/components/Footer";
-import { ScrollToTop } from "../../lib/components/ScrollToTop";
 import Layout from "../Layout";
 const PrivacyPolicy = () => {
   return (

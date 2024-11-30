@@ -14,6 +14,7 @@ import Otp from "./otp";
 import NotFound from "./NotFound";
 import Home from "./home";
 import PrivacyPolicy from "./privacy-policy";
+import TermsOfService from "./terms-of-service";
 
 export default function Routes() {
   return (
@@ -23,6 +24,7 @@ export default function Routes() {
       <Route path="/signIn/" element={<SignIn />} />
       <Route path="/otp/" element={<Otp />} />
       <Route path="/privacy-policy/" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service/" element={<TermsOfService />} />
 
       {/* Protected Routes */}
       <Route
