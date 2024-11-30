@@ -21,12 +21,12 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: "#features",
-    label: "Features",
+    href: "https://discord.gg/kcqsbukZ",
+    label: "Discord",
   },
   {
-    href: "#faq",
-    label: "FAQ",
+    href: "/privacy-policy",
+    label: "Privacy Policy",
   },
 ];
 
