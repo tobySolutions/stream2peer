@@ -3,11 +3,11 @@ import { InternalServerError } from 'Api/Modules/Common/Exceptions/InternalServe
 import { ENV_NOT_FOUND_ERROR } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import path from 'path';
 
-const envFound = dotenv.config({
-  path: path.join(__dirname, '..', '..', '.env'),
-});
+// const envFound = dotenv.config({
+//   path: path.join(__dirname, '..', '..', '.env'),
+// });
 
-if (envFound.error) throw new InternalServerError(ENV_NOT_FOUND_ERROR);
+// if (envFound.error) throw new InternalServerError(ENV_NOT_FOUND_ERROR);
 
 export * from './authConfig';
 export * from './businessConfig';
