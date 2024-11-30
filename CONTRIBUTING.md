@@ -132,7 +132,6 @@ The source code is divided into two main folders:
 
 - `frontend` - This folder contains the frontend code
 - `backend` - This folder contains the backend code
-- `landing` - This folder contains the landing page's code
 
 You need to install the dependencies to be able to run the development server:
 
