@@ -73,6 +73,15 @@ export const Footer = () => {
               FAQ
             </a>
           </div>
+          <div>
+            <a
+              rel="noreferrer noopener"
+              href="/privacy-policy"
+              className="opacity-60 hover:opacity-100"
+            >
+              Privacy policy
+            </a>
+          </div>
         </div>
 
         <div
@@ -112,7 +121,7 @@ export const Footer = () => {
         className="container pb-14 text-center"
       >
         <h3>
-          &copy; 2024 Landing page made by{" "}
+          &copy; 2024 by{" "}
           <a
             rel="noreferrer noopener"
             target="_blank"

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-import { navItems } from "../utils/navContent";
+import { navItems } from "../../utils/navContent";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { LogoIcon } from "../assets/svg-exports";
-import { deleteDataInCookie, getDataInCookie } from "../utils/utils";
+import { LogoIcon } from "../../assets/svg-exports";
+import { deleteDataInCookie, getDataInCookie } from "../../utils/utils";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -88,7 +88,10 @@ function Navbar() {
       >
         <div className="flex justify-end p-[40px]">
           {/* Close icon (uses the same lines as the hamburger) */}
-          <button onClick={() => setMenuOpen(false)} className="icon-close"></button>
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="icon-close"
+          ></button>
         </div>
 
         <div className="overflow-hidden">

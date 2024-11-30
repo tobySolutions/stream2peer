@@ -12,7 +12,8 @@ import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
 import Otp from "./otp";
 import NotFound from "./NotFound";
-import Home from "./Home";
+import Home from "./home";
+import PrivacyPolicy from "./privacy-policy";
 
 export default function Routes() {
   return (
@@ -21,6 +22,7 @@ export default function Routes() {
 
       <Route path="/signIn/" element={<SignIn />} />
       <Route path="/otp/" element={<Otp />} />
+      <Route path="/privacy-policy/" element={<PrivacyPolicy />} />
 
       {/* Protected Routes */}
       <Route
