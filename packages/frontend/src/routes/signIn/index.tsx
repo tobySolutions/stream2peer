@@ -1,12 +1,12 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import Navbar from "../../lib/navbar";
+
 import Input from "../../lib/Input";
 import {
   emailRegex,
   getDataInCookie,
   storeDataInCookie,
 } from "../../utils/utils";
-import Button from "../../lib/Button";
+import { Button } from "../../lib/components/ui/button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import {
   generateAuthWithGithubUrl,
@@ -17,6 +17,7 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoadingIcon } from "@livepeer/react/assets";
+import { Navbar } from "../../lib/components/Navbar";
 
 export type FormValuesType = {
   email: string;
@@ -35,7 +36,6 @@ function SignIn() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [callbackloading, setCallbackLoading] = useState(false);
   const [oauthMethod, setOauthMethod] = useState<string | null>(null);
 
   const userCode = params.get("code") ?? "";
@@ -137,7 +137,7 @@ function SignIn() {
           className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
         >
           <div className="rounded-[8px] border border-[#313538] px-[2.5rem] py-[3rem] md:px-[4rem]">
-            <div className="my-[.6rem] lg:mt-[1.3rem]  text-white text-[15px]">
+            <div className="my-[.6rem] lg:mt-[1.3rem] text-muted-foreground text-[15px]">
               <Input
                 type="email"
                 name="email"
@@ -149,18 +149,22 @@ function SignIn() {
               />
             </div>
 
-            <Button
-              className="w-full text-[1rem] my-[.8rem]"
-              text="Login"
-              isDisabled={loading} // Disable button during loading
-            />
+            <Button className="w-full text-lg" size="lg">
+              {loading ? (
+                <div className="grid place-content-center">
+                  <LoadingIcon />
+                </div>
+              ) : (
+                "Login"
+              )}
+            </Button>
 
             <div className="text-center text-white my-5">
               <span>or</span>
             </div>
 
             <div className="flex flex-col space-y-4">
-              <button
+              <Button
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
@@ -174,7 +178,7 @@ function SignIn() {
                   <FaGoogle className="mr-2" />
                 )}
                 Sign in with Google
-              </button>
+              </Button>
               <button
                 type="button"
                 onClick={handleGitHubSignIn}

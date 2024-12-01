@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../lib/navbar";
+import Navbar from "./navbar";
 import Sidebar from "../../lib/sidebar";
 import { ToastContainer } from "react-toastify";
 

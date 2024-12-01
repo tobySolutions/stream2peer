@@ -77,11 +77,6 @@ Before you begin, ensure you have met the following requirements:
    pnpmm dev:frontend
   ```
 
-- For Landing page:
-  ```bash
-  pnpm dev:landing
-  ```
-
 ### Project Structure
 
 ```bash
