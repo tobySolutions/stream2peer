@@ -7,7 +7,7 @@ import {
   validateTwitch,
   validateYouTube,
 } from "../../../network/streams/streams-api";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import { ImTwitch } from "react-icons/im";
 import { toast } from "react-toastify";
 import { fetchPlatforms } from "../../../network/projects/projects";

@@ -77,10 +77,10 @@ function Projects() {
 
         toast.success("Project added successfully");
       } else {
-        const res = await AddProject({
-          title: projectDetails.title,
-          description: projectDetails.desc,
-        });
+        // const res = await AddProject({
+        //   title: projectDetails.title,
+        //   description: projectDetails.desc,
+        // });
 
         toast.success("Project added successfully");
       }

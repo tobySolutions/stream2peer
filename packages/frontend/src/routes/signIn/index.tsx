@@ -40,8 +40,36 @@ function SignIn() {
 
   const userCode = params.get("code") ?? "";
   storeDataInCookie("userCode", userCode, 1);
-
+  
   useEffect(() => {
+    const getUserData = async (
+      userCodeFromCookie: string,
+      isGoogleInUrl: string
+    ) => {
+      try {
+        const userDataResponse = await getUserDetails(
+          userCodeFromCookie,
+          isGoogleInUrl
+        );
+
+        if (userDataResponse?.statusCode === 200) {
+          const token = userDataResponse.data.token.split(" ")[1];
+          storeDataInCookie(
+            "userDataResponse",
+            JSON.stringify(userDataResponse.data),
+            1
+          );
+          storeDataInCookie("userToken", token, 2);
+          navigate("/dashboard");
+        }
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || error?.message);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     const userCodeFromCookie = getDataInCookie("userCode");
     const isGoogleInUrl = window.location.href.includes("google")
       ? "google"
@@ -49,31 +77,7 @@ function SignIn() {
 
     if (userCodeFromCookie) {
       setLoading(true);
-      async function getUserData() {
-        try {
-          const userDataResponse = await getUserDetails(
-            userCodeFromCookie,
-            isGoogleInUrl
-          );
-
-          if (userDataResponse?.statusCode === 200) {
-            const token = userDataResponse.data.token.split(" ")[1];
-            storeDataInCookie(
-              "userDataResponse",
-              JSON.stringify(userDataResponse.data),
-              1
-            );
-            storeDataInCookie("userToken", token, 2);
-            navigate("/dashboard");
-          }
-        } catch (error: any) {
-          toast.error(error?.response?.data?.message || error?.message);
-          setLoading(false);
-        } finally {
-          setLoading(false);
-        }
-      }
-      getUserData();
+      getUserData(userCodeFromCookie, isGoogleInUrl);
     }
   }, [userCode]);
 

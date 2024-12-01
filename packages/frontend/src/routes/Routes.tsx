@@ -1,6 +1,6 @@
 import { Route, Routes as BaseRoutes, Navigate } from "react-router-dom";
 import SignIn from "./signIn";
-import DashboardHome from "./dashboard/home";
+import DashboardHome from "./dashboard/home/index";
 import Projects from "./dashboard/projects";
 import ProjectPage from "./dashboard/projects/[id]";
 import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
@@ -12,7 +12,7 @@ import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
 import Otp from "./otp";
 import NotFound from "./NotFound";
-import Home from "./home";
+import Home from "./Home/index";
 import PrivacyPolicy from "./privacy-policy";
 import TermsOfService from "./terms-of-service";
 
