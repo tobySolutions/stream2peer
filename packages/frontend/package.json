@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.1.0",
   "description": "Landing page for Stream2peer and frontend application",
-  "license": "MIT",
+  "license": "GPL 3.0",
   "keywords": [
     "react",
     "typescript",
@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
