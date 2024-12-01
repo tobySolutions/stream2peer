@@ -11,7 +11,6 @@ import LivestreamCard from "../../../../lib/components/LivestreamCard";
 import {
   fetchPlatforms,
   FetchProjectById,
-  getAccessToken,
   sendPeerInvite,
 } from "../../../../network/projects/projects";
 import { useAppStore } from "../../../../state";
@@ -24,7 +23,7 @@ import LivestreamForm from "./components/livestreamForm";
 import PeerInviteForm from "./components/peerInviteForm";
 import { IoLogoYoutube } from "react-icons/io5";
 import { ImTwitch } from "react-icons/im";
-import { getDataInCookie, storeDataInCookie } from "../../../../utils/utils";
+import { storeDataInCookie } from "../../../../utils/utils";
 import { EmptyCard } from "../../../../lib/components/emptyCard";
 
 const ProjectPage = () => {

@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import { useTheme } from "../../state/theme";
 
 export function ModeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
