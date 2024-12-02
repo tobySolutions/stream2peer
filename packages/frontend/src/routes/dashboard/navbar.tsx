@@ -5,6 +5,7 @@ import { navItems } from "../../utils/navContent";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { LogoIcon } from "../../assets/svg-exports";
 import { deleteDataInCookie, getDataInCookie } from "../../utils/utils";
+import { ModeToggle } from "../../lib/components/mode-toggle";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -48,7 +49,7 @@ function Navbar() {
       </div>
 
       {/* Desktop Menu */}
-      <ul className="hidden relative md:flex gap-[20px] items-center list-none">
+      <ul className="hidden relative md:flex gap-[5px] items-center list-none">
         {/* Conditionally render "My Account" menu */}
         {!location.pathname.includes("signIn") && (
           <li
@@ -59,6 +60,7 @@ function Navbar() {
             My Account
           </li>
         )}
+        {/* <ModeToggle /> */}
         {subMenuOpen && (
           <div className="absolute bg-dark-gray top-12 right-2 border border-primary-border rounded-sm">
             <p className="py-2 px-3 text-primary-white/60">

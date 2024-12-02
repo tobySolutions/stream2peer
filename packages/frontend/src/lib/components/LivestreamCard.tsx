@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const LivestreamCard = ({ livestream }: any) => {
   let navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
-  const url = `http://localhost:5173/stream/${livestream?.playbackId}`;
+  const url = `https://stream2peer.on-fleek.app/stream/${livestream?.playbackId}`;
 
   const handleCopy = async () => {
     try {
