@@ -96,7 +96,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="relative">
       <label
-        className="my-[.6rem] inline-block text-[1rem] xl:my-[1rem] text-white"
+        className="my-[.6rem] inline-block text-[1rem] xl:my-[1rem] text-muted-foreground"
         htmlFor={`input-${name}`}
       >
         {label}
@@ -105,7 +105,7 @@ const Input: React.FC<InputProps> = ({
       <div className="relative">
         <input
           className={clsx(
-            "focus:border-ui-medium-blue w-full rounded-[6px] border border-ui-mid-white bg-black px-[1.1rem] py-[.4rem] text-[1rem] outline-none focus:border md:text-[1.2rem]",
+            "focus:border-ui-medium-blue w-full bg-background rounded-[6px] border border-ui-mid-white px-[1.1rem] py-[.4rem] text-[1rem] outline-none focus:border md:text-[1.2rem]",
             {
               "cursor-not-allowed": readOnly || disabled,
             },

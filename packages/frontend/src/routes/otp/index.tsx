@@ -1,10 +1,11 @@
 import { FormEvent, useState } from "react";
 import { OtpInput } from "../../lib/OtpInput";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Navbar from "../../lib/navbar";
-import Button from "../../lib/Button";
+import { Navbar } from "../../lib/components/Navbar";
+import { Button } from "../../lib/components/ui/button";
 import { getDataInCookie, storeDataInCookie } from "../../utils/utils";
 import { verifyUserOtp } from "../../network/auth/auth";
+import { toast } from "react-toastify";
 
 function Otp() {
   const [otp, setOtp] = useState("");
@@ -20,7 +21,6 @@ function Otp() {
       email,
       token: otp,
     };
-    console.log(payload);
 
     try {
       const userDataResponse = await verifyUserOtp(
@@ -37,12 +37,15 @@ function Otp() {
         storeDataInCookie("userToken", token, 2);
         navigate("/dashboard");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(error?.message);
+      }
     }
   };
-
-
 
   return (
     <div>
@@ -52,12 +55,9 @@ function Otp() {
           <form onSubmit={submitForm}>
             <OtpInput otp={otp} setOtp={setOtp} />
 
-            <div className="py-3">
-              <Button
-                className="w-full text-[1rem] my-[.8rem]"
-                text="Verify Otp"
-              />
-            </div>
+            <Button className="w-full text-lg my-4" size="lg">
+              Verify Otp
+            </Button>
           </form>
         </article>
       </div>

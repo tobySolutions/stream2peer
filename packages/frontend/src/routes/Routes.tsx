@@ -1,8 +1,7 @@
-import { Route, Routes as BaseRoutes } from "react-router-dom";
-import Login from "./login";
-import DashboardHome from "./dashboard/home";
+import { Route, Routes as BaseRoutes, Navigate } from "react-router-dom";
+import SignIn from "./signIn";
+import DashboardHome from "./dashboard/home/index";
 import Projects from "./dashboard/projects";
-import SignUp from "./signup";
 import ProjectPage from "./dashboard/projects/[id]";
 import LivestreamPage from "./dashboard/projects/[id]/livestream/[livestremId]";
 import { DemoPlayer } from "./dashboard/livestream";
@@ -12,13 +11,20 @@ import { Stream } from "./stream/stream";
 import PrivateRoute from "../lib/PrivateRoute";
 import { BroadcastWithControls } from "./stream/broadcast";
 import Otp from "./otp";
+import NotFound from "./NotFound";
+import Home from "./Home/index";
+import PrivacyPolicy from "./privacy-policy";
+import TermsOfService from "./terms-of-service";
 
 export default function Routes() {
   return (
     <BaseRoutes>
-      <Route path="/login/" element={<Login />} />
-      <Route path="/signup/" element={<SignUp />} />
+      <Route path="/" element={<Home />} />
+
+      <Route path="/signIn/" element={<SignIn />} />
       <Route path="/otp/" element={<Otp />} />
+      <Route path="/privacy-policy/" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service/" element={<TermsOfService />} />
 
       {/* Protected Routes */}
       <Route
@@ -109,6 +115,8 @@ export default function Routes() {
           </PrivateRoute>
         }
       />
+
+      <Route path="*" element={<NotFound />} />
     </BaseRoutes>
   );
 }

@@ -133,7 +133,7 @@ The source code is divided into two main folders:
 - `frontend` - This folder contains the frontend code
 - `backend` - This folder contains the backend code
 
-To run the website locally, you need to install the dependencies and run the development server:
+You need to install the dependencies to be able to run the development server:
 
 ```bash
 npm i -g pnpm # Install pnpm

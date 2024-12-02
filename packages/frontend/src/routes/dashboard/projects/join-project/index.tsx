@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FetchProjectById } from "../../../../network/projects/projects";
+import { toast } from "react-toastify";
 
 export const JoinProject = () => {
   const { id: projectId } = useParams();
@@ -17,10 +18,14 @@ export const JoinProject = () => {
     setProjectLoading(true);
     try {
       const res = await FetchProjectById(projectId!);
-      console.log(res);
+
       setProjectData(res.results);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+       if (err?.response?.data?.message) {
+         toast.error(err?.response?.data?.message);
+       } else {
+         toast.error(err?.message);
+       }
     }
     setProjectLoading(false);
   };
@@ -36,7 +41,7 @@ export const JoinProject = () => {
         Do you accept to join {ProjectData?.title}?
         <div className="flex gap-6 items-center">
           <button
-            className="py-2 px-4 rounded-md bg-[#FF4C4C] text-primary-white"
+            className="py-2 px-4 rounded-md bg-destructive text-primary-white"
             onClick={() => handleJoinProject()}
           >
             {joiningProject ? (

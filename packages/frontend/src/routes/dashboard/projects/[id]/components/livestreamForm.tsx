@@ -1,6 +1,7 @@
 import { Select } from "antd";
 import React from "react";
 import DateTimePicker from "react-datetime-picker";
+import { AiOutlineWarning } from "react-icons/ai";
 
 interface LivestreamFormProps {
   streamDetails: {
@@ -35,7 +36,6 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
 }) => {
   const { Option } = Select;
 
-  console.log(platforms)
 
   return (
     <div>
@@ -103,24 +103,32 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
           <DateTimePicker value={selectedDate} onChange={setSelectedDate} />
         </div>
       )}
-      <Select
-        placeholder="Select a platform"
-        style={{ width: 200 }}
-        onChange={handleChange} // Handle change event
-      >
-        {platforms?.length === 0 ? (
-          <div>Connect your account to stream to other platforms</div>
-        ) : (
-          platforms?.map((platform) => (
+      {platforms?.length === 0 ? (
+        <div className="flex items-center gap-2">
+          <AiOutlineWarning className="text-yellow-dark-7" />
+          <span className="text-[12px]">
+            {" "}
+            Connect your account to stream to other platforms
+          </span>
+        </div>
+      ) : (
+        <Select
+          placeholder="Select a platform"
+          mode="multiple"
+          allowClear
+          style={{ width: 200 }}
+          onChange={handleChange} // Handle change event
+        >
+          {platforms?.map((platform) => (
             <Option key={platform.value} value={platform.value}>
               <div className="flex items-center gap-1">
                 {platform.icon}
                 <span style={{ marginLeft: 8 }}>{platform.label}</span>
               </div>
             </Option>
-          ))
-        )}
-      </Select>
+          ))}
+        </Select>
+      )}
     </div>
   );
 };

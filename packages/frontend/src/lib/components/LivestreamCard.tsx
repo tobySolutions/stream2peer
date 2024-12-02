@@ -1,33 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegCopy } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-const LivestreamCard = ({ livestream, type }: any) => {
+const LivestreamCard = ({ livestream }: any) => {
+  let navigate = useNavigate();
+  const [isCopied, setIsCopied] = useState(false);
+  const url = `http://localhost:5173/stream/${livestream?.playbackId}`;
 
-    let navigate = useNavigate();
-     const [isCopied, setIsCopied] = useState(false);
-     const url = `http://localhost:5173/stream/${livestream?.playbackId}`;
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setIsCopied(true);
 
-     const handleCopy = async () => {
-       try {
-         await navigator.clipboard.writeText(url);
-         setIsCopied(true);
-
-         // Reset the copied state after 2 seconds
-         setTimeout(() => setIsCopied(false), 2000);
-       } catch (err) {
-         console.error("Failed to copy text: ", err);
-       }
-     };
+      // Reset the copied state after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      toast.error("An error occured, try again")
+    }
+  };
   const viewDetails = () => {
     // Calls the onView function passed from parent with the livestream id
-    navigate(`/broadcast/${livestream?.streamKey}`)
+    navigate(`/broadcast/${livestream?.streamKey}`);
   };
 
-  console.log(livestream)
-
   return (
-    <div className="bg-dark-gray border border-primary-border w-[100%] mb-4 py-2 px-5 rounded-lg shadow-md flex justify-between items-center">
+    <div className="bg-dark-gray border border-primary-border w-[100%] mb-4 py-2 px-5 rounded-lg shadow-md flex justify-between items-center flex-wrap gap-4">
       <div>
         <h3 className="text-lg font-semibold text-primary-white flex items-center gap-2">
           {livestream?.title}
@@ -52,15 +50,11 @@ const LivestreamCard = ({ livestream, type }: any) => {
       </div>
       <button
         onClick={viewDetails}
-        className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-white hover:text-black bg-transparent border border-primary-border rounded-md"
+        className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-primary-white hover:text-black bg-transparent border border-primary-border rounded-md"
       >
         <span className="relative z-[10]">Start stream</span>
-        <div className="absolute inset-0 w-full h-full bg-[#FFFFFF] transition-transform duration-500 transform translate-y-full group-hover:translate-y-0"></div>
+        <div className="absolute inset-0 w-full h-full bg-primary transition-transform duration-500 transform translate-y-full group-hover:translate-y-0"></div>
       </button>
-
-      {/* <button className="bg-dark-gray border border-primary-border text-white px-4 py-2 rounded hover:bg-white hover:text-gray-800">
-        Start stream
-      </button> */}
     </div>
   );
 };

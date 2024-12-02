@@ -40,3 +40,8 @@ export const getAccessToken = async (projectId: string) => {
   );
   return data;
 };
+
+export const fetchPlatforms = async () => {
+  const { data } = await instance.get(`/auth/profile`);
+  return data;
+};
