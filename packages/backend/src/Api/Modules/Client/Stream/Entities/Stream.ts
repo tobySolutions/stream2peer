@@ -74,6 +74,7 @@ export class Stream extends BaseEntity {
     return {
       title: this.title,
       description: this.description,
+      createdAt: this.createdAt,
       status: this.status,
       viewers: this.viewers,
       lastSeen: this.lastSeen,
@@ -93,6 +94,7 @@ export class Stream extends BaseEntity {
       identifier: this.identifier,
       title: this.title,
       description: this.description,
+      createdAt: this.createdAt,
       status: this.status,
       viewers: this.viewers,
       lastSeen: this.lastSeen,
