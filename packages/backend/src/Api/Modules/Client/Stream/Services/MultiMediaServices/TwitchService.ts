@@ -6,7 +6,7 @@ class TwitchAuthService {
   public getTwitchAuthUrl(): string {
     const clientId = authConfig.twitchClientId;
     const redirectUri = authConfig.twitchRedirectURI;
-    const scope = 'channel:read:stream_key';
+    const scope = 'channel:manage:schedule+channel:manage:broadcast+channel:read:stream_key';
     const responseType = 'code';
 
     return `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
@@ -72,13 +72,12 @@ class TwitchAuthService {
     }
   }
 
-  //instant stream
   public async getStreamKey(
     refreshToken: string,
     title: string,
     scheduleDate: string,
     authCalls: number = 0,
-  ): Promise<string | null> {
+  ): Promise<{token: string, broadcastId: string} | null> {
     const MAX_AUTH_CALLS = 2;
     try {
       if (authCalls >= MAX_AUTH_CALLS) {
@@ -87,7 +86,6 @@ class TwitchAuthService {
       }
 
       const newAccessToken = await this.refreshAccessToken(refreshToken);
-
       const userDetails = await this.getUserDetails(newAccessToken);
       if (!userDetails || !userDetails.id) {
         console.error('Failed to fetch broadcaster_id. Returning NULL_OBJECT.');
@@ -95,14 +93,24 @@ class TwitchAuthService {
       }
 
       const broadcasterId = userDetails.id;
+      await HttpClient.patch({ 
+        url: `https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`, 
+        headers: { 
+          Authorization: `Bearer ${newAccessToken}`,
+          'Client-Id': authConfig.twitchClientId,
+        },
+        body: {
+          title: title, 
+          description: 'Live From Stream2Peer'
+        }});
+      
       const response = await HttpClient.get({
         url: `https://api.twitch.tv/helix/streams/key?broadcaster_id=${broadcasterId}`,
         headers: {
           Authorization: `Bearer ${newAccessToken}`,
           'Client-Id': authConfig.twitchClientId,
-        },
-      });
-      return response.data[0]?.stream_key;
+        }});
+      return {token: response.data[0]?.stream_key, broadcastId: broadcasterId};
     } catch (getStreamKeyError) {
       console.log(
         'Error in getStreamKey, refreshing token...',
@@ -113,6 +121,8 @@ class TwitchAuthService {
   }
 
   //scheduled stream
+  //check if user is a partner or affiliate 
+  //else can only have recurring streams via twitch
   public async getScheduledStreamKey(){
     //-->TDL
   }

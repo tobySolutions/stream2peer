@@ -35,6 +35,21 @@ export class HttpClient {
     }
   }
 
+  public static async patch(putRequestDto: PutRequestDto) {
+    const { url, headers, body } = putRequestDto;
+
+    const axiosInstance = axios.create({ headers });
+
+    try {
+      const response = await axiosInstance.patch(url, body);
+      return response.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (axiosPatchRequestError: any) {
+      console.log(`axiosPostRequestError -> ${axiosPatchRequestError.message}`);
+      throw axiosPatchRequestError;
+    }
+  }
+
   public static async put(putRequestDto: PutRequestDto) {
     const { url, headers, body } = putRequestDto;
 

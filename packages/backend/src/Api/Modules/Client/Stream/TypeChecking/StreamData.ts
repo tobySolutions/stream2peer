@@ -1,3 +1,5 @@
+import { streamConfig } from "Config/streamConfig";
+
 export type StreamProfile = {
   name: string;
   bitrate: number;
@@ -23,7 +25,7 @@ export type PlaybackPolicy = {
 
 export const defaultPlaybackPolicy: PlaybackPolicy = {
   type: Type.Webhook,
-  webhookId: 'bf5e608c-750d-4926-bdb0-db840d6f0316',
+  webhookId: streamConfig.livepeerWebhookID,
   refreshInterval: 600,
 };
 

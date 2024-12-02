@@ -7,7 +7,7 @@ import {
   StreamProfile,
   Type,
 } from 'Api/Modules/Client/Stream/TypeChecking/StreamData';
-import { Platform } from 'Api/Modules/Client/Stream/TypeChecking/MultiStreamUserDestination';
+import { StreamPlatform } from 'Api/Modules/Client/Stream/TypeChecking/MultiStreamUserDestination';
 
 @Entity('streams')
 export class Stream extends BaseEntity {
@@ -61,13 +61,13 @@ export class Stream extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   profiles: StreamProfile[];
 
-  @Column({ type: 'simple-array', nullable: true })
-  destinations: Platform[];
+  @Column({ type: 'json', nullable: true })
+  destinations: StreamPlatform[];
 
   @Column({ type: 'text', nullable: true })
   encryptedStreamData: string;
 
-  @ManyToOne(() => Project, (project) => project.streams)
+  @ManyToOne(() => Project, (project) => project.streams, { onDelete: 'CASCADE' })
   project: Project;
 
   public singleView() {

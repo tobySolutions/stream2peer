@@ -21,8 +21,6 @@ export const validateLivepeerSignature = (
     .createHmac('sha256', sharedSecret)
     .update(JSON.stringify(request.body))
     .digest('hex');
-  console.log(hash);
-  console.log(actualSignature);
   if (hash !== actualSignature) {
     return response.status(403).json({ error: 'Invalid signature' });
   }

@@ -22,7 +22,7 @@ class CreateStreamController {
 
     try {
       const { projectId } = request.params;
-      const { title, description, profiles, scheduleDate, platforms } =
+      const { title, description, profiles, scheduleDate, platforms, visibility=true } =
         request.body;
 
       const { error } = await ProjectService.validateMultistreamTokens(
@@ -32,10 +32,7 @@ class CreateStreamController {
       );
 
       if (error) {
-        console.error(
-          'CreateStreamController.handle -> MultiStreamTokenError:',
-          error,
-        );
+        console.error( 'CreateStreamController.handle -> MultiStreamTokenError:', error);
         await queryRunner.rollbackTransaction();
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
           status_code: HttpStatusCodeEnum.BAD_REQUEST,
@@ -45,7 +42,7 @@ class CreateStreamController {
       }
 
       const stream = await StreamService.createStream(
-        { projectId, title, description, profiles, scheduleDate, platforms },
+        { projectId, title, description, profiles, scheduleDate, platforms, visibility },
         queryRunner,
       );
 
