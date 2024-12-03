@@ -16,6 +16,7 @@ export const authConfig = {
   metamaskRedirectUri: process.env['METAMASK_REDIRECT_URI']!,
 
   youtubeRedirectUri: process.env['YOUTUBE_REDIRECT_URI'],
+  youtubeAPIKey: process.env['YOUTUBE_API_KEY'],
 
   twitchClientId: process.env['TWITCH_CLIENT_ID'],
   twitchClientSecret: process.env['TWITCH_CLIENT_SECRET'],

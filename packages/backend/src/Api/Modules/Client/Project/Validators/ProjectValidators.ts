@@ -5,6 +5,8 @@ export const CreateProjectValidator = [
     .isString()
     .isLength({ min: 3, max: 100 })
     .withMessage('Project title must be between 3 and 100 characters')
+    .matches(/^[a-zA-Z0-9\s]+$/)
+    .withMessage('Project title must not contain special characters')
     .trim()
     .escape(),
   body('description', 'Project description should be a string')
@@ -12,6 +14,8 @@ export const CreateProjectValidator = [
     .isLength({ max: 1000 })
     .withMessage('Project description must be less than 1000 characters')
     .optional()
+    .matches(/^[a-zA-Z0-9\s]+$/)
+    .withMessage('Project description must not contain special characters')
     .trim()
     .escape(),
 ];
