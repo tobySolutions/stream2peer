@@ -1,5 +1,4 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
-
 import Input from "../../lib/Input";
 import {
   emailRegex,
@@ -7,7 +6,7 @@ import {
   storeDataInCookie,
 } from "../../utils/utils";
 import { Button } from "../../lib/components/ui/button";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { FaGoogle, FaGithub, FaSignInAlt } from "react-icons/fa";
 import {
   generateAuthWithGithubUrl,
   generateAuthWithGoogleUrl,
@@ -16,8 +15,8 @@ import {
 } from "../../network/auth/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { LoadingIcon } from "@livepeer/react/assets";
 import { Navbar } from "../../lib/components/Navbar";
+import { Loader } from "../../lib/Loader";
 
 export type FormValuesType = {
   email: string;
@@ -36,17 +35,19 @@ function SignIn() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [centralizedLoading, setCentralizedLoading] = useState(false);
   const [oauthMethod, setOauthMethod] = useState<string | null>(null);
 
   const userCode = params.get("code") ?? "";
   storeDataInCookie("userCode", userCode, 1);
-  
+
   useEffect(() => {
     const getUserData = async (
       userCodeFromCookie: string,
       isGoogleInUrl: string
     ) => {
       try {
+        setCentralizedLoading(true); // Show loader
         const userDataResponse = await getUserDetails(
           userCodeFromCookie,
           isGoogleInUrl
@@ -66,6 +67,7 @@ function SignIn() {
         toast.error(error?.response?.data?.message || error?.message);
         setLoading(false);
       } finally {
+        setCentralizedLoading(false); // Hide loader
         setLoading(false);
       }
     };
@@ -76,13 +78,13 @@ function SignIn() {
       : "github";
 
     if (userCodeFromCookie) {
-      setLoading(true);
       getUserData(userCodeFromCookie, isGoogleInUrl);
     }
   }, [userCode]);
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     const { email } = formValues;
     storeDataInCookie("emailAddress", email, 1);
@@ -136,71 +138,76 @@ function SignIn() {
       <Navbar />
 
       <div className="justify-center items-center flex min-h-screen">
-        <form
-          onSubmit={handleFormSubmit}
-          className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
-        >
-          <div className="rounded-[8px] border border-[#313538] px-[2.5rem] py-[3rem] md:px-[4rem]">
-            <div className="my-[.6rem] lg:mt-[1.3rem] text-muted-foreground text-[15px]">
-              <Input
-                type="email"
-                name="email"
-                value={formValues.email}
-                isRequired
-                pattern={`${emailRegex}`}
-                onChange={(value) => handleInputChange("email", value)}
-                label="Email address"
-              />
-            </div>
+        {centralizedLoading ? (
+          <Loader variant="large" />
+        ) : (
+          <form
+            onSubmit={handleFormSubmit}
+            className="mt-[70px] mx-auto  w-[90%] max-w-[768px] lg:w-[70%] xl:w-[65%]"
+          >
+            <div className="rounded-[8px] border border-[#313538] px-[2.5rem] py-[3rem] md:px-[4rem]">
+              <div className="my-[.6rem] lg:mt-[1.3rem] text-muted-foreground text-[15px]">
+                <Input
+                  type="email"
+                  name="email"
+                  value={formValues.email}
+                  isRequired
+                  pattern={`${emailRegex}`}
+                  onChange={(value) => handleInputChange("email", value)}
+                  label="Email address"
+                />
+              </div>
 
-            <Button className="w-full text-lg" size="lg">
-              {loading ? (
-                <div className="grid place-content-center">
-                  <LoadingIcon />
-                </div>
-              ) : (
-                "Login"
-              )}
-            </Button>
-
-            <div className="text-center text-white my-5">
-              <span>or</span>
-            </div>
-
-            <div className="flex flex-col space-y-4">
-              <Button
-                type="button"
-                onClick={handleGoogleSignIn}
-                disabled={loading}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
-              >
-                {oauthMethod === "google" && loading ? (
+              <Button className="w-full text-lg" size="lg">
+                {!oauthMethod && loading ? (
                   <div className="grid place-content-center mx-2">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
                   </div>
                 ) : (
-                  <FaGoogle className="mr-2" />
+                  <FaSignInAlt className="mr-2" />
                 )}
-                Sign in with Google
+                Sign in
               </Button>
-              <button
-                type="button"
-                onClick={handleGitHubSignIn}
-                disabled={loading}
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50"
-              >
-                {oauthMethod === "github" && loading ? (
-                  <div className="grid place-content-center mx-2">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
-                  </div>
-                ) : (
-                  <FaGithub className="mr-2" />
-                )}
-                Sign in with GitHub
-              </button>
+
+              <div className="text-center my-5">
+                <span>or</span>
+              </div>
+
+              <div className="flex flex-col space-y-4">
+                <Button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  disabled={loading}
+                  className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
+                >
+                  {oauthMethod === "google" && loading ? (
+                    <div className="grid place-content-center mx-2">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+                    </div>
+                  ) : (
+                    <FaGoogle className="mr-2" />
+                  )}
+                  Sign in with Google
+                </Button>
+                <button
+                  type="button"
+                  onClick={handleGitHubSignIn}
+                  disabled={loading}
+                  className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50"
+                >
+                  {oauthMethod === "github" && loading ? (
+                    <div className="grid place-content-center mx-2">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+                    </div>
+                  ) : (
+                    <FaGithub className="mr-2" />
+                  )}
+                  Sign in with GitHub
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        )}
       </div>
     </div>
   );
