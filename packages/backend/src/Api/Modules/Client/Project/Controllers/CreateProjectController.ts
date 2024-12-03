@@ -53,7 +53,7 @@ class CreateProjectController {
           queryRunner,
         );
       }
-      this.loggingProvider.info(`PROJECT CREATED SUCCESSFULLY ${project}`);
+      // this.loggingProvider.info(`PROJECT CREATED SUCCESSFULLY ${project}`);
       console.log(`PROJECT CREATED SUCCESSFULLY ${project}`);
       await queryRunner.commitTransaction();
 

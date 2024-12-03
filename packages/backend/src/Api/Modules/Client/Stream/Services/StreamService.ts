@@ -187,14 +187,14 @@ class StreamService {
     queryRunner: QueryRunner,
   ): Promise<Stream | null> {
     const stream = await this.streamRepository.findOne({
-      where: { identifier: streamId },
+      where: { livepeerStreamId: streamId },
     });
     if (!stream) return NULL_OBJECT;
 
     try {
-      await LivepeerService.terminateStream(streamId);
       stream.status = StreamStatus.ENDED;
       stream.endedAt = new Date();
+      await LivepeerService.terminateStream(streamId);
       await queryRunner.manager.save(stream);
       return stream;
     } catch (error) {
@@ -241,9 +241,8 @@ class StreamService {
           return this.activatePlatform(platform, streamingPlatform);
       });
     }
-
-    await LivepeerService.activateStream(stream.livepeerStreamId);
     stream.status = StreamStatus.LIVE;
+    await LivepeerService.activateStream(stream.livepeerStreamId);
     await queryRunner.manager.save(stream);
     return stream;
   }
@@ -281,12 +280,15 @@ class StreamService {
     if (!stream) return NULL_OBJECT;
     switch (eventType) {
       case StreamStatus.LIVE:
+        console.log('live')
         await this.activateStream(streamId,queryRunner);
         break;
       case StreamStatus.SUSPENDED:
+        console.log('suspend')
         await this.suspendStream(streamId,queryRunner);
         break;
       case StreamStatus.ENDED:
+        console.log('end')
         await this.terminateStream(streamId,queryRunner);
         break;
       default:

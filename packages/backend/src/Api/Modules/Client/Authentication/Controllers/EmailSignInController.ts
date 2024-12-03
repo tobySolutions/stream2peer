@@ -27,20 +27,19 @@ class EmailSignInController {
 
     await queryRunner.startTransaction();
     try {
-      let { email } = request.query;
-      email = email!.toString();
-      console.log('EmailSignInController.handle ->', email);
-      const existingToken = await AuthTokensService.getUserTokenByEmail(email);
+      const { email } = request.query;
+
+      const existingToken = await AuthTokensService.getUserTokenByEmail(String(email));
       if (existingToken) {
           await AuthTokensService.deleteUserToken(existingToken.token);
       }
 
       const token = generateStringOfLength(businessConfig.signInTokenLength);
-      const otpToken = await AuthTokensService.createEmailSignInToken({email, token, queryRunner});
+      const otpToken = await AuthTokensService.createEmailSignInToken({ email: String(email), token, queryRunner });
 
       await queryRunner.commitTransaction();
       await EmailService.sendAccountActivationEmail({
-        userEmail: email,
+        userEmail: String(email),
         activationToken: otpToken.token,
       });
 
