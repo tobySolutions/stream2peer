@@ -33,7 +33,7 @@ class StreamEventController {
         case 'stream.idle':
           streamEvent = await StreamService.updateStreamStatus(
             streamData.stream.id,
-            StreamStatus.SUSPENDED,
+            StreamStatus.ENDED, //TDL {suspend and terminate stream}->{stream sessions}
             queryRunner,
           );
           break;

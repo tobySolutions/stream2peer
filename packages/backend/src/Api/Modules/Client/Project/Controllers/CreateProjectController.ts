@@ -10,10 +10,13 @@ import {
   SOMETHING_WENT_WRONG,
 } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import { AuthRequest } from 'TypeChecking/GeneralPurpose/AuthRequest';
+import { ILoggingDriver, LoggingProviderFactory } from 'Lib/Infra/Internal/Logging';
 
 const dbContext = container.resolve(DbContext);
 
 class CreateProjectController {
+  loggingProvider:ILoggingDriver = LoggingProviderFactory.build();
+
   public async handle(request: Request, response: Response) {
     const queryRunner = await dbContext.getTransactionalQueryRunner();
 
@@ -50,7 +53,8 @@ class CreateProjectController {
           queryRunner,
         );
       }
-
+      this.loggingProvider.info(`PROJECT CREATED SUCCESSFULLY ${project}`);
+      console.log(`PROJECT CREATED SUCCESSFULLY ${project}`);
       await queryRunner.commitTransaction();
 
       return response.status(HttpStatusCodeEnum.CREATED).json({

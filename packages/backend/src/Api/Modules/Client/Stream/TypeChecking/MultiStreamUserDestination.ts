@@ -17,3 +17,8 @@ export type MultiStreamToken = {
   type: Platform;
   token: Token;
 };
+
+export type StreamPlatform = {
+  platform: Platform;
+  broadcastId: string;
+};

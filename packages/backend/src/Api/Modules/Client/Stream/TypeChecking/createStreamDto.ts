@@ -1,4 +1,4 @@
-import { Platform } from './MultiStreamUserDestination';
+import { Platform, StreamPlatform } from './MultiStreamUserDestination';
 import { PlaybackPolicy, StreamProfile } from './StreamData';
 
 export type createStreamDto = {
@@ -9,6 +9,7 @@ export type createStreamDto = {
   profiles?: StreamProfile[];
   scheduleDate?: Date;
   platforms?: Set<Platform>;
+  visibility: boolean;
 };
 
 export type MultistreamSpec = {
@@ -22,6 +23,11 @@ export type MultistreamTarget = {
   id?: string;
   spec: MultistreamSpec;
 };
+
+export type DestinationPlatform = {
+  target: MultistreamTarget;
+  destinations: StreamPlatform;
+}
 
 export type LivepeerCreateStreamDto = {
   title: string;
