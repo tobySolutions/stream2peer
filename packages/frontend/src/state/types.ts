@@ -4,6 +4,7 @@ export type ProjectDetails = {
   title: string;
   description: string;
   image_url: string;
+  date_created: string;
 };
 
 export type Theme = "dark" | "light" | "system";

@@ -6,6 +6,7 @@ import Modal from "../modal";
 import { toast } from "react-toastify";
 import { useAppStore } from "../../state";
 import { Loader } from "../Loader";
+import { formatDate } from "../../utils/utils";
 
 const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -144,7 +145,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
         </p>
         <div className="w-full flex justify-between items-center">
           <span className="dark:text-[#fff6ffd1] text-white/90 text-sm">
-            Date Created: 12/06/2024
+            Date Created: {formatDate(project?.date_created)}
           </span>
           <button
             className="underline dark:text-[#fff6ffd1] text-sm text-[#1e1e1e] cursor-pointer"

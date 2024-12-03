@@ -85,6 +85,8 @@ function Projects() {
 
         toast.success("Project added successfully");
       }
+      window.location.reload();
+
       // setProjectData(res?.results?.data);
     } catch (error: any) {
       if (error?.response) {
@@ -95,7 +97,6 @@ function Projects() {
     }
     setLoading(false);
     setModalOpen(false);
-    window.location.reload();
   };
 
   useEffect(() => {
