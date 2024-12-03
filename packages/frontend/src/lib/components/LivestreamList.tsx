@@ -1,6 +1,7 @@
 import LivestreamCard from "./LivestreamCard";
 
 export const LivestreamList = ({
+  projectId,
   type,
 }: {
   projectId: string | undefined;
@@ -14,7 +15,7 @@ export const LivestreamList = ({
   return (
     <div className="grid grid-cols-3 w-full gap-6">
       {livestreams.map((livestream) => (
-        <LivestreamCard livestream={livestream} type={type} />
+        <LivestreamCard livestream={livestream} type={type}/>
       ))}
     </div>
   );

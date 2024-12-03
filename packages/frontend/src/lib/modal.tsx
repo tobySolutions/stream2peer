@@ -29,7 +29,7 @@ const Modal = ({
         {/* Modal Close Button */}
         <button
           className="absolute z-20 top-3 right-4 text-gray-500 hover:text-gray-800"
-          onClick={() => {
+          onClick={(e) => {
             onClose();
             // e.stopPropagation();
           }}
@@ -39,18 +39,18 @@ const Modal = ({
 
         {/* Modal Title */}
         {title && (
-          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white text-dark-gray">
+          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white ">
             {title}
           </h2>
         )}
 
         {/* Modal Content */}
-        <div className="mb-4 text-dark-gray">{children}</div>
+        <div className="mb-4">{children}</div>
 
         {/* Close Modal Button */}
         {onSubmit && (
           <button
-            className="bg-primary hover:bg-primary/90 text-primary-white px-4 py-2 rounded"
+            className="bg-orange-500 text-primary-white px-4 py-2 rounded"
             onClick={onSubmit}
           >
             {loading ? (

@@ -2,6 +2,8 @@ import { storeDataInCookie } from "../../utils/utils";
 import instance from "../axios";
 import { GoogleAuthUrlResponse, User } from "./types";
 
+const errorCodes = [400, 401, 403, 404, 500];
+
 // export const login = async (payload: AddProjectProps) => {
 //   const { data } = await instance.post(`/project/create`, payload);
 //   return data;
@@ -30,6 +32,7 @@ export const getUserDetails = async (code: string, provider: string) => {
   });
 
   if (data["status_code"] === 200) {
+    console.log(data, "200");
     const token = data.token.split(" ")[1];
     storeDataInCookie("accessToken", token, 1);
     return {
@@ -39,8 +42,31 @@ export const getUserDetails = async (code: string, provider: string) => {
   }
 };
 
+export const handleGoogleSignIn = async () => {
+  console.log("Google sign-in clicked");
+  try {
+    const { data } = await generateAuthWithGoogleUrl();
+    window.location.href = data.authUrl;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const handleGitHubSignIn = async () => {
+  console.log("GitHub sign-in clicked");
+  try {
+    const { data } = await generateAuthWithGithubUrl();
+    console.log(data);
+    window.location.href = data.authUrl;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const sendUserAuthOtpMail = async (email: string) => {
+  console.log(email, "request");
   const { data } = await instance.get(`/auth/email/sign-in?email=${email}`);
+  console.log(data, "response");
   return data;
 };
 

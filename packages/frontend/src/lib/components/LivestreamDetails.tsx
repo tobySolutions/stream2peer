@@ -1,8 +1,6 @@
-const LivestreamDetails = ({
-  livestreamId,
-}: {
-  livestreamId: string | undefined;
-}) => {
+import React from "react";
+
+const LivestreamDetails = ({ livestreamId }: { livestreamId: string | undefined }) => {
   // Mock data - replace with actual API call
   const livestream = {
     id: livestreamId,

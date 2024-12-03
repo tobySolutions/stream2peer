@@ -1,4 +1,5 @@
 import React from "react";
+import { IoAddSharp } from "react-icons/io5";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Select } from "antd";
 
@@ -19,6 +20,7 @@ interface PeerInviteFormProps {
 
 const PeerInviteForm: React.FC<PeerInviteFormProps> = ({
   userData,
+  setUserData,
   inputEmail,
   setInputEmail,
   selectedRole,
@@ -49,7 +51,7 @@ const PeerInviteForm: React.FC<PeerInviteFormProps> = ({
           />
           <button
             type="submit"
-            className="bg-primary hover:bg-primary/90 text-white py-2 px-4 rounded-md disabled:bg-gray-400"
+            className="bg-orange-500 text-white py-2 px-4 rounded-md disabled:bg-gray-400"
             disabled={!inputEmail || userData.length >= 3}
           >
             Add
@@ -76,7 +78,7 @@ const PeerInviteForm: React.FC<PeerInviteFormProps> = ({
             <span className="text-[14px]">{`${user.userId} (${user.role})`}</span>
             <button
               onClick={() => handleDeleteEmail(user.userId)}
-              className="text-destructive hover:text-destructive/90 font-bold"
+              className="text-orange-500 hover:text-orange-700 font-bold"
             >
               <FaRegTrashCan />
             </button>
@@ -88,7 +90,7 @@ const PeerInviteForm: React.FC<PeerInviteFormProps> = ({
         <div className="mt-4">
           <button
             type="button"
-            className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded"
+            className="bg-orange-500 text-white px-4 py-2 rounded"
             onClick={handleAddEmail}
           >
             Submit

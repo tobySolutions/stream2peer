@@ -24,7 +24,6 @@ import * as Popover from "@radix-ui/react-popover";
 import React, { useEffect } from "react";
 import { getIngest } from "@livepeer/react/external";
 import { useParams } from "react-router-dom";
-import { LogoIcon } from "../../../assets/svg-exports";
 
 // import { toast } from "sonner";
 
@@ -48,6 +47,7 @@ export function BroadcastWithControls() {
         //       )
         //     : null
         // }
+
         aspectRatio={16 / 9}
         ingestUrl={ingestUrl}
       >
@@ -71,9 +71,9 @@ export function BroadcastWithControls() {
           >
             <OfflineErrorIcon className="h-[120px] w-full sm:flex hidden text-primary-white" />
             <div className="flex flex-col gap-1">
-              <div className="text-2xl font-bold">Livestream failed</div>
+              <div className="text-2xl font-bold">Broadcast failed</div>
               <div className="text-sm text-gray-100">
-                There was an error with Livestreaming - it is retrying in the
+                There was an error with broadcasting - it is retrying in the
                 background.
               </div>
             </div>
@@ -150,7 +150,7 @@ export function BroadcastWithControls() {
             </Broadcast.EnabledIndicator>
           </Broadcast.Controls>
           <div className="absolute top-2 left-2">
-            <LogoIcon theme="dark"/>
+            <img src={Logo} alt="Logo" width="120px" height="50px" />
           </div>
 
           <Broadcast.LoadingIndicator asChild matcher={false}>

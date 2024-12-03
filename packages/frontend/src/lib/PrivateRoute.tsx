@@ -10,7 +10,7 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const userToken = getDataInCookie("userToken");
 
   if (!userToken) {
-    return <Navigate to="/signIn" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;
