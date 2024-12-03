@@ -60,7 +60,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   const DeleteModalContent = () => (
     <div className="flex gap-6 items-center">
       <button
-        className="py-2 px-4 rounded-md bg-destructive text-primary-white"
+        className="py-2 px-4 rounded-md bg-destructive dark:text-primary-white text-white"
         onClick={() => handleDeleteProject(project.identifier)}
       >
         {isDeleteLoading ? (
@@ -70,7 +70,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
         )}
       </button>
       <button
-        className="py-2 px-4 rounded-md bg-[#6C757D] text-primary-white"
+        className="py-2 px-4 rounded-md bg-[#6C757D] dark:text-primary-white text-white"
         onClick={() => setDeleteModalOpen(false)}
       >
         NO
@@ -81,7 +81,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   const EditModalContent = () => (
     <div>
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm mb-2">
+        <label htmlFor="title" className="block mb-2">
           Project Title
         </label>
         <input
@@ -94,7 +94,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="description" className="block text-sm mb-2">
+        <label htmlFor="description" className="block mb-2">
           Project Description
         </label>
         <textarea
@@ -110,7 +110,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   );
 
   return (
-    <div className="block cursor-pointer bg-primary dark:bg-[#1e1e1e] rounded-lg p-6 shadow-md transition-shadow border border-primary-border min-h-[130px] duration-300 hover:shadow-lg">
+    <div className="cursor-pointer bg-primary dark:bg-[#1e1e1e] rounded-lg p-6 shadow-md transition-shadow border border-primary-border min-h-[130px] duration-300 hover:shadow-lg flex flex-col justify-between">
       <Modal
         isOpen={isDeleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
@@ -127,33 +127,35 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
         <EditModalContent />
       </Modal>
       <div className="flex w-full justify-between">
-        <h2 className="text-xl text-primary-white font-semibold mb-2 w-64 truncate">
+        <h2 className="text-xl text-white dark:text-primary-white font-semibold mb-2 w-64 truncate">
           {project.title}
         </h2>
         <FaRegTrashAlt
-          className="cursor-pointer text-destructive"
+          className="cursor-pointer text-[#d74444] dark:text-destructive"
           onClick={(e) => {
             e.stopPropagation();
             setDeleteModalOpen(true);
           }}
         />
       </div>
-      <p className="dark:text-[#fff6ffd1] text-[#1e1e1e] w-64 truncate">
-        {project.description}
-      </p>
-      <div className="w-full flex justify-between items-center">
-        <span className="dark:text-[#fff6ffd1] text-[#1e1e1e] text-sm">
-          Date Created: 12/06/2024
-        </span>
-        <button
-          className="underline dark:text-[#fff6ffd1] text-sm text-[#1e1e1e] cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            setEditModalOpen(true);
-          }}
-        >
-          Edit
-        </button>
+      <div>
+        <p className="dark:text-[#fff6ffd1] text-white/90 w-64 truncate">
+          {project.description}
+        </p>
+        <div className="w-full flex justify-between items-center">
+          <span className="dark:text-[#fff6ffd1] text-white/90 text-sm">
+            Date Created: 12/06/2024
+          </span>
+          <button
+            className="underline dark:text-[#fff6ffd1] text-sm text-[#1e1e1e] cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setEditModalOpen(true);
+            }}
+          >
+            Edit
+          </button>
+        </div>
       </div>
     </div>
   );

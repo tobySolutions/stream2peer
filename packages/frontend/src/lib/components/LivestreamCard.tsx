@@ -25,7 +25,7 @@ const LivestreamCard = ({ livestream }: any) => {
   };
 
   return (
-    <div className="bg-dark-gray border border-primary-border w-[100%] mb-4 py-2 px-5 rounded-lg shadow-md flex justify-between items-center flex-wrap gap-4">
+    <div className="bg-dark-gray border border-primary-border w-[100%] mb-4 py-2 px-5 rounded-lg dark:shadow-md flex justify-between items-center flex-wrap gap-4 shadow-lg">
       <div>
         <h3 className="text-lg font-semibold text-primary-white flex items-center gap-2">
           {livestream?.title}

@@ -27,7 +27,7 @@ function Layout({ children }: LayoutProps) {
         <Sidebar />
         <main className="md:px-[36px] px-[20px] py-[25px] w-full ml-0 md:ml-[20%] min-h-[calc(100vh-60px)] animate-slideUp">
           <div>{children}</div>
-          {/* <div className="shadow">hey</div> */}
+          {/* <div className="dashboard-shadow"></div> */}
         </main>
       </div>
     </div>
