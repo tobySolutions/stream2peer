@@ -11,7 +11,7 @@ import { AuthAccountType } from '../TypeChecking/AuthAccount';
 import { GetRequestDto } from 'TypeChecking/GeneralPurpose/GetRequestDto';
 import { HttpClient } from 'Lib/Infra/Internal/HttpClient';
 import _ from 'lodash';
-import { MultiStreamToken } from '../../Stream/TypeChecking/MultiStreamUserDestination';
+import { MultiStreamToken, Platform } from '../../Stream/TypeChecking/MultiStreamUserDestination';
 import { FindOrCreateAuthAccountDto } from '../TypeChecking/FindOrCreateAuthAccountDto';
 
 @autoInjectable()
@@ -159,6 +159,23 @@ class AuthAccountService {
     await this.authAccountRepository.save(authAccount);
     return authAccount;
   }
+
+  public async removeStreamPlatform(userId: string, platformType: Platform) {
+  const authAccount = await this.getAuthAccountByUserId(userId);
+
+  if (authAccount === NULL_OBJECT) return NULL_OBJECT;
+
+  const existingStreamTokens = authAccount.stream_tokens || [];
+  const updatedStreamTokens = existingStreamTokens.filter(
+    (token) => token.type !== platformType,
+  );
+
+  authAccount.stream_tokens = updatedStreamTokens;
+
+  await this.authAccountRepository.save(authAccount);
+  return authAccount;
+}
+
 }
 
 export default new AuthAccountService();

@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "0cdfa4c6-b011-4d44-a453-2827b35d060b",
 		"name": "Stream2Peer",
+		"description": "Live link  \nhttps://speeding-escape-874917.postman.co/workspace/3918322c-b216-4d01-8557-35f2415eee2f",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "20800726"
 	},
@@ -30,37 +31,37 @@
 						{
 							"name": "url callback",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "https://accounts.google.com/o/oauth2/auth?client_id=602969011181-2f4f8r9t5hrhmtr9rd1pl7vkn4q2r3v4.apps.googleusercontent.com&redirect_uri=http://localhost:8000/Interface/auth/google/callback&response_type=code&scope=email",
-									"protocol": "https",
+									"raw": "http://localhost:8000/Interface/auth/google/callback?code=4%2F0AeanS0aKR4yyiFbIlN8K1Wraf8YtwU8QnzbowoUnXF5cyvbMKs5dN-lPKFpRUXKIRLzqpw&scope=email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=none",
+									"protocol": "http",
 									"host": [
-										"accounts",
-										"google",
-										"com"
+										"localhost"
 									],
+									"port": "8000",
 									"path": [
-										"o",
-										"oauth2",
-										"auth"
+										"Interface",
+										"auth",
+										"google",
+										"callback"
 									],
 									"query": [
 										{
-											"key": "client_id",
-											"value": "602969011181-2f4f8r9t5hrhmtr9rd1pl7vkn4q2r3v4.apps.googleusercontent.com"
-										},
-										{
-											"key": "redirect_uri",
-											"value": "http://localhost:8000/Interface/auth/google/callback"
-										},
-										{
-											"key": "response_type",
-											"value": "code"
+											"key": "code",
+											"value": "4%2F0AeanS0aKR4yyiFbIlN8K1Wraf8YtwU8QnzbowoUnXF5cyvbMKs5dN-lPKFpRUXKIRLzqpw"
 										},
 										{
 											"key": "scope",
-											"value": "email"
+											"value": "email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid"
+										},
+										{
+											"key": "authuser",
+											"value": "0"
+										},
+										{
+											"key": "prompt",
+											"value": "none"
 										}
 									]
 								}
@@ -101,7 +102,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://github.com/login/oauth/authorize?client_id=Ov23liylaZFhAVh8WqZz&redirect_uri=http://localhost:8000/Interface/auth/github/callback&scope=user:email",
+									"raw": "https://github.com/login/oauth/authorize?client_id={{client_id}}&redirect_uri=http://localhost:8000/Interface/auth/github/callback&scope=user:email",
 									"protocol": "https",
 									"host": [
 										"github",
@@ -115,7 +116,7 @@
 									"query": [
 										{
 											"key": "client_id",
-											"value": "Ov23liylaZFhAVh8WqZz"
+											"value": "{{client_id}}"
 										},
 										{
 											"key": "redirect_uri",
@@ -144,11 +145,15 @@
 										"disableBodyPruning": true
 									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {}
+										},
 										"method": "GET",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\":\"adedejitobiloba7@gmail.com\"\r\n}",
+											"raw": "{\r\n    \"email\":\"{}\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -166,7 +171,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\":\"dasijr22@gmail.com\",\r\n    \"token\":\"3F01E9\"\r\n}",
+											"raw": "{\r\n    \"email\":\"{}\",\r\n    \"token\":\"{}\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -194,7 +199,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": {}
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNGVkODk5NDItYjVjNS00ODcyLWJjMmYtMzI0M2Y0NDVlMzBhIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoiZW1haWwiLCJpYXQiOjE3MzMyMjQ5ODEsImV4cCI6MTczMzM5Nzc4MX0.nuPxIfFW_Ohf6T9f20q2v7pHzS4jXMcAXS9q6AcNIm0"
+									}
 								},
 								"method": "POST",
 								"header": [
@@ -206,7 +213,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"title\": \"Project Gamma\",\r\n  \"description\": \"This is a description of Project Alpha.\",\r\n  \"imageUrl\": \"https://example.com/images/project-alpha.png\",\r\n  \"inviteeId\": \"excellencejumo@gmail.com\"\r\n}\r\n",
+									"raw": "{\r\n  \"title\": \"Project BETA1\",\r\n  \"description\": \"This is a description of Project Beta\"\r\n//   \"imageUrl\": \"https://example.com/images/project-alpha.png\",\r\n//   \"inviteeId\": \"{}\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -235,7 +242,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"users\" :[{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"excellencejumo@gmail.com\"\r\n},{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"adedamolaadejumo484@gmail.com\"\r\n}]}",
+									"raw": "{\"users\" :[{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"{}\"\r\n},{\r\n    \"role\":\"co-Host\",\r\n    \"userId\":\"{}\"\r\n}]}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -255,7 +262,7 @@
 									"variable": [
 										{
 											"key": "projectId",
-											"value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
+											"value": "{}"
 										}
 									]
 								}
@@ -280,7 +287,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"title\":\"Project Vinicius\",\r\n    \"description\":\"Star Player\"\r\n}",
+									"raw": "{\r\n    \"title\":\"{}\",\r\n    \"description\":\"{}\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -300,7 +307,7 @@
 									"variable": [
 										{
 											"key": "projectId",
-											"value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
+											"value": "{}"
 										}
 									]
 								}
@@ -333,7 +340,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/project/join/:projectId?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJleGNlbGxlbmNlanVtb0BnbWFpbC5jb20iLCJwcm9qZWN0SWQiOiJlMDNiY2M4Mi1jNWFmLTRmODgtOTRmNy1lM2E3NjMwNjU1ZjIiLCJyb2xlIjoiY28tSG9zdCIsImlhdCI6MTcyOTg3MTgzOSwiZXhwIjoxNzMwMDQ0NjM5fQ.xrgyfjg-yw-GMuXVKFlTvbSr9nb13sBeU_HCIqO5DYU",
+									"raw": "{{base_url}}/project/join/:projectId?token={}",
 									"host": [
 										"{{base_url}}"
 									],
@@ -345,13 +352,13 @@
 									"query": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJleGNlbGxlbmNlanVtb0BnbWFpbC5jb20iLCJwcm9qZWN0SWQiOiJlMDNiY2M4Mi1jNWFmLTRmODgtOTRmNy1lM2E3NjMwNjU1ZjIiLCJyb2xlIjoiY28tSG9zdCIsImlhdCI6MTcyOTg3MTgzOSwiZXhwIjoxNzMwMDQ0NjM5fQ.xrgyfjg-yw-GMuXVKFlTvbSr9nb13sBeU_HCIqO5DYU"
+											"value": "{}"
 										}
 									],
 									"variable": [
 										{
 											"key": "projectId",
-											"value": "e03bcc82-c5af-4f88-94f7-e3a7630655f2"
+											"value": "{}"
 										}
 									]
 								}
@@ -387,7 +394,7 @@
 									"variable": [
 										{
 											"key": "projectId",
-											"value": "585beceb-cc7b-4723-9400-baebd4a6d86d"
+											"value": "{}"
 										}
 									]
 								}
@@ -405,7 +412,7 @@
 								"auth": {
 									"type": "bearer",
 									"bearer": {
-										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMThhNmM0MDMtZDIwMy00ODJkLWJhZTktYTA2M2U3MDk2MzgzIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoibWV0YW1hc2siLCJpYXQiOjE3MzE0MDQ1NDAsImV4cCI6MTczMTU3NzM0MH0.zjyQ97OI1bLtBXB1sAZOwGIfYn7xZzp71khmTIkGhZM"
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNGVkODk5NDItYjVjNS00ODcyLWJjMmYtMzI0M2Y0NDVlMzBhIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoiZW1haWwiLCJpYXQiOjE3MzMyMjQ5ODEsImV4cCI6MTczMzM5Nzc4MX0.nuPxIfFW_Ohf6T9f20q2v7pHzS4jXMcAXS9q6AcNIm0"
 									}
 								},
 								"method": "GET",
@@ -476,7 +483,7 @@
 									"variable": [
 										{
 											"key": "projectId",
-											"value": "585beceb-cc7b-4723-9400-baebd4a6d86d"
+											"value": "{}"
 										}
 									]
 								}
@@ -576,9 +583,27 @@
 							"item": [
 								{
 									"name": "generate twitch auth url",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjFlNjJkM2MtNDAxZi00YjVhLTliMzgtZTljMWRhYzllM2E3IiwidXNlcklkIjoiYWRlZGFtb2xhYWRlanVtbzQ4NEBnbWFpbC5jb20iLCJhdXRoUHJvdmlkZXIiOiJtZXRhbWFzayIsImlhdCI6MTczMjU2OTI3MSwiZXhwIjoxNzMyNzQyMDcxfQ.O0bhYYLlb-ivTrJnIYkhQfAE51q4l63tlX3YvY8XfHU"
+											}
+										},
 										"method": "GET",
 										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": "{{base_url}}/MultiStream/twitch/auth"
 									},
 									"response": []
@@ -644,7 +669,7 @@
 										"auth": {
 											"type": "bearer",
 											"bearer": {
-												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiMGFhZjYwNzYtNWZmZi00ODc2LThlZDMtYjNhZGZiNmUyMGNlIiwidXNlcklkIjoiZXhjZWxsZW5jeWp1bW8iLCJhdXRoUHJvdmlkZXIiOiJnaXRodWIiLCJpYXQiOjE3MzIwNTI2NjgsImV4cCI6MTczMjIyNTQ2OH0.9-HLeumh1wtTsxOt6CbBdInDmFQzgPgsHNqWdzmFUs0"
+												"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNGVkODk5NDItYjVjNS00ODcyLWJjMmYtMzI0M2Y0NDVlMzBhIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoiZW1haWwiLCJpYXQiOjE3MzMyMjQ5ODEsImV4cCI6MTczMzM5Nzc4MX0.nuPxIfFW_Ohf6T9f20q2v7pHzS4jXMcAXS9q6AcNIm0"
 											}
 										},
 										"method": "POST",
@@ -657,7 +682,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"title\":\"TWITCH STREAMYARD\",\r\n    \"description\":\"Testing twitch broadcast from livepeer\",\r\n    \"platforms\":[\"Twitch\"]//please pay attention to how it is written\r\n}",
+											"raw": "{\r\n    \"title\":\"DUAL Testing STREAM2PEER\",\r\n    \"description\":\"Testing broadcast from livepeer\",\r\n    \"platforms\":[\"Twitch\",\"Youtube\"]//please pay attention to how it is written\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -677,7 +702,7 @@
 											"variable": [
 												{
 													"key": "projectId",
-													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+													"value": "{}"
 												}
 											]
 										}
@@ -718,11 +743,11 @@
 											"variable": [
 												{
 													"key": "projectId",
-													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+													"value": "{}"
 												},
 												{
 													"key": "streamId",
-													"value": "face5745-3be7-4e35-9544-4b2a08f96741"
+													"value": "{}"
 												}
 											]
 										}
@@ -759,7 +784,7 @@
 											"variable": [
 												{
 													"key": "projectId",
-													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+													"value": "{}"
 												}
 											]
 										}
@@ -791,11 +816,11 @@
 											"variable": [
 												{
 													"key": "projectId",
-													"value": "f8af0f87-b502-42bc-a697-5e16a56255be"
+													"value": "{}"
 												},
 												{
 													"key": "streamId",
-													"value": "1f880ef1-ccfa-4716-9de4-cfd3ec9f0ac6"
+													"value": "{}"
 												}
 											]
 										}
@@ -844,10 +869,33 @@
 											"variable": [
 												{
 													"key": "projectId",
-													"value": "e5da8295-cc15-4cae-b00c-fbdde82d7488"
+													"value": "{}"
 												}
 											]
 										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Webhook Status",
+							"item": [
+								{
+									"name": "Livepeerwebhook stream status",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"stream\":{\"id\":\"{}\"},\r\n    \"event\":\"stream.started\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{base_url}}/stream/webhooks/update-status"
 									},
 									"response": []
 								}
@@ -859,7 +907,32 @@
 		},
 		{
 			"name": "Profile",
-			"item": []
+			"item": [
+				{
+					"name": "Remove Media Platform",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNGVkODk5NDItYjVjNS00ODcyLWJjMmYtMzI0M2Y0NDVlMzBhIiwidXNlcklkIjoiZXhjZWxsZW5jZWp1bW9AZ21haWwuY29tIiwiYXV0aFByb3ZpZGVyIjoiZW1haWwiLCJpYXQiOjE3MzMyMjQ5ODEsImV4cCI6MTczMzM5Nzc4MX0.nuPxIfFW_Ohf6T9f20q2v7pHzS4jXMcAXS9q6AcNIm0"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"platform\":\"Twitch\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/profile/remove-platform"
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
