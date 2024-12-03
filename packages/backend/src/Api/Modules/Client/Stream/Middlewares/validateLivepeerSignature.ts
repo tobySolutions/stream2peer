@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import { streamConfig } from 'Config/streamConfig';
@@ -14,15 +15,13 @@ export const validateLivepeerSignature = (
     return response.status(403).json({ error: 'Unauthorized request' });
   }
 
-  const [, signatureHash] = signature.split(',');
-  const [, actualSignature] = signatureHash.split('=');
+  const [, signatureHash] = signature?.split(',');
+  const [, actualSignature] = signatureHash?.split('=');
 
   const hash = crypto
     .createHmac('sha256', sharedSecret)
     .update(JSON.stringify(request.body))
     .digest('hex');
-  console.log(hash);
-  console.log(actualSignature);
   if (hash !== actualSignature) {
     return response.status(403).json({ error: 'Invalid signature' });
   }

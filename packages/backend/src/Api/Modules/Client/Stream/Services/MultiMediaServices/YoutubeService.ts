@@ -47,7 +47,7 @@ class YouTubeAuthService {
     title: string,
     scheduleDate: string,
     authCalls: number = 0
-  ): Promise<string | null> {
+  ): Promise<{token: string, broadcastId: string} | null> {
     const MAX_AUTH_CALLS = 2;
     try {
       if (authCalls >= MAX_AUTH_CALLS) {
@@ -65,7 +65,7 @@ class YouTubeAuthService {
         params: { part: 'cdn,snippet,status', id: streamId },
       });
   
-      return streamDetails.items[0].cdn.ingestionInfo.streamName;
+      return { token: streamDetails.items[0].cdn.ingestionInfo.streamName, broadcastId };
     } catch (getStreamKeyError:any) {
       console.log('Error in getOrCreateStreamKey, refreshing token...', getStreamKeyError.response?.data?.error?.errors);
       return this.getStreamKey(refreshToken, title, scheduleDate, authCalls + 1);
@@ -83,9 +83,14 @@ class YouTubeAuthService {
             title,
             scheduledStartTime: scheduleDate,
           },
+          contentDetails: {
+            monitorStream: {
+              enableMonitorStream: false,
+            },
+          },
           status: { privacyStatus: 'public' },
         },
-        params: { part: 'snippet,status' }
+        params: { part: 'snippet, contentDetails, status' }
       });
       return newBroadcast.id;
     } catch (createBroadcastError:any) {
@@ -130,6 +135,20 @@ class YouTubeAuthService {
     } catch (bindBroadcastToStreamError:any) {
       console.log('Error binding broadcast to stream:', bindBroadcastToStreamError.response?.data?.error?.errors);
       throw new Error('Error binding broadcast to stream');
+    }
+  }
+
+  public async activateStream(broadcastId: string,accessToken: string) {
+    try {
+      await HttpClient.post({
+        url: `https://www.googleapis.com/youtube/v3/liveBroadcasts/transition`,
+        headers: { Authorization: `Bearer ${accessToken}` },
+        params: { broadcastStatus: 'live', id: broadcastId, part: 'snippet,status', key: authConfig.youtubeAPIKey },
+      });
+      console.log(`Stream with broadcastId ${broadcastId} is now live on YouTube.`);
+    } catch (activateStreamError: any) {
+      console.error('Error activating YouTube stream:', activateStreamError.response?.data?.error?.errors);
+      throw new Error('Error activating stream broadcast');
     }
   }
 }

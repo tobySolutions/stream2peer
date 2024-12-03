@@ -4,6 +4,7 @@ import {
   SUCCESS,
   ERROR,
   SOMETHING_WENT_WRONG,
+  NULL_OBJECT,
 } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import AuthAccountService from '../Services/AuthAccountService';
 import { AuthRequest } from 'Api/TypeChecking';
@@ -17,7 +18,7 @@ class ProfileController {
         user.userId,
       );
 
-      if (!userProfile) {
+      if (userProfile==NULL_OBJECT) {
         return response.status(HttpStatusCodeEnum.BAD_REQUEST).json({
           status_code: HttpStatusCodeEnum.BAD_REQUEST,
           status: ERROR,
@@ -30,8 +31,8 @@ class ProfileController {
         status: SUCCESS,
         data: userProfile.getProfile(),
       });
-    } catch (error) {
-      console.log('ProfileController.handle error ->', error);
+    } catch (ProfileControllerError) {
+      console.log('ProfileController.handle error ->', ProfileControllerError);
       return response.status(HttpStatusCodeEnum.INTERNAL_SERVER_ERROR).json({
         status_code: HttpStatusCodeEnum.INTERNAL_SERVER_ERROR,
         status: ERROR,

@@ -6,6 +6,8 @@ export const CreateStreamValidator = [
     .isString()
     .isLength({ min: 4, max: 30 })
     .withMessage('Stream title must be between 4 and 30 characters')
+    .matches(/^[a-zA-Z0-9\s]+$/)
+    .withMessage('Stream title must not contain special characters')
     .trim()
     .escape(),
   body('description', 'Stream description should be a string')
@@ -13,6 +15,8 @@ export const CreateStreamValidator = [
     .isLength({ max: 1000 })
     .withMessage('Stream description must be less than 1000 characters')
     .optional()
+    .matches(/^[a-zA-Z0-9\s]+$/)
+    .withMessage('Stream description must not contain special characters')
     .trim()
     .escape(),
   body('platforms.*', 'Each platform must be one of the valid enum values')

@@ -21,6 +21,10 @@ export class WinstonDriver implements ILoggingDriver {
           level: 'error',
           filename: 'logs/logsErrors',
         }),
+        new winston.transports.File({
+          level: 'info',
+          filename: 'logs/logsInfo',
+        }),
       ],
       format: winston.format.combine(
         winston.format.json(),

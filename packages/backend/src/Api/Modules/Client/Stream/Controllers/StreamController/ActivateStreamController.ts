@@ -21,8 +21,18 @@ class ActivateStreamController {
     try {
       const { streamId } = request.params;
 
+      const livepeerId = await StreamService.getStreamByIdentifier(streamId);
+      if (livepeerId == NULL_OBJECT) {
+        await queryRunner.rollbackTransaction();
+        return response.status(HttpStatusCodeEnum.NOT_FOUND).json({
+          status_code: HttpStatusCodeEnum.NOT_FOUND,
+          status: ERROR,
+          message: RESOURCE_NOT_FOUND,
+        });
+      }
+
       const activatedStream = await StreamService.activateStream(
-        streamId,
+        livepeerId.livepeerStreamId,
         queryRunner,
       );
 

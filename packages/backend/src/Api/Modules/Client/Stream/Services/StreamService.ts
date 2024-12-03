@@ -6,7 +6,7 @@ import { Repository, QueryRunner } from 'typeorm';
 import { NULL_OBJECT } from 'Api/Modules/Common/Helpers/Messages/SystemMessages';
 import {
   createStreamDto,
-  MultistreamTarget,
+  DestinationPlatform,
 } from '../TypeChecking/createStreamDto';
 import {
   defaultPlaybackPolicy,
@@ -19,6 +19,7 @@ import LivepeerService from './LivepeerService';
 import {
   MultiStreamToken,
   Platform,
+  StreamPlatform,
 } from '../TypeChecking/MultiStreamUserDestination';
 import { transformPlatform } from '../Utils/StreamHelper';
 import TwitchService from './MultiMediaServices/TwitchService';
@@ -45,7 +46,7 @@ class StreamService {
     streamData: createStreamDto,
     queryRunner: QueryRunner,
   ): Promise<Stream | null> {
-    const { projectId, title, description, profiles, scheduleDate, platforms } =
+    const { projectId, title, description, profiles, scheduleDate, platforms, visibility } =
       streamData;
 
     const project = await this.projectRepository.findOne({
@@ -55,17 +56,8 @@ class StreamService {
     if (!project) return NULL_OBJECT;
 
     const stream = new Stream();
-    let playBackPolicy: PlaybackPolicy;
-    if(title){
-      playBackPolicy = defaultPublicPlaybackPolicy;
-    }else{
-      playBackPolicy = {
-        ...defaultPlaybackPolicy,
-        webhookContext: { projectId },
-      };
-    }
-
-
+    const playBackPolicy: PlaybackPolicy = visibility ? defaultPublicPlaybackPolicy 
+    : { ...defaultPlaybackPolicy, webhookContext: { projectId } };
     const streamProfiles = profiles || defaultProfiles;
 
     Object.assign(stream, {
@@ -76,7 +68,6 @@ class StreamService {
       playBackPolicy: JSON.stringify(playBackPolicy),
       schedule: scheduleDate,
       status: scheduleDate ? StreamStatus.SCHEDULED : StreamStatus.IDLE,
-      destinations: platforms || null,
     });
 
     try {
@@ -94,36 +85,13 @@ class StreamService {
         stream,
         streamProfiles,
         playBackPolicy,
-        multistreamTargets,
+        multistreamTargets?.map((stream)=>stream.target),
       );
+      stream.destinations = multistreamTargets?.map((destination) => destination.destinations) || [];
       await queryRunner.manager.save(stream);
       return stream;
     } catch (error) {
       console.error('Error creating stream:', error);
-      return null;
-    }
-  }
-
-  /**
-   * Terminates a stream by setting its status to "ENDED" and updating its `endedAt` timestamp.
-   */
-  public async terminateStream(
-    streamId: string,
-    queryRunner: QueryRunner,
-  ): Promise<Stream | null> {
-    const stream = await this.streamRepository.findOne({
-      where: { identifier: streamId },
-    });
-    if (!stream) return NULL_OBJECT;
-
-    try {
-      await LivepeerService.terminateStream(streamId);
-      stream.status = StreamStatus.ENDED;
-      stream.endedAt = new Date();
-      await queryRunner.manager.save(stream);
-      return stream;
-    } catch (error) {
-      console.error('Error terminating stream:', error);
       return null;
     }
   }
@@ -212,6 +180,31 @@ class StreamService {
   }
 
   /**
+   * Terminates a stream by setting its status to "ENDED" and updating its `endedAt` timestamp.
+   */
+  public async terminateStream(
+    streamId: string,
+    queryRunner: QueryRunner,
+  ): Promise<Stream | null> {
+    const stream = await this.streamRepository.findOne({
+      where: { livepeerStreamId: streamId },
+    });
+    if (!stream) return NULL_OBJECT;
+
+    try {
+      stream.status = StreamStatus.ENDED;
+      stream.endedAt = new Date();
+      await LivepeerService.terminateStream(streamId);
+      await queryRunner.manager.save(stream);
+      return stream;
+    } catch (error) {
+      console.error('Error terminating stream:', error);
+      return null;
+    }
+  }
+
+
+  /**
    * Suspends a stream.
    */
   public async suspendStream(
@@ -237,14 +230,40 @@ class StreamService {
     queryRunner: QueryRunner,
   ): Promise<Stream | null> {
     const stream = await this.streamRepository.findOne({
-      where: { identifier: streamId },
+      where: { livepeerStreamId: streamId },
+      relations: ['project', 'project.owner'],
     });
     if (!stream) return NULL_OBJECT;
-
-    await LivepeerService.activateStream(stream.livepeerStreamId);
+    if(stream?.destinations){
+      const streamTokens = stream.project.owner.stream_tokens;
+      stream.destinations.forEach(async (platform)=>{
+        const streamingPlatform = streamTokens.filter((token) => token.type == platform.platform)[0];
+          return this.activatePlatform(platform, streamingPlatform);
+      });
+    }
     stream.status = StreamStatus.LIVE;
+    await LivepeerService.activateStream(stream.livepeerStreamId);
     await queryRunner.manager.save(stream);
     return stream;
+  }
+
+  /**
+   * Activates the stream for a specific platform.
+   */
+  private async activatePlatform(destination: StreamPlatform, streamingPlatform:MultiStreamToken): Promise<void> {
+    const { platform, broadcastId } = destination;
+    try{
+      switch (platform) {
+        case Platform.Youtube:
+          await YoutubeService.activateStream(broadcastId,await YoutubeService.refreshAccessToken(streamingPlatform.token.refreshToken));
+        break;
+        //other platform cases to be added here
+        default:
+          console.warn(`Activation for platform ${platform} is not implemented.`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }} catch(activatePlatformError:any){
+        console.error( 'activatePlatformError:', activatePlatformError);
+    }
   }
 
   /**
@@ -259,19 +278,22 @@ class StreamService {
       where: { livepeerStreamId: streamId },
     });
     if (!stream) return NULL_OBJECT;
-
     switch (eventType) {
       case StreamStatus.LIVE:
-        await LivepeerService.activateStream(streamId);
+        console.log('live')
+        await this.activateStream(streamId,queryRunner);
         break;
       case StreamStatus.SUSPENDED:
-        await LivepeerService.suspendStream(streamId);
+        console.log('suspend')
+        await this.suspendStream(streamId,queryRunner);
+        break;
+      case StreamStatus.ENDED:
+        console.log('end')
+        await this.terminateStream(streamId,queryRunner);
         break;
       default:
         throw new Error('Invalid Event Type');
     }
-    stream.status = eventType;
-    await queryRunner.manager.save(stream);
     return stream;
   }
 
@@ -280,10 +302,9 @@ class StreamService {
     streamTokens: MultiStreamToken[],
     title: string,
     scheduleDate: string = new Date().toISOString().slice(0, 16),
-  ): Promise<MultistreamTarget[]> {
+  ): Promise<DestinationPlatform[]> {
     if (!platforms) return [];
-
-    const multistreamTargets: MultistreamTarget[] = [];
+    const multistreamTargets: DestinationPlatform[] = [];
 
     for (const platform of platforms) {
       try {
@@ -296,18 +317,15 @@ class StreamService {
         }
 
         const refreshToken = platformToken.token.refreshToken;
-        const token = await this.getPlatformStreamKey(platform, refreshToken, title, scheduleDate);
-        if (!token) {
+        const platformData = await this.getPlatformStreamKey(platform, refreshToken, title, scheduleDate);
+        if (!platformData?.token) {
           console.log(`No token found for platform: ${platform}`);
           continue;
         }
-        const target = transformPlatform(platform, token, title);
-        multistreamTargets.push(target);
-      } catch (error) {
-        console.error(
-          `Error generating multistream target for ${platform}:`,
-          error,
-        );
+        const target = transformPlatform(platform, platformData?.token, title);
+        multistreamTargets.push({target,destinations:{broadcastId: platformData.broadcastId, platform}});
+      } catch (generateMultistreamTargetsError) {
+        console.error(`Error generating multistream target for ${platform}:`, generateMultistreamTargetsError);
       }
     }
     return multistreamTargets;
@@ -318,19 +336,19 @@ class StreamService {
     refreshToken: string,
     title: string,
     scheduleDate: string,
-  ): Promise<string | null> {
+  ): Promise<{token: string, broadcastId: string} | null> {
     switch (platform) {
       case Platform.Youtube:
         return YoutubeService.getStreamKey(refreshToken,title,scheduleDate);
       case Platform.Twitch:
         return await TwitchService.getStreamKey(refreshToken,title,scheduleDate);
       case Platform.Facebook:
-        return '';
+        return null;
       case Platform.Linkedin:
-        return '';
+        return null;
       default:
         console.warn(`Unsupported platform: ${platform}`);
-        return '';
+        return null;
     }
   }
 }
