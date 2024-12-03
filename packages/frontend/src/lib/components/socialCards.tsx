@@ -10,6 +10,7 @@ import {
 } from "../../network/streams/streams-api";
 import { toast } from "react-toastify";
 import { fetchPlatforms } from "../../network/projects/projects";
+import { Loader } from "../Loader";
 
 const SocialMediaCards: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -64,7 +65,7 @@ const SocialMediaCards: React.FC = () => {
     <>
       {loading ? (
         <div className="grid place-content-center h-[calc(100vh-400px)]">
-          <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+         <Loader variant="large"/>
         </div>
       ) : (
         <div className="flex flex-wrap gap-4">

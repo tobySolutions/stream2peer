@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FetchProjectById } from "../../../../network/projects/projects";
 import { toast } from "react-toastify";
+import { Loader } from "../../../../lib/Loader";
 
 export const JoinProject = () => {
   const { id: projectId } = useParams();
@@ -46,7 +47,7 @@ export const JoinProject = () => {
           >
             {joiningProject ? (
               <div className="grid place-content-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#FFFFFF]"></div>
+                <Loader variant="small"/>
               </div>
             ) : (
               "YES"

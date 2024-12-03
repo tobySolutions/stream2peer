@@ -25,6 +25,7 @@ import { IoLogoYoutube } from "react-icons/io5";
 import { ImTwitch } from "react-icons/im";
 import { storeDataInCookie } from "../../../../utils/utils";
 import { EmptyCard } from "../../../../lib/components/emptyCard";
+import { Loader } from "../../../../lib/Loader";
 
 const ProjectPage = () => {
   const { id: projectId } = useParams();
@@ -219,7 +220,7 @@ const ProjectPage = () => {
     <Layout>
       <div
         onClick={() => navigate(-1)}
-        className="flex gap-2 px-0 md:px-4 py-2 cursor-pointer items-center text-white"
+        className="flex gap-2 px-0 md:px-4 py-2 cursor-pointer items-center text-black dark:text-white"
       >
         <IoIosArrowBack />
         Back
@@ -227,11 +228,11 @@ const ProjectPage = () => {
 
       {loading.project ? (
         <div className="grid place-content-center h-[calc(100vh-400px)]">
-          <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-white"></div>
+         <Loader variant="large"/>
         </div>
       ) : (
         <div className="container p-0 md:p-4">
-          <h1 className="text-2xl text-white font-bold mb-1">
+          <h1 className="text-2xl text-black dark:text-white font-bold mb-1">
             {projectData?.title}
           </h1>
           <p className="text-md text-primary-white mb-6">
@@ -243,21 +244,21 @@ const ProjectPage = () => {
               {["upcoming", "past"].map((tab) => (
                 <button
                   key={tab}
-                  className={`px-4 py-2 ${
+                  className={`px-4 w-24 py-2 ${
                     activeTab === tab
-                      ? "bg-gray-100 text-gray-800"
-                      : "bg-dark-gray text-white"
+                      ? "dark:bg-gray-100 bg-primary dark:text-gray-800 text-white"
+                      : "dark:bg-dark-gray bg-gray-100 text-black dark:text-white"
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
                   {tab === "upcoming"
-                    ? "Upcoming Livestreams"
-                    : "Past Livestreams"}
+                    ? "Upcoming"
+                    : "Past"}
                 </button>
               ))}
             </div>
             <button
-              className="bg-dark-gray text-white px-4 py-2 rounded"
+              className="dark:bg-dark-gray hover:bg-primary/90 bg-primary text-white px-4 py-2 rounded"
               onClick={() => setModalState({ isOpen: true, type: "instant" })}
               ref={dropdownRef}
             >

@@ -5,6 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import Modal from "../modal";
 import { toast } from "react-toastify";
 import { useAppStore } from "../../state";
+import { Loader } from "../Loader";
 
 const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -63,7 +64,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
         onClick={() => handleDeleteProject(project.identifier)}
       >
         {isDeleteLoading ? (
-          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#FFFFFF]" />
+          <Loader variant="small"/>
         ) : (
           "YES"
         )}
@@ -109,7 +110,7 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
   );
 
   return (
-    <div className="block cursor-pointer bg-dark-gray rounded-lg p-6 shadow-md transition-shadow border border-primary-border duration-300 hover:shadow-lg">
+    <div className="block cursor-pointer bg-primary dark:bg-[#1e1e1e] rounded-lg p-6 shadow-md transition-shadow border border-primary-border min-h-[130px] duration-300 hover:shadow-lg">
       <Modal
         isOpen={isDeleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
@@ -130,21 +131,22 @@ const ProjectCard = ({ project }: { project: ProjectDetails }) => {
           {project.title}
         </h2>
         <FaRegTrashAlt
-          color="#d56a7f"
-          className="cursor-pointer"
+          className="cursor-pointer text-destructive"
           onClick={(e) => {
             e.stopPropagation();
             setDeleteModalOpen(true);
           }}
         />
       </div>
-      <p className="text-[#fff6ffd1] w-64 truncate">{project.description}</p>
+      <p className="dark:text-[#fff6ffd1] text-[#1e1e1e] w-64 truncate">
+        {project.description}
+      </p>
       <div className="w-full flex justify-between items-center">
-        <span className="text-[#fff6ffd1] text-sm">
+        <span className="dark:text-[#fff6ffd1] text-[#1e1e1e] text-sm">
           Date Created: 12/06/2024
         </span>
         <button
-          className="underline text-[#fff6ffd1] text-sm cursor-pointer"
+          className="underline dark:text-[#fff6ffd1] text-sm text-[#1e1e1e] cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
             setEditModalOpen(true);

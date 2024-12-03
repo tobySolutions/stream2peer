@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
 import { EmptyCard } from "../../../lib/components/emptyCard";
 import { getDataInCookie } from "../../../utils/utils";
+import { Loader } from "../../../lib/Loader";
 
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -138,7 +139,7 @@ function Projects() {
         children={
           <div>
             <div className="mb-4">
-              <label htmlFor="title" className="text-dark-gray">
+              <label htmlFor="title" className="dark:text-dark-gray text-black">
                 Project Title
               </label>
               <input
@@ -154,11 +155,13 @@ function Projects() {
                 value={projectDetails.title}
               />
               {InputError.title && (
-                <span className="text-destructive">{InputError.title}</span>
+                <span className="text-destructive text-[13px] md:text-[14px]">
+                  {InputError.title}
+                </span>
               )}
             </div>
             <div className="mb-4">
-              <label htmlFor="title" className="text-dark-gray">
+              <label htmlFor="title" className="dark:text-dark-gray text-black">
                 Project Description
               </label>
               <textarea
@@ -174,13 +177,15 @@ function Projects() {
                 value={projectDetails.desc}
               />
               {InputError.desc && (
-                <span className="text-destructive">{InputError.title}</span>
+                <span className="text-destructive text-[13px] md:text-[14px]">
+                  {InputError.title}
+                </span>
               )}
             </div>
             <form onSubmit={handleAddEmail} className="relative">
               <label
                 htmlFor="email-input"
-                className="block mb-2 text-dark-gray"
+                className="block mb-2 text-black dark:text-dark-gray"
               >
                 Invite users via email
               </label>
@@ -261,14 +266,14 @@ function Projects() {
           <p className="text-primary-white text-[32px]">Projects</p>
           <button
             onClick={() => setModalOpen(true)}
-            className="bg-dark-gray flex items-center gap-1 text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[13px] md:text-[14px] transition"
+            className="dark:bg-dark-gray bg-primary flex items-center gap-1 text-white px-4 py-2 rounded hover:bg-primary/90 border border-primary-border text-[13px] md:text-[14px] transition"
           >
             <IoAddSharp size={18} /> Add New Project
           </button>
         </div>
         {projectingLoading ? (
           <div className="grid place-content-center h-[calc(100vh-400px)]">
-            <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+            <Loader variant="large" />
           </div>
         ) : ProjectsData?.length === 0 ? (
           <div className="w-full flex justify-center">
@@ -282,7 +287,7 @@ function Projects() {
             {ProjectsData?.map((project) => (
               <div
                 key={project.id}
-                className=""
+                className="min-h-[130px]"
                 onClick={() =>
                   navigate(`/dashboard/projects/${project.identifier}`)
                 }

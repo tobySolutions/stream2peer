@@ -22,12 +22,14 @@ html {
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --destructive: 100% 75% 75%;
+    --destructive: 9 100% 50%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
+    --dark-gray: #ffffff;
+    --primary-white: #1e1e1e
   }
 
   .dark {
@@ -50,6 +52,8 @@ html {
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
+    --dark-gray: #1e1e1e;
+    --primary-white: #fff6ff
   }
 }
 

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { GrClose } from "react-icons/gr";
 import { useAppStore } from "../state";
+import { Loader } from "./Loader";
 
 const Modal = ({
   isOpen,
@@ -39,13 +40,13 @@ const Modal = ({
 
         {/* Modal Title */}
         {title && (
-          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white text-dark-gray">
+          <h2 className="text-xl pt-6 font-bold pb-4 sticky top-0 left-0 right-0 bg-white text-black dark:text-dark-gray">
             {title}
           </h2>
         )}
 
         {/* Modal Content */}
-        <div className="mb-4 text-dark-gray">{children}</div>
+        <div className="mb-4 ">{children}</div>
 
         {/* Close Modal Button */}
         {onSubmit && (
@@ -55,7 +56,7 @@ const Modal = ({
           >
             {loading ? (
               <div className="grid place-content-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#FFFFFF]"></div>
+                <Loader variant="small"/>
               </div>
             ) : (
               "Submit"
