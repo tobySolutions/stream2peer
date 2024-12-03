@@ -81,12 +81,19 @@ function Navbar() {
       </ul>
 
       {/* Mobile Menu Toggle */}
-      <button
-        onClick={() => setMenuOpen((prev) => !prev)}
-        className="cursor-pointer md:pr-0 pr-6 relative md:hidden block"
-      >
-        <div id="icon" className={`${menuOpen ? "icon-close" : "icon-menu"}`} />
-      </button>
+      <div className="md:hidden flex items-center gap-2">
+        <ModeToggle />
+        <button
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className="cursor-pointer md:pr-0 pr-6 relative "
+        >
+          <div
+            id="icon"
+            className={`${menuOpen ? "icon-close" : "icon-menu"}`}
+          />
+        </button>
+      </div>
+
       {/* Mobile Menu */}
       <div
         className={`${menuOpen ? "block" : "hidden"} fixed top-0 left-0 w-full h-screen z-[1000] overflow-hidden bg-dark-gray`}

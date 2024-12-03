@@ -82,7 +82,7 @@ html {
     top ease 0.3s,
     transform ease 0.3s 0.3s,
     background 0.3s ease 0.3s;
-  background: #ffffff;
+  background: var(--primary-white);
 }
 
 .icon-menu::before {
@@ -109,14 +109,14 @@ html {
 .icon-close::before {
   transform: rotate(45deg);
   top: 0px;
-  background: #ffffff;
+  background: var(--primary-white);
 }
 
 /* line two of close icon */
 .icon-close::after {
   transform: rotate(-45deg);
   top: 0px;
-  background: #ffffff;
+  background: var(--primary-white);
 }
 
 #icon {
