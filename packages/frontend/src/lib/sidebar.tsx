@@ -19,7 +19,9 @@ function Sidebar() {
           <li
             key={item.value}
             className={`${
-              isActive(item.route) ? "bg-white text-dark-gray" : "text-white"
+              isActive(item.route)
+                ? "dark:bg-white text-dark-gray bg-primary"
+                : "dark:text-primary-white text-[#1e1e1e]"
             } p-2 rounded-md no-underline font-raleway cursor-pointer flex items-center gap-2`}
             onClick={() => navigate(item.route)}
           >

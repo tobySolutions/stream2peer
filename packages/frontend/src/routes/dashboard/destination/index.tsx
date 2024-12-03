@@ -12,6 +12,7 @@ import { ImTwitch } from "react-icons/im";
 import { toast } from "react-toastify";
 import { fetchPlatforms } from "../../../network/projects/projects";
 import { EmptyCard } from "../../../lib/components/emptyCard";
+import { Loader } from "../../../lib/Loader";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
@@ -86,7 +87,7 @@ export const Destination = () => {
         {!viewDestinations && (
           <div
             onClick={() => setViewDestinations(true)}
-            className="flex gap-2 py-2 cursor-pointer items-center text-white"
+            className="flex gap-2 py-2 cursor-pointer items-center text-black dark:text-white"
           >
             <IoIosArrowBack />
             Back
@@ -94,10 +95,10 @@ export const Destination = () => {
         )}
         {viewDestinations && (
           <div className="flex gap-4 w-full justify-between items-center flex-wrap">
-            <h1 className="md:text-[16px] text-[16px]">Connect seemlessly to other social platforms </h1>
+            <h1 className="md:text-[18px] text-[16px]">Connect seemlessly to other social platforms </h1>
             <button
               onClick={() => setViewDestinations(false)}
-              className="bg-dark-gray text-white px-4 py-2 rounded hover:bg-dark-gray border border-primary-border text-[13px] md:text-[14px] transition"
+              className="dark:bg-dark-gray bg-primary text-white px-4 py-2 rounded border border-primary-border hover:bg-primary/90 text-[13px] md:text-[14px] transition"
             >
               Add destination
             </button>
@@ -108,7 +109,7 @@ export const Destination = () => {
             <h2>Destinations connected</h2>
             {loading ? (
               <div className="grid place-content-center h-[calc(100vh-400px)]">
-                <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-[#FFFFFF]"></div>
+                <Loader variant="large"/>
               </div>
             ) : destinationData?.length === 0 ? (
               <div className="w-full flex justify-center">

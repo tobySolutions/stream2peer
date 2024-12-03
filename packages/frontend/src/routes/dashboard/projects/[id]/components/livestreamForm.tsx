@@ -58,6 +58,7 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
           <input
             type="radio"
             name="options"
+            required={true}
             value="schedule"
             checked={streamDetails.type === "schedule"}
             onChange={() =>
@@ -76,6 +77,7 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
         <input
           id="title"
           type="text"
+          required={true}
           value={streamDetails.title}
           onChange={(e) =>
             setStreamDetails({ ...streamDetails, title: e.target.value })

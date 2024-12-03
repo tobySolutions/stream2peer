@@ -50,3 +50,16 @@ export function deleteAllCookie() {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function formatDate(isoString: string) {
+  // Parse the ISO string into a Date object
+  const date = new Date(isoString);
+
+  // Extract the components of the date
+  const day = String(date.getDate()).padStart(2, "0"); // Day with leading zero
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Month with leading zero
+  const year = date.getFullYear(); // Year
+
+  // Return the formatted date
+  return `${month}/${day}/${year}`;
+}

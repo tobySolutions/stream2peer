@@ -6,12 +6,15 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { LogoIcon } from "../../assets/svg-exports";
 import { deleteDataInCookie, getDataInCookie } from "../../utils/utils";
 import { ModeToggle } from "../../lib/components/mode-toggle";
+import { useTheme } from "../../state/theme";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const {theme} = useTheme()
 
   const toggleMobileMenu = () => {
     setMenuOpen(!menuOpen);
@@ -44,22 +47,22 @@ function Navbar() {
               : "https://stream2peer.on-fleek.app/"
           }
         >
-          <LogoIcon theme="dark" />
+          <LogoIcon theme={theme} />
         </Link>
       </div>
 
       {/* Desktop Menu */}
       <ul className="hidden relative md:flex gap-[5px] items-center list-none">
-        {/* Conditionally render "My Account" menu */}
-        {!location.pathname.includes("signIn") && (
-          <li
-            onClick={() => setSubMenuOpen((prev) => !prev)}
-            className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-white flex items-center gap-2"
-          >
-            <IoPersonCircleOutline size={24} />
-            My Account
-          </li>
-        )}
+        <li
+          onClick={() => setSubMenuOpen((prev) => !prev)}
+          className="text-[16px] font-normal font-raleway px-[20px] py-[12px] rounded-[30px] cursor-pointer text-primary-white flex items-center gap-2"
+        >
+          <IoPersonCircleOutline size={24} />
+          My Account
+        </li>
+
+        <ModeToggle />
+
         {/* <ModeToggle /> */}
         {subMenuOpen && (
           <div className="absolute bg-dark-gray top-12 right-2 border border-primary-border rounded-sm">
@@ -101,11 +104,11 @@ function Navbar() {
             {navItems.map((item) => (
               <li
                 key={item.value}
-                className={`${location.pathname === item.route ? "bg-white px-12 py-2" : ""} rounded-[8px]`}
+                className={`${location.pathname === item.route ? "dark:bg-white bg-[#1e1e1e] px-12 py-2" : ""} rounded-[8px]`}
               >
                 <button
                   onClick={() => handleNavigation(item.route)}
-                  className={`${location.pathname === item.route ? "text-dark-gray" : "text-white"} no-underline font-raleway w-full text-left`}
+                  className={`${location.pathname === item.route ? "text-dark-gray" : "text-primary-white"} no-underline font-raleway w-full text-left`}
                 >
                   {item.label}
                 </button>

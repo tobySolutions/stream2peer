@@ -23,10 +23,11 @@ function Layout({ children }: LayoutProps) {
         pauseOnHover
       />
       <Navbar />
-      <div className="flex h-full items-start relative bg-black">
+      <div className="flex h-full items-start relative dark:bg-black bg-white">
         <Sidebar />
         <main className="md:px-[36px] px-[20px] py-[25px] w-full ml-0 md:ml-[20%] min-h-[calc(100vh-60px)] animate-slideUp">
           <div>{children}</div>
+          {/* <div className="dashboard-shadow"></div> */}
         </main>
       </div>
     </div>
