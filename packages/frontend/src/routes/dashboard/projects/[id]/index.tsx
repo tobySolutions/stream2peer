@@ -228,7 +228,7 @@ const ProjectPage = () => {
 
       {loading.project ? (
         <div className="grid place-content-center h-[calc(100vh-400px)]">
-         <Loader variant="large"/>
+          <Loader variant="large" />
         </div>
       ) : (
         <div className="container p-0 md:p-4">
@@ -251,9 +251,7 @@ const ProjectPage = () => {
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
-                  {tab === "upcoming"
-                    ? "Upcoming"
-                    : "Past"}
+                  {tab === "upcoming" ? "Upcoming" : "Past"}
                 </button>
               ))}
             </div>
@@ -316,7 +314,9 @@ const ProjectPage = () => {
 // Helper components
 const renderStreams = (tab: string, livestreamData: any[]) => {
   const filteredStreams = livestreamData?.filter((stream) =>
-    tab === "upcoming" ? stream.status !== "ended" : stream.status === "ended"
+    tab === "upcoming"
+      ? stream.status.toLowerCase() !== "ended"
+      : stream.status.toLowerCase() === "ended"
   );
 
   if (filteredStreams?.length === 0) {
