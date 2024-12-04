@@ -16,7 +16,7 @@ const LivestreamCard = ({ livestream }: any) => {
       // Reset the copied state after 2 seconds
       setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {
-      toast.error("An error occured, try again")
+      toast.error("An error occured, try again");
     }
   };
   const viewDetails = () => {
@@ -29,32 +29,36 @@ const LivestreamCard = ({ livestream }: any) => {
       <div>
         <h3 className="text-lg font-semibold text-primary-white flex items-center gap-2">
           {livestream?.title}
-          <span
-            onClick={handleCopy}
-            title="Click to copy stream url"
-            className="cursor-pointer"
-          >
-            {isCopied ? (
-              <span className="text-green-500 text-[12px]">
-                Copied to clipboard!
-              </span>
-            ) : (
-              <FaRegCopy />
-            )}
-          </span>
+          {livestream?.status.toLowerCase() !== "ended" && (
+            <span
+              onClick={handleCopy}
+              title="Click to copy stream url"
+              className="cursor-pointer"
+            >
+              {isCopied ? (
+                <span className="text-green-500 text-[12px]">
+                  Copied to clipboard!
+                </span>
+              ) : (
+                <FaRegCopy />
+              )}
+            </span>
+          )}
         </h3>
         {/* <p className="text-primary-white text-sm mb-2">Date: {livestream.date}</p> */}
         <p className="text-primary-white text-[13px]">
           Status: {livestream?.status}
         </p>
       </div>
-      <button
-        onClick={viewDetails}
-        className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-primary-white hover:text-black bg-transparent border border-primary-border rounded-md"
-      >
-        <span className="relative z-[10]">Start stream</span>
-        <div className="absolute inset-0 w-full h-full bg-primary transition-transform duration-500 transform translate-y-full group-hover:translate-y-0"></div>
-      </button>
+      {livestream?.status.toLowerCase() !== "ended" && (
+        <button
+          onClick={viewDetails}
+          className="relative mt-2 group overflow-hidden px-4 py-2 font-semibold text-primary-white hover:text-black bg-transparent border border-primary-border rounded-md"
+        >
+          <span className="relative z-[10]">Start stream</span>
+          <div className="absolute inset-0 w-full h-full bg-primary transition-transform duration-500 transform translate-y-full group-hover:translate-y-0"></div>
+        </button>
+      )}
     </div>
   );
 };
