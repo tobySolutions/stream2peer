@@ -38,7 +38,7 @@ const LivestreamForm: React.FC<LivestreamFormProps> = ({
 
 
   return (
-    <div>
+    <div className="text-black">
       <div className="mb-4">
         <label className="inline-flex items-center mb-2">
           <input
