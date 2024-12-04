@@ -140,12 +140,14 @@ class YouTubeAuthService {
 
   public async activateStream(broadcastId: string,accessToken: string) {
     try {
-      await HttpClient.post({
-        url: `https://www.googleapis.com/youtube/v3/liveBroadcasts/transition`,
-        headers: { Authorization: `Bearer ${accessToken}` },
-        params: { broadcastStatus: 'live', id: broadcastId, part: 'snippet,status', key: authConfig.youtubeAPIKey },
-      });
-      console.log(`Stream with broadcastId ${broadcastId} is now live on YouTube.`);
+      setTimeout(async () => {
+        await HttpClient.post({
+          url: `https://www.googleapis.com/youtube/v3/liveBroadcasts/transition`,
+          headers: { Authorization: `Bearer ${accessToken}` },
+          params: { broadcastStatus: 'live', id: broadcastId, part: 'snippet,status', key: authConfig.youtubeAPIKey },
+        });
+        console.log(`Stream with broadcastId ${broadcastId} is now live on YouTube.`);
+      }, 5000);
     } catch (activateStreamError: any) {
       console.error('Error activating YouTube stream:', activateStreamError.response?.data?.error?.errors);
       throw new Error('Error activating stream broadcast');
