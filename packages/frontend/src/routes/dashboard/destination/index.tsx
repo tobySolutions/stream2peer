@@ -15,6 +15,7 @@ import { fetchPlatforms } from "../../../network/projects/projects";
 import { EmptyCard } from "../../../lib/components/emptyCard";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { Loader } from "../../../lib/Loader";
+import { platforms } from "../../../network/projects/types";
 
 export const Destination = () => {
   const [viewDestinations, setViewDestinations] = useState(true);
@@ -107,7 +108,7 @@ export const Destination = () => {
     }
   }, []);
 
-  const handleDisconnect = async (platform: "Twitch" | "Youtube") => {
+  const handleDisconnect = async (platform: platforms) => {
     try {
       const response = await disconnectPlatform(platform);
       toast.success(response?.message);
