@@ -13,3 +13,6 @@ export type UpdateProjectProps = {
 export type InvitePeerProps = {
   users: { role: "co-Host" | "Subscriber"; userId: string }[];
 };
+
+
+export type platforms =  "Twitch" | "Youtube"

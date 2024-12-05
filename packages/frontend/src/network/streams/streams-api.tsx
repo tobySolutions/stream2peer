@@ -49,3 +49,10 @@ export const validateTwitch = async (code: string) => {
     };
   }
 };
+
+export const disconnectPlatform = async (platform: "Twitch" | "Youtube") => {
+  const { data } = await instance.delete("/auth/profile/remove-platform", {
+    data: { platform },
+  });
+  return data;
+};
