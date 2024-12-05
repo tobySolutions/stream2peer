@@ -9,7 +9,7 @@ const TermsOfService = () => {
           <strong>Effective Date:</strong> 30/11/2024
         </p>
         <p className="mb-6">
-          Welcome to <strong>[Your Website/App Name]</strong>. These Terms of
+          Welcome to <strong>stream2peer.mov</strong>. These Terms of
           Service ("Terms") govern your use of our website, services, and
           products (collectively referred to as "Services"). By accessing or
           using our Services, you agree to be bound by these Terms. If you do
