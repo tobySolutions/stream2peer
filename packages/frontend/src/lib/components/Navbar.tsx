@@ -21,7 +21,7 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: "https://discord.gg/kcqsbukZ",
+    href: "https://discord.gg/kqB9uqCQ",
     label: "Discord",
   },
   {
