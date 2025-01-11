@@ -5,7 +5,7 @@
 
 Stream2Peer is a decentralized video stream management platform built on top of [Livepeer](https://livepeer.org/). Inspired by [StreamYard](https://streamyard.com/), this project replicates the core functionalities of StreamYard with added advantages of decentralization, scalability, and enhanced user control. Stream2Peer allows users to broadcast, record, and manage live streams seamlessly using the power of Web3 and Livepeer's open-source technology.
 
-You can join our Discord [here](https://discord.gg/kcqsbukZ).
+You can join our Discord [here](https://discord.gg/kqB9uqCQ).
 
 ## Code of Conduct
 
