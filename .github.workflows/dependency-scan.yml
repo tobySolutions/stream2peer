@@ -1,0 +1,28 @@
+name: Dependency Scan
+
+on:
+  push:  # runs on every push
+      branches:
+              - main
+      pull request:  # runs on every pull request to main 
+        branches: 
+              - main
+      schedule: 
+        - cron: '0 0 * * 1' # sceduled runs every monday at midnight UTC timezone
+
+jobs: 
+  scan:
+    runs:on: ubuntu-latest
+
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Run Trivy for scanning dependencies
+      - name: Run Trivy Dependency Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true  # ignore vulnerabilities without fixes 
+          format: 'table'
+          exit-code: '0'  # change to '1' if you want workflow to fail if vulnerabilities are found
