@@ -22,7 +22,7 @@ We are committed to fostering an open and welcoming environment. Please read our
 - **Chat and Audience Interaction**: Built-in tools for live chat and audience engagement.
 - **Monorepo Setup**: Organize both frontend and backend codebases in a single repository using `pnpm` workspaces.
 
-## Tech Stack
+## Tech Stac
 
 - **Frontend**: 
   - Framework: [React](https://react.dev/) with [Vite](https://vitejs.dev/) for a fast development environment.
